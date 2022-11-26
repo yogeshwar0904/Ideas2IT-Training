@@ -1,0 +1,5 @@
+2022-11-09 17:18:59,801 WARN c.i.l.CustomLogger [main] Entered invalid data
+2022-11-09 17:19:39,860 WARN c.i.l.CustomLogger [main] Entered invalid data
+2022-11-25 20:02:35,199 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!
+2022-11-26 09:26:38,342 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!
+2022-11-26 09:38:48,311 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!
