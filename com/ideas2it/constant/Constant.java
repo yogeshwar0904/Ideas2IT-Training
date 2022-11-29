@@ -12,15 +12,21 @@ import java.util.regex.Pattern;
  */ 
 public class Constant {
     public static final String VALIDATE_ACCOUNTNAME = "^[A-Za-z]\\w{5,29}$";
-    public static final String VALIDATE_NAME  = ("[a-zA-Z]+$");
+    public static final String VALIDATE_NAME = ("[a-zA-Z]{4,}+$");
     public static final String VALIDATE_MOBILENUMBER = ("^[6-9]{1}[0-9]{9}");
-    public static final String VALIDATE_PASSWORD = "^[a-zA-Z0-9]{4,9}[@$&*]{1,}[0-9]{1,3}";
+    public static final String VALIDATE_PASSWORD = "^[a-zA-Z0-9]{4,}[@$&*]{1,}[0-9]{1,3}";
+
+    public static final String ACCOUNTNAME_FORMATE = "Create the Account Name (Must be start with charecter minimum five,Continue with numbers)";
+    public static final String NAME_FORMATE = "Enter your name (Must start with charecter minimum four)";
+    public static final String MOBILENUMBER_FORMATE = "Enter the Mobile Number (Must be start  from six total ten digits)";
+    public static final String PASSWORD_FORMATE = "Create the Password (Must contain 7 characters including 5 Letters, one Special character and number)";
 
     public static final int ADD = 1;
     public static final int REMOVE = 2;
     public static final int DISPLAY = 3;
     public static final int UPDATE = 4;
     public static final int SEARCH = 5;
+    public static final int LOGIN = 6;
 
     public static final int UPDATE_ACCOUNT_NAME = 1;
     public static final int UPDATE_USER_NAME = 2;
@@ -30,14 +36,19 @@ public class Constant {
 
     public static final int ADD_POST = 1;
     public static final int DISPLAY_POST = 2;
-    public static final int LIKE_POST = 3;
-    public static final int REMOVE_POST = 4;
+    public static final int  REMOVE_POST = 3;
+    public static final int  UPDATE_POST = 4;
+
+    public static final int UPDATE_POST_CONTENT = 1;  
+    public static final int UPDATE_POST_TITLE = 2; 
 
     public static final String ERROR_01 = "No user exist";
     public static final String ERROR_02 = "No account found to update";
     public static final String ERROR_03 = "No account exist to delete";
     public static final String ERROR_04 = "No account found";
+    public static final String ERROR_05 = "No user exist to login";    
 
     public static final String ERROR_001 = "No post to display";
-    public static final String ERROR_002 = "No post exist to delete";
+    public static final String ERROR_002 = "No post exist to update";
+    public static final String ERROR_003 = "No post found to display";
 }

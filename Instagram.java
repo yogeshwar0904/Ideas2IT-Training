@@ -1,6 +1,6 @@
 /**
  * This an Instagram application where user can 
- * create an profile and post theri pictures.
+ * create an profile and post their pictures.
  */
 
 import com.ideas2it.view.UserView;

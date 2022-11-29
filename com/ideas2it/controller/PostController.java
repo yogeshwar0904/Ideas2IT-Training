@@ -29,12 +29,12 @@ public class PostController {
      *
      * @param String userId
      *        account id of the user
-     * @param String postLocation
-     *        location of post taken
+     * @param String content
+     *        content of post taken
      */
-    public Post uploadPost(User user,String title,String content)   {
+    public Post uploadPost(User user, String title, String content) {
         try {
-            return postService.uploadPost(user,title,content);
+            return postService.uploadPost(user, title, content);
         } catch (InstagramManagementException exception) {
             CustomLogger.error(exception.getMessage());
         }
@@ -44,15 +44,17 @@ public class PostController {
     /**
      * display the post of the user
      *
-     * @param String userId
-     *        id of the user
+     * @param User user
+     *        details of the user
      * @return userPosts
      *         posts of the user
      */
-    public List<Post> getUserPost(User user) {
-        List<Post> posts = null; 
+    public List<Post> getUserPost(String userId) {
+        List<Post> posts;
+        posts = null; 
+
         try {
-            posts = postService.displayPost(user);
+            posts = postService.displayPost(userId);
         } catch (InstagramManagementException exception) {
             CustomLogger.error(exception.getMessage());
         }
@@ -74,5 +76,31 @@ public class PostController {
             CustomLogger.error(exception.getMessage());
         }
         return false;
+    }
+
+    /**
+     * update the post
+     *
+     * @param string postId
+     *        post id of user
+     * @param string updateValue
+     *        change detail  of user
+     * @param int choice
+     *        choice of user
+     * @return post
+     *         details of post
+     *          
+     */   
+    public Post update(String postId, String updateValue, int choice) { 
+        try {
+            return postService.update(postId, updateValue, choice); 
+        } catch (InstagramManagementException exception) {
+            CustomLogger.error(exception.getMessage());
+        } 
+        return null; 
+    } 
+
+    public Post getPostId(String postId) {
+       return postService.getPostId(postId);
     }
 }

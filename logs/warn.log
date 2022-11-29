@@ -3,3 +3,35 @@
 2022-11-25 20:02:35,199 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!
 2022-11-26 09:26:38,342 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!
 2022-11-26 09:38:48,311 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!
+2022-11-26 14:34:08,354 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!
+2022-11-26 14:35:38,576 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!
+2022-11-28 10:46:22,869 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-28 10:46:55,452 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-28 10:47:04,275 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-28 10:47:20,577 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-28 10:47:29,085 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-28 11:49:51,044 WARN c.i.l.CustomLogger [main] Entered invalid data
+2022-11-28 11:51:43,289 WARN c.i.l.CustomLogger [main] Entered invalid data
+2022-11-28 12:15:57,378 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-28 12:18:28,979 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-28 12:18:54,467 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-28 12:19:22,950 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-28 12:22:45,983 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-28 12:58:19,244 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-28 13:37:36,828 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-28 13:38:00,373 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-28 13:39:33,787 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-28 13:40:22,294 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-28 13:50:00,661 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-28 13:50:08,975 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-28 13:55:12,400 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-28 13:56:09,215 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-28 14:30:52,304 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!
+2022-11-28 15:37:43,415 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!
+2022-11-29 14:39:38,185 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-29 14:40:07,428 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-29 14:40:07,436 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-29 14:40:07,441 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-29 14:43:48,966 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-29 14:43:52,288 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-11-29 14:54:36,035 WARN c.i.l.CustomLogger [main] Entered wrong format try again

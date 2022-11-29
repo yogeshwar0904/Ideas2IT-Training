@@ -1,8 +1,6 @@
 package com.ideas2it.view;
 
-import java.util.HashMap;
 import java.util.InputMismatchException;
-import java.util.Map;
 import java.util.Scanner;
 
 import com.ideas2it.constant.Constant;
@@ -32,7 +30,7 @@ public class UserView {
     /**
      * Login the user 
      */
-    public void login(){
+    public void login() {
         String accountName;
  	String password;	    
         System.out.println("Enter account name");
@@ -40,12 +38,12 @@ public class UserView {
         System.out.println("Enter the password");
         password = scanner.nextLine();
         User user = instagramController.login(accountName, password);
-        if (null == user) {
-            System.out.println("No Account found");
-            userInput();
+
+        if (null != user) {
+             postView.postMenu(user);
         } else {
-            System.out.println(user);
-            postView.postMenu(user);
+            userInput();
+            CustomLogger.info("No account exist");
          }
      }
 
@@ -90,9 +88,9 @@ public class UserView {
                 case Constant.SEARCH:
                     search();
                     break;
-               case 6:
-                  login();
-                  break;
+                case Constant.LOGIN:
+                    login();
+                    break;
 
                 default:
                     CustomLogger.warn("Entered value is Invalid!!");
@@ -112,17 +110,12 @@ public class UserView {
      * creates the account for user.         
      */   
     private void add() {
-        String accountName; 
-        String userName;
-        long mobileNumber; 
-        String password;
         boolean isValid = false;
         User user = null;
-
-        accountName = getAccountName(); 
-        userName = getUserName();
-        mobileNumber = getMobileNumber();
-        password = getPassword();     
+        String  accountName = getAccountName(); 
+        String  userName = getUserName();
+        long mobileNumber = getMobileNumber();
+        String  password = getPassword();     
         user = new User(accountName, userName,
                         mobileNumber, password);
 
@@ -142,12 +135,12 @@ public class UserView {
     private String getAccountName() {
         String accountName; 
         boolean isValid = false;
-        User user = null;
+        
         do {
-            System.out.println("Create the Account Name");
+            System.out.println(Constant.ACCOUNTNAME_FORMATE);
             accountName = scanner.nextLine();
             isValid = instagramController.isValidAccountName(accountName);
-            user = instagramController.search(accountName);
+
             if (!isValid) {  
                 CustomLogger.warn("Entered wrong format try again");
             } 
@@ -165,7 +158,7 @@ public class UserView {
         String userName; 
         boolean isValid = false;
         do {
-            System.out.println("Enter your name");
+            System.out.println(Constant.NAME_FORMATE);
             userName = scanner.nextLine();
             isValid = instagramController.isValidName(userName);
 
@@ -186,7 +179,7 @@ public class UserView {
         long mobileNumber; 
         boolean isValid = false;
         do {
-            System.out.println("Enter the Mobile Number");
+            System.out.println(Constant.MOBILENUMBER_FORMATE);
             mobileNumber = scanner.nextLong();
             scanner.skip("\r\n");
             isValid = instagramController.isValidMobileNumber(mobileNumber);
@@ -207,8 +200,9 @@ public class UserView {
     private String getPassword() {
         String password; 
         boolean isValid = false;
+        
         do {
-            System.out.println("Create the Password");
+            System.out.println(Constant.PASSWORD_FORMATE);
             password = scanner.next();
             isValid = instagramController.isValidPassword(password);
             if (!isValid) {
@@ -267,7 +261,7 @@ public class UserView {
         int choice;
         System.out.println("enter account name to update");
         String accountName = scanner.next();
-        User user = null  ; 
+        User user = null; 
         try {
             userControl.append(" Enter 1 for update account name")
                        .append("\n Enter 2 for update user name")

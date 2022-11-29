@@ -18,7 +18,11 @@ public class Post {
         this.title = title;
         this.content = content;
     }
-
+    public Post(User user, String title, String content) {
+        this.user = user;
+        this.title = title;
+        this.content = content;
+    }
     public String getTitle() {
         return title;
     }

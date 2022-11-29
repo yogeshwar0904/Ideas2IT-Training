@@ -36,7 +36,12 @@ public class InstagramController {
      *        password of user
      */
      public User login(String accountName, String password) {
-         return instagramService.login(accountName, password);   
+         try {
+             return instagramService.login(accountName, password);
+         } catch (InstagramManagementException exception) {
+            CustomLogger.error(exception.getMessage());
+         }
+         return null; 
      }
 
     /**
