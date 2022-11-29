@@ -178,4 +178,16 @@ public class InstagramController {
     public boolean isValidPassword(String password) {
         return instagramUtil.isValidPassword(password);
     }
+
+    /**
+     * validate the password
+     *
+     * @param password
+     *        password of user
+     * @return if password valid return true
+     *         else return false              
+     */ 
+    public boolean isValidOption(int choice) {
+        return instagramUtil.isValidPassword(choice);
+    }
 }

@@ -57,12 +57,11 @@ public class UserView {
         int choice;
         String backToMenu = "";
         do {
-            userControl.append(" Enter 1 for add user") 
-                       .append("\n Enter 2 for remove user")
-                       .append("\n Enter 3 for display the user")
-                       .append("\n Enter 4 for update the user")
-                       .append("\n Enter 5 for search")
-                       .append("\n Enter 6 to login");
+            userControl.append("\n Enter 1 for remove user")
+                       .append("\n Enter 2 for display the user")
+                       .append("\n Enter 3 for update the user")
+                       .append("\n Enter 4 for search")
+                       .append("\n Enter 5 for login");
             try {
                 System.out.println(userControl);
                 choice = scanner.nextInt();
@@ -104,91 +103,6 @@ public class UserView {
                 System.out.println("Enter Y for continue \nEnter any key for Exit");
                 backToMenu = scanner.next();
         } while (backToMenu.equalsIgnoreCase("Y"));
-    }
-
-    /**
-     * creates the account for user.         
-     */   
-    private void add() {
-        boolean isValid = false;
-        User user = null;
-        String  accountName = getAccountName(); 
-        String  userName = getUserName();
-        long mobileNumber = getMobileNumber();
-        String  password = getPassword();     
-        user = new User(accountName, userName,
-                        mobileNumber, password);
-
-        if (instagramController.add(user) != null) {
-	    CustomLogger.info("Account created sucessfully");   
-        } else {
-            CustomLogger.info("Account not created");
-        }
-    }
-
-    /**
-     * Create account name for user.
-     *
-     * @return String accountName
-     *         accountName of the user
-     */ 
-    private String getAccountName() {
-        String accountName; 
-        boolean isValid = false;
-        
-        do {
-            System.out.println(Constant.ACCOUNTNAME_FORMATE);
-            accountName = scanner.nextLine();
-            isValid = instagramController.isValidAccountName(accountName);
-
-            if (!isValid) {  
-                CustomLogger.warn("Entered wrong format try again");
-            } 
-        } while (!isValid);
-        return accountName;
-    }
-
-    /**
-     * creates the first name for user.
-     *
-     * @return String userName
-     *         name of the user
-     */ 
-    private String getUserName() {
-        String userName; 
-        boolean isValid = false;
-        do {
-            System.out.println(Constant.NAME_FORMATE);
-            userName = scanner.nextLine();
-            isValid = instagramController.isValidName(userName);
-
-            if (!isValid) {
-                CustomLogger.warn("Entered wrong format try again");
-            } 
-        } while (!isValid);
-        return userName;
-    }
- 
-    /**
-     * creates mobile number for user.
-     *      
-     * @return long mobileNumber
-     *         mobileNumber of the user
-     */     
-    private long getMobileNumber() {
-        long mobileNumber; 
-        boolean isValid = false;
-        do {
-            System.out.println(Constant.MOBILENUMBER_FORMATE);
-            mobileNumber = scanner.nextLong();
-            scanner.skip("\r\n");
-            isValid = instagramController.isValidMobileNumber(mobileNumber);
-
-            if (!isValid) {
-                CustomLogger.warn("Entered wrong format try again");
-            } 
-        } while (!isValid); 
-        return mobileNumber;
     }
   
     /**

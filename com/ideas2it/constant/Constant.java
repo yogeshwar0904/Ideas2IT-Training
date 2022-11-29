@@ -11,10 +11,15 @@ import java.util.regex.Pattern;
  * @author      Yogeshwar
  */ 
 public class Constant {
+    public static final int LOGIN = 1;
+    public static final int CREATE = 2;
+    public static final int EXIT = 3;
+
     public static final String VALIDATE_ACCOUNTNAME = "^[A-Za-z]\\w{5,29}$";
     public static final String VALIDATE_NAME = ("[a-zA-Z]{4,}+$");
     public static final String VALIDATE_MOBILENUMBER = ("^[6-9]{1}[0-9]{9}");
     public static final String VALIDATE_PASSWORD = "^[a-zA-Z0-9]{4,}[@$&*]{1,}[0-9]{1,3}";
+    public static final String VALIDATE_USERINPUT = "^[1-3]\d*$";
 
     public static final String ACCOUNTNAME_FORMATE = "Create the Account Name (Must be start with charecter minimum five,Continue with numbers)";
     public static final String NAME_FORMATE = "Enter your name (Must start with charecter minimum four)";
@@ -26,7 +31,7 @@ public class Constant {
     public static final int DISPLAY = 3;
     public static final int UPDATE = 4;
     public static final int SEARCH = 5;
-    public static final int LOGIN = 6;
+    public static final int POST_LOGIN = 6;
 
     public static final int UPDATE_ACCOUNT_NAME = 1;
     public static final int UPDATE_USER_NAME = 2;
