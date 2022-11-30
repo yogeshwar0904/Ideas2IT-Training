@@ -29,22 +29,17 @@ public class PostView {
      * account. 
      */ 
     public void postMenu(User user) {
+        boolean choice;
         StringBuilder postControl = new StringBuilder();   
-        int choice;
-        String backToMenu = "";
-
+        postControl.append(" Enter 1 for add post") 
+                   .append("\n Enter 2 for display post")
+                   .append("\n Enter 3 for remove post")
+                   .append("\n Enter 4 for update post");
+        choice = false;
         do {
-            postControl.append(" Enter 1 for add post") 
-                       .append("\n Enter 2 for display post")
-                       .append("\n Enter 3 for remove post")
-                       .append("\n Enter 4 for update post");
-
             try {
                 System.out.println(postControl);
-                choice = scanner.nextInt();
-                scanner.skip("\r\n");
-
-                switch (choice) {
+                switch (scanner.nextInt()) {
                 case Constant.ADD_POST:
                     uploadPost(user);
                     break;
@@ -67,12 +62,9 @@ public class PostView {
                 }
             } catch (InputMismatchException inputMismatch) {
                 CustomLogger.error("Enter only Numbers");
-                scanner.next();
             }
-                postControl.setLength(0);
-                System.out.println("Enter Y for continue \nEnter any key for Exit");
-                backToMenu = scanner.next();
-        } while (backToMenu.equalsIgnoreCase("Y"));
+            postControl.setLength(0);
+        } while (!choice);
     }
 
     /**

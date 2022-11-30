@@ -94,3 +94,14 @@
 2022-11-29 14:55:02,871 INFO c.i.l.CustomLogger [main] Account created sucessfully
 2022-11-29 15:15:05,892 INFO c.i.l.CustomLogger [main] Account created sucessfully
 2022-11-29 15:22:28,778 INFO c.i.l.CustomLogger [main] Account created sucessfully
+2022-11-30 20:38:05,836 INFO c.i.l.CustomLogger [main] No account exist
+2022-11-30 21:59:47,153 INFO c.i.l.CustomLogger [main] No account exist
+2022-11-30 22:35:28,571 INFO c.i.l.CustomLogger [main] No account exist
+2022-11-30 22:42:44,315 INFO c.i.l.CustomLogger [main] No account exist
+2022-11-30 22:54:59,108 INFO c.i.l.CustomLogger [main] Account created sucessfully
+2022-11-30 22:54:59,109 INFO c.i.l.CustomLogger [main] No account exist
+2022-11-30 22:59:11,616 INFO c.i.l.CustomLogger [main] Account created sucessfully
+2022-11-30 23:15:16,486 INFO c.i.l.CustomLogger [main] Account created sucessfully
+2022-11-30 23:24:03,784 INFO c.i.l.CustomLogger [main] Account created sucessfully
+2022-11-30 23:26:14,928 INFO c.i.l.CustomLogger [main] Account created sucessfully
+2022-11-30 23:31:32,295 INFO c.i.l.CustomLogger [main] Account created sucessfully

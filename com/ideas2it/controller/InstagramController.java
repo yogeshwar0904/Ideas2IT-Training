@@ -54,7 +54,7 @@ public class InstagramController {
      * @return users
      *        details of the user           
      */ 
-    public User add(User user) {
+    public User create(User user) {
         return instagramService.add(user);    
     }
 
@@ -179,15 +179,4 @@ public class InstagramController {
         return instagramUtil.isValidPassword(password);
     }
 
-    /**
-     * validate the password
-     *
-     * @param password
-     *        password of user
-     * @return if password valid return true
-     *         else return false              
-     */ 
-    public boolean isValidOption(int choice) {
-        return instagramUtil.isValidPassword(choice);
-    }
 }

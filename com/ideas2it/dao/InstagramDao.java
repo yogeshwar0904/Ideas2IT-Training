@@ -32,7 +32,7 @@ public class InstagramDao {
      * @return users
      *         details of user
      */
-    public User add(User user) {
+    public User create(User user) {
 
         try {
             //System.out.println(user.getUserId());

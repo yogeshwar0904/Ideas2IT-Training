@@ -15,29 +15,29 @@ public class Constant {
     public static final int CREATE = 2;
     public static final int EXIT = 3;
 
+    public static final int PROFILE_MENU  = 1;
+    public static final int POST_MENU = 2;
+
     public static final String VALIDATE_ACCOUNTNAME = "^[A-Za-z]\\w{5,29}$";
     public static final String VALIDATE_NAME = ("[a-zA-Z]{4,}+$");
     public static final String VALIDATE_MOBILENUMBER = ("^[6-9]{1}[0-9]{9}");
     public static final String VALIDATE_PASSWORD = "^[a-zA-Z0-9]{4,}[@$&*]{1,}[0-9]{1,3}";
-    public static final String VALIDATE_USERINPUT = "^[1-3]\d*$";
 
     public static final String ACCOUNTNAME_FORMATE = "Create the Account Name (Must be start with charecter minimum five,Continue with numbers)";
     public static final String NAME_FORMATE = "Enter your name (Must start with charecter minimum four)";
     public static final String MOBILENUMBER_FORMATE = "Enter the Mobile Number (Must be start  from six total ten digits)";
     public static final String PASSWORD_FORMATE = "Create the Password (Must contain 7 characters including 5 Letters, one Special character and number)";
 
-    public static final int ADD = 1;
-    public static final int REMOVE = 2;
-    public static final int DISPLAY = 3;
-    public static final int UPDATE = 4;
-    public static final int SEARCH = 5;
-    public static final int POST_LOGIN = 6;
+    public static final int REMOVE = 1;
+    public static final int DISPLAY = 2;
+    public static final int UPDATE = 3;
+    public static final int SEARCH = 4;
 
     public static final int UPDATE_ACCOUNT_NAME = 1;
     public static final int UPDATE_USER_NAME = 2;
     public static final int UPDATE_MOBILE_NUMBER = 3;
     public static final int UPDATE_PASSWORD = 4; 
-    public static final int EXIT = 5; 
+    public static final int EXIT_ACCOUNT = 5; 
 
     public static final int ADD_POST = 1;
     public static final int DISPLAY_POST = 2;

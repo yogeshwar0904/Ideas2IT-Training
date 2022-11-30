@@ -3,7 +3,7 @@
  * create an profile and post their pictures.
  */
 
-import com.ideas2it.view.UserView;
+import com.ideas2it.view.InstagramView;
 
 /** Call the User sugestion method to run the 
  * application.
@@ -13,7 +13,7 @@ import com.ideas2it.view.UserView;
  */
 public class Instagram {     
     public static void main(String[] args) { 
-        UserView userView = new UserView();
-        userView.userInput();
+        InstagramView instagramView = new InstagramView();
+        instagramView.userInput();
     }
 }

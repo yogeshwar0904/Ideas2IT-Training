@@ -10,10 +10,7 @@ import com.ideas2it.constant.Constant;
  * mobileNumber and password.
  */
 public class InstagramUtil {  
-    public static boolean isValidOption(int choice) {
-        return Pattern.matches(Constant.VALIDATE_USERINPUT, choice);
-    }
- 
+
     public static boolean isValidAccountName(String accountName) {
         return Pattern.matches(Constant.VALIDATE_ACCOUNTNAME, accountName);
     }

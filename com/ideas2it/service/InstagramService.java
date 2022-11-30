@@ -59,7 +59,7 @@ public class InstagramService {
         String userId;
         userId = UUID.randomUUID().toString();
         user.setUserId(userId);
-        return instagramDao.add(user);
+        return instagramDao.create(user);
     } 
   
     /**

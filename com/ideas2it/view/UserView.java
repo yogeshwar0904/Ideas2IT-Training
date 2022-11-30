@@ -8,70 +8,72 @@ import com.ideas2it.controller.InstagramController;
 import com.ideas2it.logger.CustomLogger;
 import com.ideas2it.model.User;
 import com.ideas2it.view.PostView;
+import com.ideas2it.view.InstagramView;
 
-/**
- * Create instagram account for user
- * user.
- *
- * @version     1.0 14 Sept 2022
- * @author      Yogeshwar
- */ 
 public class UserView {
     private InstagramController instagramController;
     private Scanner scanner;
     private PostView postView;
+    private InstagramView instagramView;
 
     public UserView() {
         this.instagramController = new InstagramController();
         this.scanner = new Scanner(System.in);
         this.postView = new PostView();
+        this.instagramView = new InstagramView();
     }
 
-    /**
-     * Login the user 
-     */
-    public void login() {
-        String accountName;
- 	String password;	    
-        System.out.println("Enter account name");
-        accountName = scanner.nextLine();
-        System.out.println("Enter the password");
-        password = scanner.nextLine();
-        User user = instagramController.login(accountName, password);
+    public void homeMenu(User user) {
+        boolean choice;
+        StringBuilder userChoice = new StringBuilder();
+        userChoice.append("Enter 1 for profile menu")
+                  .append("\nEnter 2 for post menu")
+                  .append("\nEnter 3 for Exit");
+        choice = false;
+        do {
+            try {
+                System.out.println(userChoice);
+                switch (scanner.nextInt()) {
+                case Constant.PROFILE_MENU: 
+                    profileMenu();
+                    break;
 
-        if (null != user) {
-             postView.postMenu(user);
-        } else {
-            userInput();
-            CustomLogger.info("No account exist");
-         }
-     }
+                case Constant.POST_MENU: 
+                    postView.postMenu(user);
+                    break;
 
+                case Constant.EXIT:
+                    choice = true;
+                    break;
+
+                default :
+                    System.out.println("Entered data not match");
+                    break;
+                }
+                userChoice.setLength(0);
+            } catch (InputMismatchException exception) {
+                CustomLogger.error("Entered data is invalid");
+                scanner.next();
+            }
+        } while(!choice);
+    }
     /**
      * Get the sugestion from the 
      * user to add, remove, display, 
      * update and search the account.
      */ 
-    public void userInput() {
-        StringBuilder userControl = new StringBuilder();   
-        int choice;
-        String backToMenu = "";
+    public void profileMenu() {   
+        boolean choice;
+        StringBuilder userControl = new StringBuilder();
+        userControl.append("\n Enter 1 for remove user")
+                   .append("\n Enter 2 for display the user")
+                   .append("\n Enter 3 for update the user")
+                   .append("\n Enter 4 for search");
+        choice = false;
         do {
-            userControl.append("\n Enter 1 for remove user")
-                       .append("\n Enter 2 for display the user")
-                       .append("\n Enter 3 for update the user")
-                       .append("\n Enter 4 for search")
-                       .append("\n Enter 5 for login");
             try {
                 System.out.println(userControl);
-                choice = scanner.nextInt();
-                scanner.skip("\r\n");
-
-                switch (choice) {
-                case Constant.ADD:
-                    add();
-                    break;
-
+                switch (scanner.nextInt()) {
                 case Constant.REMOVE:
                     deleteAccount();
                     break;
@@ -87,44 +89,18 @@ public class UserView {
                 case Constant.SEARCH:
                     search();
                     break;
-                case Constant.LOGIN:
-                    login();
-                    break;
 
                 default:
                     CustomLogger.warn("Entered value is Invalid!!");
                     break;
                 }
+                //userControl.setLength(0);
             } catch (InputMismatchException inputMismatch) {
                 CustomLogger.error("Enter only Numbers");
                 scanner.next();
             }
-                userControl.setLength(0);
-                System.out.println("Enter Y for continue \nEnter any key for Exit");
-                backToMenu = scanner.next();
-        } while (backToMenu.equalsIgnoreCase("Y"));
+        } while (!choice);
     }
-  
-    /**
-     * creates password for user.
-     *
-     * @return String password
-     *         password of the user.
-     */   
-    private String getPassword() {
-        String password; 
-        boolean isValid = false;
-        
-        do {
-            System.out.println(Constant.PASSWORD_FORMATE);
-            password = scanner.next();
-            isValid = instagramController.isValidPassword(password);
-            if (!isValid) {
-                CustomLogger.warn("Entered wrong format try again");
-            } 
-        } while (!isValid);
-        return password;
-    } 
 
     /**
      * remove the Account 
@@ -133,9 +109,9 @@ public class UserView {
         String accountName;
         String password;
         System.out.println("Enter the account name you want to remove");
-        accountName = scanner.nextLine();
+        accountName = scanner.next();
         System.out.println("Enter the password of your account");
-        password = scanner.nextLine();
+        password = scanner.next();
 
         if (instagramController.deleteAccount(accountName, password)) {
             CustomLogger.info("Account deleted successfully");         
@@ -150,7 +126,7 @@ public class UserView {
     private void search() {
         String accountName;
         CustomLogger.info("Enter the account name you want to search");
-        accountName = scanner.nextLine();  
+        accountName = scanner.next();  
         User user = instagramController.search(accountName);
 
         if (null == user) {
@@ -189,33 +165,33 @@ public class UserView {
             switch (choice) {
             case Constant.UPDATE_ACCOUNT_NAME:
                 String updateAccountName;
-                updateAccountName = getAccountName();
+                updateAccountName = instagramView.getAccountName();
                 user = instagramController.update(accountName, updateAccountName,
                                                   Constant.UPDATE_ACCOUNT_NAME);
                 break;
 
             case Constant.UPDATE_USER_NAME:
                 String updateUserName;
-                updateUserName = getUserName();
+                updateUserName = instagramView.getUserName();
                 user = instagramController.update(accountName, updateUserName,
                                            Constant.UPDATE_USER_NAME);
                 break;
 
             case Constant.UPDATE_MOBILE_NUMBER:
                 long mobileNumber;
-                mobileNumber = getMobileNumber(); 
+                mobileNumber = instagramView.getMobileNumber(); 
                 user = instagramController.update(accountName, String.valueOf(mobileNumber),
                                            Constant.UPDATE_MOBILE_NUMBER);
                 break;
 
             case Constant.UPDATE_PASSWORD:
                 String updatePassword;
-                updatePassword = getPassword();
+                updatePassword = instagramView.getPassword();
                 user = instagramController.update(accountName, updatePassword,
                                            Constant.UPDATE_PASSWORD);
                 break;
 
-            case Constant.EXIT:
+            case Constant.EXIT_ACCOUNT:
                 break;
 
             default:
@@ -237,4 +213,4 @@ public class UserView {
             scanner.next();     
         }
     }
-}    
+}

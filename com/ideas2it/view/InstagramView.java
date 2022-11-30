@@ -7,17 +7,16 @@ import com.ideas2it.constant.Constant;
 import com.ideas2it.controller.InstagramController;
 import com.ideas2it.logger.CustomLogger;
 import com.ideas2it.model.User;
+import com.ideas2it.view.UserView;
 import com.ideas2it.view.PostView;
 
 public class InstagramView {
     private InstagramController instagramController;
     private Scanner scanner;
-    private UserView userView;
 
     public InstagramView() {
         this.instagramController = new InstagramController();
         this.scanner = new Scanner(System.in);
-        this.userView = new User View();
     }
 
     /**
@@ -30,25 +29,30 @@ public class InstagramView {
                   .append("\nEnter 2 for Create account")
                   .append("\nEnter 3 for Exit");
         choice = false;
-
         do {
-            System.out.println(userChoice);
-            switch (scanner.nextInt()) {
-            case Constant.LOGIN: 
-                login();
-                break;
+            try {
+                System.out.println(userChoice);  
+                switch (scanner.nextInt()) {
+                case Constant.LOGIN: 
+                    login();
+                    choice = true;
+                    break;
 
-            case Constant.CREATE: 
-                create()
-                break;
+                case Constant.CREATE: 
+                    create();
+                    break;
 
-            case Constant.EXIT:
-                choice = true;
-                break;
+                case Constant.EXIT:
+                    choice = true;
+                    break;
 
-            default :
-                System.out.println("Invalid input");
-                break;
+                default :
+                    CustomLogger.warn("Entered data not match");
+                    break;
+                }
+            } catch (InputMismatchException exception) {
+                System.out.println("Entered data is invalid");
+                scanner.next();
             }
         } while(!choice);
     }
@@ -57,15 +61,18 @@ public class InstagramView {
      * Login the user 
      */
     public void login() {
+        UserView userView;
         String accountName;
- 	String password;	    
+ 	String password;
+        userView = new UserView();	    
         System.out.println("Enter account name");
-        accountName = scanner.nextLine();
+        accountName = scanner.next();
         System.out.println("Enter the password");
-        password = scanner.nextLine();
+        password = scanner.next();
         User user = instagramController.login(accountName, password);
+
         if (null != user) {
-            userView.postMenu(user);
+            userView.homeMenu(user);
         } else {
             userInput();
             CustomLogger.info("No account exist");
@@ -86,7 +93,8 @@ public class InstagramView {
                         mobileNumber, password);
 
         if (instagramController.create(user) != null) {
-	    CustomLogger.info("Account created sucessfully");   
+	    CustomLogger.info("Account created sucessfully"); 
+            userInput();
         } else {
             CustomLogger.info("Account not created");
         }
@@ -98,13 +106,13 @@ public class InstagramView {
      * @return String accountName
      *         accountName of the user
      */ 
-    private String getAccountName() {
+    public String getAccountName() {
         String accountName; 
         boolean isValid = false;
         
         do {
             System.out.println(Constant.ACCOUNTNAME_FORMATE);
-            accountName = scanner.nextLine();
+            accountName = scanner.next();
             isValid = instagramController.isValidAccountName(accountName);
 
             if (!isValid) {  
@@ -120,12 +128,12 @@ public class InstagramView {
      * @return String userName
      *         name of the user
      */ 
-    private String getUserName() {
+    public String getUserName() {
         String userName; 
         boolean isValid = false;
         do {
             System.out.println(Constant.NAME_FORMATE);
-            userName = scanner.nextLine();
+            userName = scanner.next();
             isValid = instagramController.isValidName(userName);
 
             if (!isValid) {
@@ -141,7 +149,7 @@ public class InstagramView {
      * @return long mobileNumber
      *         mobileNumber of the user
      */     
-    private long getMobileNumber() {
+    public long getMobileNumber() {
         long mobileNumber; 
         boolean isValid = false;
         do {
@@ -156,4 +164,25 @@ public class InstagramView {
         } while (!isValid); 
         return mobileNumber;
     }
+
+    /**
+     * creates password for user.
+     *
+     * @return String password
+     *         password of the user.
+     */   
+    public String getPassword() {
+        String password; 
+        boolean isValid = false;
+        
+        do {
+            System.out.println(Constant.PASSWORD_FORMATE);
+            password = scanner.next();
+            isValid = instagramController.isValidPassword(password);
+            if (!isValid) {
+                CustomLogger.warn("Entered wrong format try again");
+            } 
+        } while (!isValid);
+        return password;
+    } 
 }
