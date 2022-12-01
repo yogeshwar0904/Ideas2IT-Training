@@ -40,6 +40,7 @@ public class InstagramView {
 
                 case Constant.CREATE: 
                     create();
+                    choice = true;
                     break;
 
                 case Constant.EXIT:
@@ -47,7 +48,7 @@ public class InstagramView {
                     break;
 
                 default :
-                    CustomLogger.warn("Entered data not match");
+                    System.out.println("Entered data not match");
                     break;
                 }
             } catch (InputMismatchException exception) {
@@ -106,18 +107,28 @@ public class InstagramView {
      * @return String accountName
      *         accountName of the user
      */ 
-    public String getAccountName() {
-        String accountName; 
-        boolean isValid = false;
-        
+        public String getAccountName() {
+            String accountName; 
+            boolean isValid = false;
+            User user = null;
+
         do {
             System.out.println(Constant.ACCOUNTNAME_FORMATE);
             accountName = scanner.next();
             isValid = instagramController.isValidAccountName(accountName);
+            user = instagramController.search(accountName);
 
-            if (!isValid) {  
-                CustomLogger.warn("Entered wrong format try again");
-            } 
+            if (isValid) { 
+                if (user == null) {
+                    return accountName;
+                } else {
+                    System.out.println("account name alredy exist");
+                    isValid = false;
+                }
+            }  else {
+                 CustomLogger.warn("Entered wrong format try again");
+                 isValid = false;
+            }
         } while (!isValid);
         return accountName;
     }

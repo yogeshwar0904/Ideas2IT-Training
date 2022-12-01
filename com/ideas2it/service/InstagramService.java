@@ -133,10 +133,6 @@ public class InstagramService {
 
         if (null != user) {
             switch (choice) {
-            case Constant.UPDATE_ACCOUNT_NAME:
-                user.setAccountName(updateValue); 
-                break;
-
             case Constant.UPDATE_USER_NAME:
                 user.setUserName(updateValue);
                 break;

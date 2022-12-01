@@ -7,8 +7,10 @@ import java.util.Scanner;
 import com.ideas2it.constant.Constant;
 import com.ideas2it.controller.PostController;
 import com.ideas2it.logger.CustomLogger;
+import com.ideas2it.view.UserView;
 import com.ideas2it.model.Post;
 import com.ideas2it.model.User;
+
 /**
  * add the post for user
  *
@@ -21,7 +23,7 @@ public class PostView {
 
     public PostView() {
         this.postController = new PostController();
-        this.scanner = new Scanner(System.in);
+        this.scanner = new Scanner(System.in); 
     }
 
     /**
@@ -42,18 +44,22 @@ public class PostView {
                 switch (scanner.nextInt()) {
                 case Constant.ADD_POST:
                     uploadPost(user);
+                    choice = true;
                     break;
 
                 case Constant.DISPLAY_POST:
                     displayPost(user);
+                    choice = true;
                     break;
 
                 case Constant.REMOVE_POST:
-                    deletePost();
+                    deletePost(user);
+                    choice = true;
                     break;
 
                 case Constant.UPDATE_POST:
-                    update();
+                    update(user);
+                    choice = true;
                     break;
 
                 default:
@@ -62,8 +68,8 @@ public class PostView {
                 }
             } catch (InputMismatchException inputMismatch) {
                 CustomLogger.error("Enter only Numbers");
+                scanner.next();
             }
-            postControl.setLength(0);
         } while (!choice);
     }
 
@@ -77,16 +83,16 @@ public class PostView {
         String title;
         String content;
         Post post;
-        System.out.println("Enter the post title");  
-        title = scanner.nextLine();
-        System.out.println("Enter contents of your post");
-	content = scanner.nextLine();
+        UserView userView = new UserView();
+        title = getTitle();
+	content = getContent();
         post = postController.uploadPost(user, title, content);
 
         if(null == post) {
 	    System.out.println("Post not created");
         } else {
             System.out.println("Post created successfully");
+            userView.profileMenu(user);
         }
     }
 
@@ -96,9 +102,10 @@ public class PostView {
     private void displayPost(User user) {
         List<Post> posts;
         posts = postController.getUserPost(user.getUserId()); 
-
+        UserView userView = new UserView();  
         if (null != posts) {
             System.out.println(posts);
+            userView.profileMenu(user);
         } else {
             System.out.println("No Post Uploaded yet");            
         }  
@@ -107,37 +114,38 @@ public class PostView {
     /**
      * To delete the post.
      */ 
-    private void deletePost() {
+    private void deletePost(User user) {
         String postId;
         System.out.println("Enter the post Id");
         postId = scanner.nextLine();
-
+        UserView userView = new UserView();
         if (postController.delete(postId)) {
             System.out.println("Post is deleted");
+            userView.profileMenu(user);
         } else {
             System.out.println("Something went wrong");
+            userView.profileMenu(user);
         }        
     }
 
     /**
      * update the post    
      */
-    private void update() {
+    private void update(User user) {
         StringBuilder postUpdate = new StringBuilder();
         int choice;
-        System.out.println("enter post id to update");
-        String postId = scanner.next();
+        System.out.println("Enter the post Id to update");
+        String postId = scanner.nextLine();
         Post post = null; 
-        //if(isPostAvailable(postId)) {
+        UserView userView = new UserView();
         try {
             postUpdate.append(" Enter 1 for update post content")
                       .append("\n Enter 2 for update post tittle");
 
             System.out.println(postUpdate);
-            choice = scanner.nextInt();
             scanner.skip("\r\n");     
         
-            switch (choice) {
+            switch (scanner.nextInt()) {
 
             case Constant.UPDATE_POST_CONTENT:
                 String updatePostContent;
@@ -163,6 +171,7 @@ public class PostView {
 
             if (postId.equals(post.getPostId())) {
                 CustomLogger.info("post updated Successfully");
+                userView.homeMenu(user);
             } else {
                 CustomLogger.info("post not updated");
             }
@@ -176,7 +185,7 @@ public class PostView {
     private String getContent() {
         String content;
         System.out.println("Enter your content");
-        content = scanner.nextLine();
+        content = scanner.next();
         return content;
     }
 
@@ -185,6 +194,13 @@ public class PostView {
         System.out.println("Enter your title");
         title = scanner.nextLine();
         return title;
+    }
+
+    /**
+     * display the Account
+     */
+    private void display() {
+        System.out.println(postController.display());
     }
 
     private boolean isPostAvailable(String id) {

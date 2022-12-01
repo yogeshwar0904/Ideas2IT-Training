@@ -103,4 +103,15 @@ public class PostController {
     public Post getPostId(String postId) {
        return postService.getPostId(postId);
     }
+
+    public List<Post> getAllUsersPost() {
+        List<Post> listOfPost = null;
+         
+        try {
+            listOfPosts = postService.getUserPosts();
+        } catch (CustomException customException) {
+            logger.error(customException.getMessage());
+        }
+        return listOfPost;
+    }
 }

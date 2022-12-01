@@ -24,25 +24,22 @@ public class UserView {
     }
 
     public void homeMenu(User user) {
+        //dispalyPost(user);
         boolean choice;
         StringBuilder userChoice = new StringBuilder();
         userChoice.append("Enter 1 for profile menu")
-                  .append("\nEnter 2 for post menu")
-                  .append("\nEnter 3 for Exit");
+                  .append("\nEnter 2 for Exit");
         choice = false;
         do {
             try {
                 System.out.println(userChoice);
                 switch (scanner.nextInt()) {
                 case Constant.PROFILE_MENU: 
-                    profileMenu();
+                    profileMenu(user);
+                    choice = true;
                     break;
 
-                case Constant.POST_MENU: 
-                    postView.postMenu(user);
-                    break;
-
-                case Constant.EXIT:
+                case Constant.PROFILE_EXIT:
                     choice = true;
                     break;
 
@@ -50,32 +47,35 @@ public class UserView {
                     System.out.println("Entered data not match");
                     break;
                 }
-                userChoice.setLength(0);
             } catch (InputMismatchException exception) {
                 CustomLogger.error("Entered data is invalid");
                 scanner.next();
             }
         } while(!choice);
     }
+
     /**
      * Get the sugestion from the 
      * user to add, remove, display, 
      * update and search the account.
      */ 
-    public void profileMenu() {   
+    public void profileMenu(User user) {   
         boolean choice;
         StringBuilder userControl = new StringBuilder();
         userControl.append("\n Enter 1 for remove user")
                    .append("\n Enter 2 for display the user")
                    .append("\n Enter 3 for update the user")
-                   .append("\n Enter 4 for search");
+                   .append("\n Enter 4 for search")
+                   .append("\nEnter 5 for post menu")
+                   .append("\n Enter 6 for home menu");
         choice = false;
         do {
             try {
                 System.out.println(userControl);
                 switch (scanner.nextInt()) {
                 case Constant.REMOVE:
-                    deleteAccount();
+                    deleteAccount(user);
+                    choice = true;
                     break;
 
                 case Constant.DISPLAY:
@@ -83,18 +83,27 @@ public class UserView {
                     break;
 
                 case Constant.UPDATE:
-                    update();
+                    update(user);
                     break;
 
                 case Constant.SEARCH:
                     search();
                     break;
 
+                case Constant.POST_MENU: 
+                    postView.postMenu(user);
+                    choice = true;
+                    break;
+
+                case Constant.BACK_TO_HOMEMENU:
+                    homeMenu(user);
+                    choice = true;
+                    break;
+
                 default:
                     CustomLogger.warn("Entered value is Invalid!!");
                     break;
                 }
-                //userControl.setLength(0);
             } catch (InputMismatchException inputMismatch) {
                 CustomLogger.error("Enter only Numbers");
                 scanner.next();
@@ -105,16 +114,15 @@ public class UserView {
     /**
      * remove the Account 
      */
-    private void deleteAccount() {
+    private void deleteAccount(User user) {
         String accountName;
         String password;
-        System.out.println("Enter the account name you want to remove");
-        accountName = scanner.next();
-        System.out.println("Enter the password of your account");
-        password = scanner.next();
+        accountName = user.getAccountName();
+        password = user.getPassword();
 
         if (instagramController.deleteAccount(accountName, password)) {
-            CustomLogger.info("Account deleted successfully");         
+            CustomLogger.info("Account deleted successfully"); 
+            instagramView.userInput();      
         } else {
             CustomLogger.warn("Entered invalid data");
         }
@@ -137,6 +145,14 @@ public class UserView {
     }
 
     /**
+     * displayPost will gets all the post which are posted by the user
+     * stores it in the List and prints the post
+     * if the List of post is empty then it will print a No post found
+     *
+     * @param user - the object of the user
+     * 
+
+    /**
      * display the Account
      */
     private void display() {
@@ -146,30 +162,20 @@ public class UserView {
     /**
      * update the Account    
      */
-    private void update() {
+    private void update(User user) {
+        String accountName;
         StringBuilder userControl = new StringBuilder();
         int choice;
-        System.out.println("enter account name to update");
-        String accountName = scanner.next();
-        User user = null; 
+        accountName = user.getAccountName();
+        userControl.append("\n Enter 1 for update user name")
+                   .append("\n Enter 2 for update mobile number")
+                   .append("\n Enter 3 for update password");
         try {
-            userControl.append(" Enter 1 for update account name")
-                       .append("\n Enter 2 for update user name")
-                       .append("\n Enter 3 for update mobile number")
-                       .append("\n Enter 4 for update password")
-                       .append("\n Enter 5 to Exit");
             System.out.println(userControl);
             choice = scanner.nextInt();
             scanner.skip("\r\n");     
         
             switch (choice) {
-            case Constant.UPDATE_ACCOUNT_NAME:
-                String updateAccountName;
-                updateAccountName = instagramView.getAccountName();
-                user = instagramController.update(accountName, updateAccountName,
-                                                  Constant.UPDATE_ACCOUNT_NAME);
-                break;
-
             case Constant.UPDATE_USER_NAME:
                 String updateUserName;
                 updateUserName = instagramView.getUserName();
@@ -189,9 +195,6 @@ public class UserView {
                 updatePassword = instagramView.getPassword();
                 user = instagramController.update(accountName, updatePassword,
                                            Constant.UPDATE_PASSWORD);
-                break;
-
-            case Constant.EXIT_ACCOUNT:
                 break;
 
             default:

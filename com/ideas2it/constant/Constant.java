@@ -16,7 +16,7 @@ public class Constant {
     public static final int EXIT = 3;
 
     public static final int PROFILE_MENU  = 1;
-    public static final int POST_MENU = 2;
+    public static final int PROFILE_EXIT = 2;
 
     public static final String VALIDATE_ACCOUNTNAME = "^[A-Za-z]\\w{5,29}$";
     public static final String VALIDATE_NAME = ("[a-zA-Z]{4,}+$");
@@ -32,17 +32,18 @@ public class Constant {
     public static final int DISPLAY = 2;
     public static final int UPDATE = 3;
     public static final int SEARCH = 4;
+    public static final int POST_MENU = 5;
+    public static final int BACK_TO_HOMEMENU = 6;
 
-    public static final int UPDATE_ACCOUNT_NAME = 1;
-    public static final int UPDATE_USER_NAME = 2;
-    public static final int UPDATE_MOBILE_NUMBER = 3;
-    public static final int UPDATE_PASSWORD = 4; 
-    public static final int EXIT_ACCOUNT = 5; 
+    public static final int UPDATE_USER_NAME = 1;
+    public static final int UPDATE_MOBILE_NUMBER = 2;
+    public static final int UPDATE_PASSWORD = 3; 
+ 
 
     public static final int ADD_POST = 1;
     public static final int DISPLAY_POST = 2;
     public static final int  REMOVE_POST = 3;
-    public static final int  UPDATE_POST = 4;
+    public static final int   UPDATE_POST= 4;
 
     public static final int UPDATE_POST_CONTENT = 1;  
     public static final int UPDATE_POST_TITLE = 2; 

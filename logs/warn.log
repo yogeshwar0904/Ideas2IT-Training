@@ -39,3 +39,14 @@
 2022-11-30 23:10:12,876 WARN c.i.l.CustomLogger [main] Entered wrong format try again
 2022-11-30 23:11:59,303 WARN c.i.l.CustomLogger [main] Entered wrong format try again
 2022-11-30 23:23:39,625 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-12-01 10:11:42,248 WARN c.i.l.CustomLogger [main] Entered data not match
+2022-12-01 10:35:11,076 WARN c.i.l.CustomLogger [main] Entered data not match
+2022-12-01 12:43:58,072 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-12-01 12:49:13,083 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-12-01 12:49:40,262 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-12-01 12:53:24,465 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-12-01 12:53:40,276 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-12-01 13:02:30,680 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-12-01 16:39:44,337 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!
+2022-12-01 20:40:59,466 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!
+2022-12-01 21:58:41,519 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!

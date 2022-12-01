@@ -35,7 +35,6 @@ public class InstagramDao {
     public User create(User user) {
 
         try {
-            //System.out.println(user.getUserId());
             connection = DatabaseConnection.getConnection();
             query = "INSERT INTO user(user_id, account_name, user_name, mobile_number, password) VALUES(?,?,?,?,?)";
             statement = connection.prepareStatement(query);
@@ -180,15 +179,14 @@ public class InstagramDao {
         try {
             connection = DatabaseConnection.getConnection();
             StringBuilder query = new StringBuilder();
-            query.append("UPDATE user SET account_name = ?, user_name = ?,")
+            query.append("UPDATE user SET user_name = ?,")
                  .append("mobile_number = ?, password = ?")
                  .append("WHERE user_id = ? and is_deactivated = 0");
             statement = connection.prepareStatement(query.toString());
-            statement.setString(1,user.getAccountName());
-            statement.setString(2,user.getUserName());
-            statement.setLong(3,user.getMobileNumber());
-            statement.setString(4,user.getPassword());
-            statement.setString(5,user.getUserId());
+            statement.setString(1, user.getUserName());
+            statement.setLong(2, user.getMobileNumber());
+            statement.setString(3, user.getPassword());
+            statement.setString(4, user.getUserId());
             statement.execute();
             statement.close();
         } catch(SQLException exception) {

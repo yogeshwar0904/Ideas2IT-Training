@@ -112,4 +112,14 @@ public class PostService {
     public Post getPostId(String postId) {
        return postDao.getPostId(postId);
     }
+
+    public List<Post> getAllUsersPost() throws CustomException {
+        List<Post> listOfPost;
+        listOfPost = postDao.getUserPosts();
+        
+        if (allPosts.isEmpty()) { 
+            throw new CustomException(Constants.ERROR_03);   
+        }
+        return listOfPost;
+    
 }
