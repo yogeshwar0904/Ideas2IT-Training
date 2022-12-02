@@ -1505,3 +1505,53 @@
 2022-12-01 20:02:28,217 ERROR c.i.l.CustomLogger [main] No user exist
 2022-12-01 20:40:48,011 ERROR c.i.l.CustomLogger [main] Entered data is invalid
 2022-12-01 20:40:57,645 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-02 12:09:11,317 ERROR c.i.l.CustomLogger [main] Entered data is invalid
+2022-12-02 12:31:30,263 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-02 12:32:36,561 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-02 12:53:31,140 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-02 14:17:25,904 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-02 14:30:25,414 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-02 14:30:25,425 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-02 14:32:30,182 ERROR c.i.l.CustomLogger [main] No user exist
+2022-12-02 14:36:51,147 ERROR c.i.l.CustomLogger [main] Entered data is invalid
+2022-12-02 14:49:00,135 ERROR c.i.l.CustomLogger [main] No user exist
+2022-12-02 14:49:13,394 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-02 15:03:20,038 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-02 15:13:47,174 ERROR c.i.l.CustomLogger [main] No user exist
+2022-12-02 15:33:37,083 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-02 15:46:43,252 ERROR c.i.l.CustomLogger [main] No post exist to update
+2022-12-02 17:17:36,159 ERROR c.i.l.CustomLogger [main] Entered data is invalid
+2022-12-02 17:22:24,026 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-02 17:23:07,200 ERROR c.i.l.CustomLogger [main] No user exist
+2022-12-02 17:44:34,516 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-02 19:12:48,267 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-02 19:13:22,735 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-02 19:15:39,932 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-02 19:16:35,822 ERROR c.i.l.CustomLogger [main] No user exist
+2022-12-02 20:46:18,680 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-02 21:41:19,930 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-02 21:44:27,569 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-02 21:45:35,610 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-02 21:47:04,644 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-02 21:50:04,285 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-02 21:52:35,803 ERROR c.i.l.CustomLogger [main] No user exist
+2022-12-02 21:55:30,872 ERROR c.i.l.CustomLogger [main] No user exist
+2022-12-02 22:19:08,005 ERROR c.i.l.CustomLogger [main] Entered value is Invalid!!
+2022-12-02 22:25:50,334 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-02 22:26:08,549 ERROR c.i.l.CustomLogger [main] No user exist
+2022-12-02 22:27:43,310 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-02 22:30:24,588 ERROR c.i.l.CustomLogger [main] Entered value is Invalid!!
+2022-12-02 22:37:50,758 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-02 22:40:01,273 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-02 22:40:44,649 ERROR c.i.l.CustomLogger [main] No user exist
+2022-12-02 22:41:53,076 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-02 22:42:42,621 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-02 23:08:18,669 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-02 23:10:46,979 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-02 23:12:06,860 ERROR c.i.l.CustomLogger [main] No post to display
+2022-12-02 23:12:15,795 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-02 23:12:16,802 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-02 23:12:20,754 ERROR c.i.l.CustomLogger [main] Entered value is Invalid!!
+2022-12-02 23:42:40,855 ERROR c.i.l.CustomLogger [main] No post to display
+2022-12-02 23:45:58,138 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-03 00:04:43,992 ERROR c.i.l.CustomLogger [main] No post to display

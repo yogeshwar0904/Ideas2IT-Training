@@ -5,42 +5,47 @@ import java.util.Scanner;
 
 import com.ideas2it.constant.Constant;
 import com.ideas2it.controller.InstagramController;
+import com.ideas2it.controller.PostController;
 import com.ideas2it.logger.CustomLogger;
 import com.ideas2it.model.User;
-import com.ideas2it.view.PostView;
 import com.ideas2it.view.InstagramView;
+import com.ideas2it.view.PostView;
 
 public class UserView {
     private InstagramController instagramController;
-    private Scanner scanner;
-    private PostView postView;
     private InstagramView instagramView;
+    private PostController postController;
+    private PostView postView;
+    private Scanner scanner;
 
     public UserView() {
         this.instagramController = new InstagramController();
-        this.scanner = new Scanner(System.in);
-        this.postView = new PostView();
         this.instagramView = new InstagramView();
+        this.postController = new PostController();
+        this.postView = new PostView();
+        this.scanner = new Scanner(System.in);
     }
 
     public void homeMenu(User user) {
-        //dispalyPost(user);
-        boolean choice;
-        StringBuilder userChoice = new StringBuilder();
+        boolean isRunning;
+        StringBuilder userChoice;
+        isRunning = false;
+        userChoice = new StringBuilder();
         userChoice.append("Enter 1 for profile menu")
                   .append("\nEnter 2 for Exit");
-        choice = false;
+        System.out.println(postController.getAllUsersPost());
+
         do {
             try {
                 System.out.println(userChoice);
                 switch (scanner.nextInt()) {
                 case Constant.PROFILE_MENU: 
                     profileMenu(user);
-                    choice = true;
+                    isRunning = true;
                     break;
 
                 case Constant.PROFILE_EXIT:
-                    choice = true;
+                    isRunning = true;
                     break;
 
                 default :
@@ -51,31 +56,32 @@ public class UserView {
                 CustomLogger.error("Entered data is invalid");
                 scanner.next();
             }
-        } while(!choice);
+        } while(!isRunning);
     }
 
     /**
-     * Get the sugestion from the 
-     * user to add, remove, display, 
-     * update and search the account.
+     * To add, remove, display, 
+     * update and search the account of users.
      */ 
     public void profileMenu(User user) {   
-        boolean choice;
-        StringBuilder userControl = new StringBuilder();
+        boolean isRunning;
+        StringBuilder userControl;
+        isRunning = false;
+        userControl = new StringBuilder();
         userControl.append("\n Enter 1 for remove user")
                    .append("\n Enter 2 for display the user")
                    .append("\n Enter 3 for update the user")
                    .append("\n Enter 4 for search")
                    .append("\nEnter 5 for post menu")
                    .append("\n Enter 6 for home menu");
-        choice = false;
+
         do {
             try {
                 System.out.println(userControl);
                 switch (scanner.nextInt()) {
                 case Constant.REMOVE:
                     deleteAccount(user);
-                    choice = true;
+                    isRunning = true;
                     break;
 
                 case Constant.DISPLAY:
@@ -92,23 +98,23 @@ public class UserView {
 
                 case Constant.POST_MENU: 
                     postView.postMenu(user);
-                    choice = true;
+                    isRunning = true;
                     break;
 
                 case Constant.BACK_TO_HOMEMENU:
                     homeMenu(user);
-                    choice = true;
+                    isRunning = true;
                     break;
 
                 default:
-                    CustomLogger.warn("Entered value is Invalid!!");
+                    CustomLogger.error("Entered value is Invalid!!");
                     break;
                 }
             } catch (InputMismatchException inputMismatch) {
-                CustomLogger.error("Enter only Numbers");
+                CustomLogger.warn("Enter only Numbers");
                 scanner.next();
             }
-        } while (!choice);
+        } while (!isRunning);
     }
 
     /**
@@ -145,14 +151,6 @@ public class UserView {
     }
 
     /**
-     * displayPost will gets all the post which are posted by the user
-     * stores it in the List and prints the post
-     * if the List of post is empty then it will print a No post found
-     *
-     * @param user - the object of the user
-     * 
-
-    /**
      * display the Account
      */
     private void display() {
@@ -163,57 +161,67 @@ public class UserView {
      * update the Account    
      */
     private void update(User user) {
+        boolean isRunning;
+        User userUpdate;
         String accountName;
+        userUpdate = new User();
         StringBuilder userControl = new StringBuilder();
-        int choice;
         accountName = user.getAccountName();
         userControl.append("\n Enter 1 for update user name")
                    .append("\n Enter 2 for update mobile number")
                    .append("\n Enter 3 for update password");
-        try {
-            System.out.println(userControl);
-            choice = scanner.nextInt();
-            scanner.skip("\r\n");     
+        isRunning = false;
+
+        do {
+            try {
+                System.out.println(userControl);
+                scanner.skip("\r\n");     
         
-            switch (choice) {
-            case Constant.UPDATE_USER_NAME:
-                String updateUserName;
-                updateUserName = instagramView.getUserName();
-                user = instagramController.update(accountName, updateUserName,
-                                           Constant.UPDATE_USER_NAME);
-                break;
+                switch (scanner.nextInt()) {
+                case Constant.UPDATE_USER_NAME:
+                    String updateUserName;
+                    updateUserName = instagramView.getUserName();
+                    userUpdate = instagramController.update(accountName, updateUserName,
+                                                     Constant.UPDATE_USER_NAME);
+                    isRunning = true;
+                    break;
 
-            case Constant.UPDATE_MOBILE_NUMBER:
-                long mobileNumber;
-                mobileNumber = instagramView.getMobileNumber(); 
-                user = instagramController.update(accountName, String.valueOf(mobileNumber),
-                                           Constant.UPDATE_MOBILE_NUMBER);
-                break;
+                case Constant.UPDATE_MOBILE_NUMBER:
+                    long mobileNumber;
+                    mobileNumber = instagramView.getMobileNumber(); 
+                    userUpdate = instagramController.update(accountName, String.valueOf(mobileNumber),
+                                                     Constant.UPDATE_MOBILE_NUMBER);
+                    isRunning = true;
+                    break;
 
-            case Constant.UPDATE_PASSWORD:
-                String updatePassword;
-                updatePassword = instagramView.getPassword();
-                user = instagramController.update(accountName, updatePassword,
-                                           Constant.UPDATE_PASSWORD);
-                break;
+                case Constant.UPDATE_PASSWORD:
+                    String updatePassword;
+                    updatePassword = instagramView.getPassword();
+                    userUpdate = instagramController.update(accountName, updatePassword,
+                                                     Constant.UPDATE_PASSWORD);
+                    isRunning = true;
+                    break;
 
-            default:
-                userControl.delete(0, userControl.length() - 1);
-                userControl.append("Entered value is Invalid!! ")
-                           .append("\n enter correct option to update");
-                CustomLogger.warn(userControl.toString());
-                break;
-            }
+                default:
+                    userControl.delete(0, userControl.length() - 1);
+                    userControl.append("Entered value is Invalid!! ")
+                               .append("\n enter correct option to update");
+                    CustomLogger.warn(userControl.toString());
+                    break;
+                }
 
-            if (accountName.equals(user.getAccountName())) {
-                CustomLogger.info("account updated Successfully");
-            } else {
-                CustomLogger.info("account not updated");
-            }
+                if (user.getPassword().equals(userUpdate.getPassword()) 
+                       && user.getUserName().equals(userUpdate.getUserName())
+                       && user.getMobileNumber() == userUpdate.getMobileNumber()) {
+                    CustomLogger.info("account not updated");  
+                } else {
+                    CustomLogger.info("account updated Successfully");
+                }
  
-        } catch (InputMismatchException intputMismatch) {
-            CustomLogger.error("Enter only Numbers"); 
-            scanner.next();     
-        }
+            } catch (InputMismatchException intputMismatch) {
+                CustomLogger.error("Enter only Numbers"); 
+                scanner.next();     
+            }
+        } while (!isRunning);
     }
 }

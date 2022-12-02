@@ -50,3 +50,13 @@
 2022-12-01 16:39:44,337 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!
 2022-12-01 20:40:59,466 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!
 2022-12-01 21:58:41,519 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!
+2022-12-02 14:49:30,500 WARN c.i.l.CustomLogger [main] dEntered value is Invalid!! 
+ enter correct option to update
+2022-12-02 17:33:12,622 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!
+2022-12-02 21:50:47,647 WARN c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-02 21:52:35,819 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-12-02 21:55:30,872 WARN c.i.l.CustomLogger [main] Entered wrong format try again
+2022-12-02 22:30:27,174 WARN c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-02 22:37:48,485 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!
+2022-12-02 23:12:17,551 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!
+2022-12-02 23:12:18,145 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!

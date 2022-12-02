@@ -53,9 +53,9 @@ public class PostService {
      * @return isDeleted - 
      *         true or false based on the response
      */
-    public boolean delete(String postId) throws InstagramManagementException { 
+    public boolean delete(String postId, String userId) throws InstagramManagementException { 
         boolean isDeleted;
-        isDeleted = (postDao.delete(postId) > 0);
+        isDeleted = (postDao.delete(postId, userId) > 0);
         return isDeleted;
     }
 
@@ -77,6 +77,22 @@ public class PostService {
     } 
 
     /**
+     * Gets All the post
+     * 
+     * @param  userId   - id of the user
+     * @return userPosts - posts of the particular user
+     */
+    public List<Post> getAllUserPost() throws InstagramManagementException {
+        List<Post> listOfPost;
+        listOfPost = postDao.displayAllUserPost();
+        
+        if (listOfPost.isEmpty()) { 
+            throw new InstagramManagementException(Constant.ERROR_001);   
+        }
+        return listOfPost;   
+    }
+
+    /**
      * update the user post
      *
      * @param String postId 
@@ -87,9 +103,9 @@ public class PostService {
      *         update the users post        
      */   
     public Post update(String postId, String updateValue,
-                           int choice) throws InstagramManagementException {
+                           int choice, String userId) throws InstagramManagementException {
         Post post = postDao.getPostId(postId);
-        String userId = postDao.getUserId(postId);
+        //String userId = postDao.getUserId(postId);
 
         if (null != post) {
             switch (choice) {
@@ -112,14 +128,4 @@ public class PostService {
     public Post getPostId(String postId) {
        return postDao.getPostId(postId);
     }
-
-    public List<Post> getAllUsersPost() throws CustomException {
-        List<Post> listOfPost;
-        listOfPost = postDao.getUserPosts();
-        
-        if (allPosts.isEmpty()) { 
-            throw new CustomException(Constants.ERROR_03);   
-        }
-        return listOfPost;
-    
 }

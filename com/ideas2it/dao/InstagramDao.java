@@ -75,7 +75,6 @@ public class InstagramDao {
 
             if (resultset.next()) {
                 user = new User();
-                System.out.println(resultset.getString("user_name"));
                 user.setUserId(resultset.getString("user_id"));
                 user.setAccountName(resultset.getString("account_name"));
                 user.setUserName(resultset.getString("user_name"));
@@ -211,7 +210,6 @@ public class InstagramDao {
 
             if (resultset.next()) {
                 user = new User();
-                System.out.println(resultset.getString("user_name"));
                 user.setUserId(resultset.getString("user_id"));
                 user.setAccountName(resultset.getString("account_name"));
                 user.setUserName(resultset.getString("user_name"));

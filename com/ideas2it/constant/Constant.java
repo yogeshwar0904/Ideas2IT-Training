@@ -23,10 +23,10 @@ public class Constant {
     public static final String VALIDATE_MOBILENUMBER = ("^[6-9]{1}[0-9]{9}");
     public static final String VALIDATE_PASSWORD = "^[a-zA-Z0-9]{4,}[@$&*]{1,}[0-9]{1,3}";
 
-    public static final String ACCOUNTNAME_FORMATE = "Create the Account Name (Must be start with charecter minimum five,Continue with numbers)";
-    public static final String NAME_FORMATE = "Enter your name (Must start with charecter minimum four)";
-    public static final String MOBILENUMBER_FORMATE = "Enter the Mobile Number (Must be start  from six total ten digits)";
-    public static final String PASSWORD_FORMATE = "Create the Password (Must contain 7 characters including 5 Letters, one Special character and number)";
+    public static final String ACCOUNTNAME_FORMATE = "Create the Account Name (Start with minimum '5' char,Continue with numbers)";
+    public static final String NAME_FORMATE = "Enter your name (Start with charecter minimum four)";
+    public static final String MOBILENUMBER_FORMATE = "Enter the Mobile Number (Start  from six total ten digits)";
+    public static final String PASSWORD_FORMATE = "Create the Password (contain 7 characters '5' Letters, one Special character and number)";
 
     public static final int REMOVE = 1;
     public static final int DISPLAY = 2;
@@ -44,6 +44,7 @@ public class Constant {
     public static final int DISPLAY_POST = 2;
     public static final int  REMOVE_POST = 3;
     public static final int   UPDATE_POST= 4;
+    public static final int BACK_TO_PROFILEMENU = 5;  
 
     public static final int UPDATE_POST_CONTENT = 1;  
     public static final int UPDATE_POST_TITLE = 2; 

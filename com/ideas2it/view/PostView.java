@@ -31,12 +31,14 @@ public class PostView {
      * account. 
      */ 
     public void postMenu(User user) {
+        UserView userView = new UserView();
         boolean choice;
         StringBuilder postControl = new StringBuilder();   
         postControl.append(" Enter 1 for add post") 
                    .append("\n Enter 2 for display post")
-                   .append("\n Enter 3 for remove post")
-                   .append("\n Enter 4 for update post");
+                   .append("\n Enter 3 for delete post")
+                   .append("\n Enter 4 for update post")
+                   .append("\n Enter 5 for profile menu");
         choice = false;
         do {
             try {
@@ -44,21 +46,22 @@ public class PostView {
                 switch (scanner.nextInt()) {
                 case Constant.ADD_POST:
                     uploadPost(user);
-                    choice = true;
                     break;
 
                 case Constant.DISPLAY_POST:
                     displayPost(user);
-                    choice = true;
                     break;
 
                 case Constant.REMOVE_POST:
                     deletePost(user);
-                    choice = true;
                     break;
 
                 case Constant.UPDATE_POST:
                     update(user);
+                    break;
+
+                case Constant.BACK_TO_PROFILEMENU:
+                    userView.profileMenu(user);
                     choice = true;
                     break;
 
@@ -83,7 +86,6 @@ public class PostView {
         String title;
         String content;
         Post post;
-        UserView userView = new UserView();
         title = getTitle();
 	content = getContent();
         post = postController.uploadPost(user, title, content);
@@ -92,7 +94,6 @@ public class PostView {
 	    System.out.println("Post not created");
         } else {
             System.out.println("Post created successfully");
-            userView.profileMenu(user);
         }
     }
 
@@ -101,11 +102,9 @@ public class PostView {
      */ 
     private void displayPost(User user) {
         List<Post> posts;
-        posts = postController.getUserPost(user.getUserId()); 
-        UserView userView = new UserView();  
+        posts = postController.getUserPost(user.getUserId());  
         if (null != posts) {
             System.out.println(posts);
-            userView.profileMenu(user);
         } else {
             System.out.println("No Post Uploaded yet");            
         }  
@@ -117,14 +116,13 @@ public class PostView {
     private void deletePost(User user) {
         String postId;
         System.out.println("Enter the post Id");
+        scanner.nextLine();
         postId = scanner.nextLine();
-        UserView userView = new UserView();
-        if (postController.delete(postId)) {
+
+        if (postController.delete(postId, user.getUserId())) {
             System.out.println("Post is deleted");
-            userView.profileMenu(user);
         } else {
-            System.out.println("Something went wrong");
-            userView.profileMenu(user);
+            System.out.println("No post found on that Id to delete");
         }        
     }
 
@@ -132,75 +130,75 @@ public class PostView {
      * update the post    
      */
     private void update(User user) {
-        StringBuilder postUpdate = new StringBuilder();
-        int choice;
+        boolean choice;
+        Post post;
+        String postId;
+        StringBuilder postUpdate;
+        post = null; 
+        postUpdate = new StringBuilder();
+        choice = false;
         System.out.println("Enter the post Id to update");
-        String postId = scanner.nextLine();
-        Post post = null; 
-        UserView userView = new UserView();
-        try {
+        postId = scanner.next();
+
+        if(null != postController.getPostId(postId)) { 
             postUpdate.append(" Enter 1 for update post content")
                       .append("\n Enter 2 for update post tittle");
-
-            System.out.println(postUpdate);
-            scanner.skip("\r\n");     
+            do {
+                try {
+                    System.out.println(postUpdate);
+                    scanner.nextLine();     
         
-            switch (scanner.nextInt()) {
+                    switch (scanner.nextInt()) {
+                    case Constant.UPDATE_POST_CONTENT:
+                        String updatePostContent;
+                        scanner.nextLine(); 
+                        updatePostContent = getContent();
+                        post = postController.update(postId, updatePostContent,
+                                                 Constant.UPDATE_POST_CONTENT,user.getUserId());
+                        choice = true;
+                        break;
 
-            case Constant.UPDATE_POST_CONTENT:
-                String updatePostContent;
-                updatePostContent = getContent();
-                post = postController.update(postId, updatePostContent,
-                                           Constant.UPDATE_POST_CONTENT);
-                break;
+                    case Constant.UPDATE_POST_TITLE:
+                        String updatePostTitle;
+                        updatePostTitle = getTitle();
+                        post = postController.update(postId, updatePostTitle,
+                                                 Constant.UPDATE_POST_TITLE,user.getUserId());
+                        choice = true;
+                        break;
 
-            case Constant.UPDATE_POST_TITLE:
-                String updatePostTitle;
-                updatePostTitle = getTitle();
-                post = postController.update(postId, updatePostTitle,
-                                                  Constant.UPDATE_POST_TITLE);
-                break;
+                    default:
+                        postUpdate.delete(0, postUpdate.length() - 1);
+                        postUpdate.append("Entered value is Invalid!! ")
+                                  .append("\n enter correct option to update");
+                        CustomLogger.warn(postUpdate.toString());
+                        break;
+                    }
 
-            default:
-                postUpdate.delete(0, postUpdate.length() - 1);
-                postUpdate.append("Entered value is Invalid!! ")
-                           .append("\n enter correct option to update");
-                CustomLogger.warn(postUpdate.toString());
-                break;
-            }
-
-            if (postId.equals(post.getPostId())) {
-                CustomLogger.info("post updated Successfully");
-                userView.homeMenu(user);
-            } else {
-                CustomLogger.info("post not updated");
-            }
+                    if (postId.equals(post.getPostId())) {
+                        CustomLogger.info("post updated Successfully");
+                    } else {
+                        CustomLogger.info("post not updated");
+                    }
  
-        } catch (InputMismatchException intputMismatch) { 
-            CustomLogger.error("Enter only Numbers"); 
-            scanner.next();     
+                } catch (InputMismatchException intputMismatch) { 
+                    CustomLogger.error("Enter only Numbers"); 
+                    scanner.next();     
+                }
+            } while (!choice);
+        } else {
+            System.out.println("no post to update"); 
         }
     }
 
     private String getContent() {
-        String content;
         System.out.println("Enter your content");
-        content = scanner.next();
-        return content;
+        return scanner.nextLine();
     }
 
     private String getTitle() {
-        String title;
         System.out.println("Enter your title");
-        title = scanner.nextLine();
-        return title;
-    }
-
-    /**
-     * display the Account
-     */
-    private void display() {
-        System.out.println(postController.display());
+	scanner.nextLine();
+        return scanner.nextLine();
     }
 
     private boolean isPostAvailable(String id) {

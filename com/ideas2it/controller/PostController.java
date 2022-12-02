@@ -69,9 +69,9 @@ public class PostController {
      * @return bolean 
      *         true or false based 
      */
-    public boolean delete(String postId) {
+    public boolean delete(String postId, String userId) {
         try {
-            return postService.delete(postId);
+            return postService.delete(postId, userId);
         } catch (InstagramManagementException exception) {
             CustomLogger.error(exception.getMessage());
         }
@@ -91,9 +91,9 @@ public class PostController {
      *         details of post
      *          
      */   
-    public Post update(String postId, String updateValue, int choice) { 
+    public Post update(String postId, String updateValue, int choice, String userId) { 
         try {
-            return postService.update(postId, updateValue, choice); 
+            return postService.update(postId, updateValue, choice, userId); 
         } catch (InstagramManagementException exception) {
             CustomLogger.error(exception.getMessage());
         } 
@@ -104,13 +104,20 @@ public class PostController {
        return postService.getPostId(postId);
     }
 
+    /**
+     * displayPost will gets all the post which are posted by the user
+     * stores it in the List and prints the post
+     * if the List of post is empty then it will print a No post found
+     *
+     * @param user - the object of the user
+     */
     public List<Post> getAllUsersPost() {
         List<Post> listOfPost = null;
          
         try {
-            listOfPosts = postService.getUserPosts();
-        } catch (CustomException customException) {
-            logger.error(customException.getMessage());
+            listOfPost = postService.getAllUserPost();
+        } catch (InstagramManagementException customException) {
+            CustomLogger.error(customException.getMessage());
         }
         return listOfPost;
     }

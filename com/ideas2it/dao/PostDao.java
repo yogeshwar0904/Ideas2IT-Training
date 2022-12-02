@@ -88,16 +88,45 @@ public class PostDao {
         return posts;       
     }
 
-    public int delete(String postId) { 
+    public List<Post> displayAllUserPost() {
+        List<Post> posts = new ArrayList();
+        StringBuilder query = new StringBuilder();
+        query.append("SELECT * FROM post");
+        ResultSet resultSet;
+        Post post;
+        
+        try {
+            connection = DatabaseConnection.getConnection();
+            statement = connection.prepareStatement(query.toString());
+            resultSet = statement.executeQuery();            
+            while (resultSet.next()){
+                post = new Post();
+                post.setPostId(resultSet.getString("post_id"));
+                post.setContent(resultSet.getString("content"));
+                post.setTitle(resultSet.getString("title"));
+                posts.add(post);               
+            } 
+            statement.close(); 
+        } catch (SQLException sqlException) {
+            CustomLogger.error(sqlException.getMessage());
+        } finally {
+            DatabaseConnection.closeConnection();
+        } 
+        return posts;       
+    }
+
+    public int delete(String postId, String userId) { 
         int noOfRowsDeleted = 0;
         StringBuilder query = new StringBuilder();
         query.append("DELETE FROM post")
-             .append(" WHERE post_id = ?");
+             .append(" WHERE post_id = ?")
+             .append("and user_id = ?");
  
         try {
             connection = DatabaseConnection.getConnection();            
             statement = connection.prepareStatement(query.toString());
             statement.setString(1, postId);
+            statement.setString(2, userId);
             noOfRowsDeleted = statement.executeUpdate();
             statement.close();
         } catch (SQLException sqlException) {
@@ -120,16 +149,18 @@ public class PostDao {
      * @return Map<String, User>
      *         account of user 
      */   
-    public Post update (String postId, Post post, String userId) {
+    public Post update(String postId, Post post, String userId) {
         try {
             connection = DatabaseConnection.getConnection();
             StringBuilder query = new StringBuilder();
             query.append("UPDATE post SET content = ?, title = ?")
-                 .append("WHERE post_id = ?");
+                 .append("WHERE post_id = ?")
+                 .append("and user_id = ?");
             statement = connection.prepareStatement(query.toString());
             statement.setString(1,post.getContent());
             statement.setString(2,post.getTitle());
             statement.setString(3,post.getPostId());
+            statement.setString(4,userId);
             statement.execute();
             statement.close();
         } catch(SQLException exception) {
