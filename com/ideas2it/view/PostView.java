@@ -161,7 +161,7 @@ public class PostView {
                     case Constant.UPDATE_POST_TITLE:
                         String updatePostTitle;
                         updatePostTitle = getTitle();
-                        post = postController.update(postId, updatePostTitle,
+                        post = postController.update(postId,updatePostTitle,
                                                  Constant.UPDATE_POST_TITLE,user.getUserId());
                         choice = true;
                         break;

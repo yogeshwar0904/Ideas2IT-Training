@@ -8,10 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ideas2it.model.Post;
+import com.ideas2it.model.User;
 import com.ideas2it.logger.CustomLogger;
 import com.ideas2it.databaseconnection.DatabaseConnection;
-import com.ideas2it.model.User;
-import com.ideas2it.model.Post;
 
 /**
  * To perform create,update,search and detele for the user
@@ -149,18 +149,19 @@ public class PostDao {
      * @return Map<String, User>
      *         account of user 
      */   
-    public Post update(String postId, Post post, String userId) {
+    public Post update(Post post, String userId) {
         try {
             connection = DatabaseConnection.getConnection();
             StringBuilder query = new StringBuilder();
             query.append("UPDATE post SET content = ?, title = ?")
-                 .append("WHERE post_id = ?")
-                 .append("and user_id = ?");
+                 .append(" WHERE post_id = ?")
+                 .append(" and user_id = ?");
             statement = connection.prepareStatement(query.toString());
             statement.setString(1,post.getContent());
             statement.setString(2,post.getTitle());
             statement.setString(3,post.getPostId());
             statement.setString(4,userId);
+
             statement.execute();
             statement.close();
         } catch(SQLException exception) {

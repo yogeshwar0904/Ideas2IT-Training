@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.ideas2it.logger.CustomLogger;
 import com.ideas2it.databaseconnection.DatabaseConnection;
+import com.ideas2it.model.Post;
 import com.ideas2it.model.User;
 
 /**
@@ -129,6 +130,10 @@ public class InstagramDao {
            statement.setString(1, accountName);
            statement.setString(2, password);
            isFound = statement.execute();
+          // query = "delete from post where user_id = ?";
+          // statement =  DatabaseConnection.getConnection().prepareStatement(query.toString());
+           //statement.setString(1, getUserId(accountName));
+           statement.execute();
            statement.close();
        } catch (SQLException exception) {
            CustomLogger.error("SQL exception occure");

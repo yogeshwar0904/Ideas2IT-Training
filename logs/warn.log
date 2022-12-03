@@ -60,3 +60,4 @@
 2022-12-02 22:37:48,485 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!
 2022-12-02 23:12:17,551 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!
 2022-12-02 23:12:18,145 WARN c.i.l.CustomLogger [main] Entered value is Invalid!!
+2022-12-03 16:45:11,349 WARN c.i.l.CustomLogger [main] Entered wrong format try again
