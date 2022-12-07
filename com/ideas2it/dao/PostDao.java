@@ -34,7 +34,7 @@ public class PostDao {
         int count = 0;  
         StringBuilder query = new StringBuilder();
         query.append("INSERT INTO ")
-             .append("post(user_id, post_id, content, title)")
+             .append("post (user_id, post_id, title, content)")
              .append("VALUES(?,?,?,?)");
 
         try {     
@@ -72,7 +72,7 @@ public class PostDao {
             statement = connection.prepareStatement(query.toString());
             statement.setString(1, userId);
             resultSet = statement.executeQuery();            
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 post = new Post();
                 post.setPostId(resultSet.getString("post_id"));
                 post.setContent(resultSet.getString("content"));
@@ -153,12 +153,12 @@ public class PostDao {
         try {
             connection = DatabaseConnection.getConnection();
             StringBuilder query = new StringBuilder();
-            query.append("UPDATE post SET content = ?, title = ?")
+            query.append("UPDATE post SET  title = ?, content = ?")
                  .append(" WHERE post_id = ?")
                  .append(" and user_id = ?");
             statement = connection.prepareStatement(query.toString());
-            statement.setString(1,post.getContent());
-            statement.setString(2,post.getTitle());
+            statement.setString(1,post.getTitle());
+            statement.setString(2,post.getContent());
             statement.setString(3,post.getPostId());
             statement.setString(4,userId);
 

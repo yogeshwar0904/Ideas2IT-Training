@@ -12,8 +12,8 @@ import com.ideas2it.util.InstagramUtil;
 
 
 /**
- * Get the information from UserView and pass 
- * to InstagramService
+ * Based on user request it perform login, create  
+ * validate the user account.
  *
  * @version     1.0 14 Sept 2022
  * @author      Yogeshwar
@@ -28,12 +28,14 @@ public class InstagramController {
     }
 
     /**
-     * Login the user.
+     * Allow the user to login.
      *
      * @param accountName
      *        account name of user
      * @param password
      *        password of user
+     * @return User user
+     *         details of the user.
      */
      public User login(String accountName, String password) {
          try {
@@ -45,11 +47,9 @@ public class InstagramController {
      }
 
     /**
-     * add the user
+     * Create account for the user
      *
-     * @param accountName
-     *        account name of user
-     * @param users
+     * @param user
      *        details of the user
      * @return users
      *        details of the user           
@@ -82,7 +82,8 @@ public class InstagramController {
      * @param String accountName 
      *        account name of user
      * @return user
-     *         account name of user   
+     *         account name of user 
+     *         if account name exist   
      */   
     public User search(String accountName) { 
         try {
@@ -96,7 +97,6 @@ public class InstagramController {
     /**
      * display the user
      *
-     * @param 
      * @return Map<String, User> 
      *         accounts of user         
      */   
@@ -115,11 +115,12 @@ public class InstagramController {
      * @param string accountName
      *        account name of user
      * @param string updateValue
-     *        change detail  of user
+     *        update detail  of user
      * @param int choice
      *        choice of user
      * @return user
-     *         details of user
+     *         details of user if account
+     *         updated succesfully.
      *          
      */   
     public User update(String accountName, String updateValue, int choice) { 
@@ -178,5 +179,4 @@ public class InstagramController {
     public boolean isValidPassword(String password) {
         return instagramUtil.isValidPassword(password);
     }
-
 }

@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ideas2it.logger.CustomLogger;
 import com.ideas2it.databaseconnection.DatabaseConnection;
+import com.ideas2it.logger.CustomLogger;
 import com.ideas2it.model.Post;
 import com.ideas2it.model.User;
 
@@ -21,12 +21,12 @@ import com.ideas2it.model.User;
  */
 public class InstagramDao {
 
-    Connection connection;  
-    String query;    
-    PreparedStatement statement;
+    private Connection connection; 
+    private PreparedStatement statement; 
+    private String query;    
 
     /**
-     * Add the user
+     * Create account for user
      *
      * @param user 
      *        details of the user
@@ -34,12 +34,16 @@ public class InstagramDao {
      *         details of user
      */
     public User create(User user) {
-
+        StringBuilder query;
+        query = new StringBuilder();
+        query.append("INSERT INTO ")
+             .append("user (user_id, account_name, user_name, mobile_number, password)")
+             .append("VALUES(?,?,?,?,?)");
+       
         try {
             connection = DatabaseConnection.getConnection();
-            query = "INSERT INTO user(user_id, account_name, user_name, mobile_number, password) VALUES(?,?,?,?,?)";
-            statement = connection.prepareStatement(query);
-            statement.setString(1,user.getUserId());
+            statement = connection.prepareStatement(query.toString());
+            statement.setString(1, user.getUserId());
             statement.setString(2, user.getAccountName());
             statement.setString(3, user.getUserName());
             statement.setLong(4, user.getMobileNumber());
@@ -47,8 +51,7 @@ public class InstagramDao {
             statement.execute(); 
             statement.close();
         } catch (SQLException exception) {
-           exception.printStackTrace();
-            CustomLogger.error("SQL exception occure");
+            CustomLogger.error(exception.getMessage());
         } finally {
             DatabaseConnection.closeConnection();
         }
@@ -56,7 +59,7 @@ public class InstagramDao {
     }
 
     /**
-     * search the user
+     * To get account name of user
      *
      * @param accountName
      *        account name of user
@@ -64,33 +67,41 @@ public class InstagramDao {
      *         details of user 
      */   
     public User getAccountName(String accountName) {
-        ResultSet resultset;
+        ResultSet resultSet;
         User user = null;
+        query = "SELECT * From user WHERE account_name = ? and is_deactivated = 0";
+        user = new User();
 
         try {
             connection = DatabaseConnection.getConnection();
-            query = "SELECT * From user WHERE account_name = ? and is_deactivated = 0";
             statement = connection.prepareStatement(query);
             statement.setString(1,accountName);
-            resultset = statement.executeQuery();
+            resultSet = statement.executeQuery();
 
-            if (resultset.next()) {
-                user = new User();
-                user.setUserId(resultset.getString("user_id"));
-                user.setAccountName(resultset.getString("account_name"));
-                user.setUserName(resultset.getString("user_name"));
-                user.setMobileNumber(Long.parseLong(resultset.getString("mobile_number")));
-                user.setPassword(resultset.getString("password"));
+            if (resultSet.next()) {
+                user.setUserId(resultSet.getString("user_id"));
+                user.setAccountName(resultSet.getString("account_name"));
+                user.setUserName(resultSet.getString("user_name"));
+                user.setMobileNumber(Long.parseLong(resultSet.getString("mobile_number")));
+                user.setPassword(resultSet.getString("password"));
                 statement.close();
             }
          } catch(SQLException exception) {
-             CustomLogger.error("SQL exception occure");
+             CustomLogger.error(exception.getMessage());
          } finally {
              DatabaseConnection.closeConnection();
          }
          return user;    
     }
 
+    /**
+     * To get id of user
+     *
+     * @param accountName
+     *        account name of user
+     * @return String
+     *         id of user 
+     */ 
     public String getUserId(String accountName) {
         ResultSet resultset;
         String userId = null;
@@ -106,7 +117,7 @@ public class InstagramDao {
             }
             statement.close();
          } catch(SQLException exception) {
-             CustomLogger.error("SQL exception occure");
+             CustomLogger.error(exception.getMessage());
          } finally {
              DatabaseConnection.closeConnection();
          }
@@ -114,14 +125,18 @@ public class InstagramDao {
     }
 
     /**
-     * remove the user
+     * remove the user account
      *
      * @param accountName
      *        account name of user
-     * @return deleted message                  
+     * @param password
+     *        password of user
+     * @return boolean 
+     *         true if deleted message                  
      */ 
     public boolean deleteAccount(String accountName, String password) {
-       boolean isFound = false;
+       boolean isFound;
+       isFound = false;
  
        try {
            connection = DatabaseConnection.getConnection();
@@ -130,14 +145,10 @@ public class InstagramDao {
            statement.setString(1, accountName);
            statement.setString(2, password);
            isFound = statement.execute();
-          // query = "delete from post where user_id = ?";
-          // statement =  DatabaseConnection.getConnection().prepareStatement(query.toString());
-           //statement.setString(1, getUserId(accountName));
            statement.execute();
            statement.close();
        } catch (SQLException exception) {
-           CustomLogger.error("SQL exception occure");
-           exception.printStackTrace();
+           CustomLogger.error(exception.getMessage());
        } finally {
            DatabaseConnection.closeConnection();           
        }
@@ -180,12 +191,14 @@ public class InstagramDao {
      *         account of user 
      */   
     public User update(String accountName, User user, String userId) {
+        StringBuilder query;
+        query = new StringBuilder();
+        query.append("UPDATE user SET user_name = ?,")
+             .append("mobile_number = ?, password = ?")
+             .append("WHERE user_id = ? and is_deactivated = 0");
+
         try {
             connection = DatabaseConnection.getConnection();
-            StringBuilder query = new StringBuilder();
-            query.append("UPDATE user SET user_name = ?,")
-                 .append("mobile_number = ?, password = ?")
-                 .append("WHERE user_id = ? and is_deactivated = 0");
             statement = connection.prepareStatement(query.toString());
             statement.setString(1, user.getUserName());
             statement.setLong(2, user.getMobileNumber());
@@ -194,36 +207,49 @@ public class InstagramDao {
             statement.execute();
             statement.close();
         } catch(SQLException exception) {
-            CustomLogger.error("SQL exception occure");
-            exception.printStackTrace(); 
+            CustomLogger.error(exception.getMessage()); 
         } finally {
             DatabaseConnection.closeConnection();
         }
         return user;   
     }
 
+    /**
+     * Login the user
+     *
+     * @param String accountName 
+     *        account name  of the user
+     * @param String password 
+     *        password  of the user
+     * @return users
+     *         details of user
+     */
     public User login(String accountName, String password) {
-        ResultSet resultset;
+        ResultSet resultSet;
+        StringBuilder query;
         User user = null;
+        query = new StringBuilder();
+        query.append("SELECT * From user ")
+             .append("WHERE account_name = ? and is_deactivated = 0 and password = ?");
+
         try {
             connection = DatabaseConnection.getConnection();
-            query = "SELECT * From user WHERE account_name = ? and is_deactivated = 0 and password = ?";
-            statement = connection.prepareStatement(query);
+            statement = connection.prepareStatement(query.toString());
             statement.setString(1,accountName);
 	    statement.setString(2,password);
-            resultset = statement.executeQuery();
+            resultSet = statement.executeQuery();
 
-            if (resultset.next()) {
+            if (resultSet.next()) {
                 user = new User();
-                user.setUserId(resultset.getString("user_id"));
-                user.setAccountName(resultset.getString("account_name"));
-                user.setUserName(resultset.getString("user_name"));
-                user.setMobileNumber(Long.parseLong(resultset.getString("mobile_number")));
-                user.setPassword(resultset.getString("password"));
+                user.setUserId(resultSet.getString("user_id"));
+                user.setAccountName(resultSet.getString("account_name"));
+                user.setUserName(resultSet.getString("user_name"));
+                user.setMobileNumber(Long.parseLong(resultSet.getString("mobile_number")));
+                user.setPassword(resultSet.getString("password"));
                 statement.close();
             }
          } catch(SQLException exception) {
-             CustomLogger.error("SQL exception occure");
+             CustomLogger.error(exception.getMessage());
          } finally {
              DatabaseConnection.closeConnection();
          }

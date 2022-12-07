@@ -1,5 +1,6 @@
 package com.ideas2it.view;
 
+import java.lang.NullPointerException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -31,15 +32,14 @@ public class PostView {
      * account. 
      */ 
     public void postMenu(User user) {
+        boolean choice = false;
         UserView userView = new UserView();
-        boolean choice;
         StringBuilder postControl = new StringBuilder();   
         postControl.append(" Enter 1 for add post") 
                    .append("\n Enter 2 for display post")
                    .append("\n Enter 3 for delete post")
                    .append("\n Enter 4 for update post")
                    .append("\n Enter 5 for profile menu");
-        choice = false;
         do {
             try {
                 System.out.println(postControl);
@@ -66,11 +66,11 @@ public class PostView {
                     break;
 
                 default:
-                    CustomLogger.warn("Entered value is Invalid!!");
+                    CustomLogger.warn(Constant.NO_FEATURES_EXIST_IN_POST);
                     break;
                 }
             } catch (InputMismatchException inputMismatch) {
-                CustomLogger.error("Enter only Numbers");
+                CustomLogger.error(Constant.INVALID_OPTION_TO_POST);
                 scanner.next();
             }
         } while (!choice);
@@ -83,12 +83,7 @@ public class PostView {
      *        account name of user.
      */
     private void uploadPost(User user) { 
-        String title;
-        String content;
-        Post post;
-        title = getTitle();
-	content = getContent();
-        post = postController.uploadPost(user, title, content);
+        Post post = postController.uploadPost(user, getTitle(), getContent());
 
         if(null == post) {
 	    System.out.println("Post not created");
@@ -101,8 +96,7 @@ public class PostView {
      * display the post
      */ 
     private void displayPost(User user) {
-        List<Post> posts;
-        posts = postController.getUserPost(user.getUserId());  
+        List<Post> posts = postController.getUserPost(user.getUserId());  
         if (null != posts) {
             System.out.println(posts);
         } else {
@@ -114,10 +108,9 @@ public class PostView {
      * To delete the post.
      */ 
     private void deletePost(User user) {
-        String postId;
         System.out.println("Enter the post Id");
         scanner.nextLine();
-        postId = scanner.nextLine();
+        String postId = scanner.nextLine();
 
         if (postController.delete(postId, user.getUserId())) {
             System.out.println("Post is deleted");
@@ -130,23 +123,20 @@ public class PostView {
      * update the post    
      */
     private void update(User user) {
-        boolean choice;
-        Post post;
-        String postId;
-        StringBuilder postUpdate;
-        post = null; 
-        postUpdate = new StringBuilder();
-        choice = false;
+        boolean choice = false;
+        Post post = null;
+        StringBuilder postUpdate = new StringBuilder();
         System.out.println("Enter the post Id to update");
-        postId = scanner.next();
+        String postId = scanner.next();
 
-        if(null != postController.getPostId(postId)) { 
+        if (null != postController.getPostId(postId)) { 
             postUpdate.append(" Enter 1 for update post content")
                       .append("\n Enter 2 for update post tittle");
+
             do {
                 try {
                     System.out.println(postUpdate);
-                    scanner.nextLine();     
+                    scanner.skip("\r\n");     
         
                     switch (scanner.nextInt()) {
                     case Constant.UPDATE_POST_CONTENT:
@@ -167,10 +157,7 @@ public class PostView {
                         break;
 
                     default:
-                        postUpdate.delete(0, postUpdate.length() - 1);
-                        postUpdate.append("Entered value is Invalid!! ")
-                                  .append("\n enter correct option to update");
-                        CustomLogger.warn(postUpdate.toString());
+                        CustomLogger.warn("No features to update in post");
                         break;
                     }
 
@@ -179,15 +166,16 @@ public class PostView {
                     } else {
                         CustomLogger.info("post not updated");
                     }
- 
                 } catch (InputMismatchException intputMismatch) { 
-                    CustomLogger.error("Enter only Numbers"); 
-                    scanner.next();     
+                    CustomLogger.error(inputMismatch.getMessage()); 
+                    scanner.next();    
+                } catch (NullPointerException exception) { 
+                    CustomLogger.error(exception.getMessage());     
                 }
-            } while (!choice);
+            } while (!choice); 
         } else {
-            System.out.println("no post to update"); 
-        }
+            System.out.println("no post to update");
+        } 
     }
 
     private String getContent() {
@@ -197,18 +185,6 @@ public class PostView {
 
     private String getTitle() {
         System.out.println("Enter your title");
-	scanner.nextLine();
         return scanner.nextLine();
-    }
-
-    private boolean isPostAvailable(String id) {
-        Post post;
-        boolean isAvailable = false;
-        post = postController.getPostId(id);
-
-        if (null != post) {
-            isAvailable = true;
-        } 
-        return isAvailable;
     }
 }

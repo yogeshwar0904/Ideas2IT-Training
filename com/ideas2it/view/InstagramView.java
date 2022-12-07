@@ -7,9 +7,16 @@ import com.ideas2it.constant.Constant;
 import com.ideas2it.controller.InstagramController;
 import com.ideas2it.logger.CustomLogger;
 import com.ideas2it.model.User;
-import com.ideas2it.view.UserView;
 import com.ideas2it.view.PostView;
+import com.ideas2it.view.UserView;
 
+/**
+ * Shows the login option, create option to the user based on 
+ * the user option it takes to the further pages.
+ *
+ * @version 1.0 22-Nov-2022
+ * @author  Yogeshwar S
+ */
 public class InstagramView {
     private InstagramController instagramController;
     private Scanner scanner;
@@ -20,18 +27,20 @@ public class InstagramView {
     }
 
     /**
-     * option for the user 
+     * Allow the user to login to their account or 
+     * create new account for user. 
      */
     public void userInput() {
-        boolean choice;
-        StringBuilder userChoice = new StringBuilder();
+        boolean choice = false;
+        StringBuilder userChoice = new StringBuilder();;
         userChoice.append("Enter 1 for Login")
                   .append("\nEnter 2 for Create account")
                   .append("\nEnter 3 for Exit");
-        choice = false;
+
         do {
             try {
-                System.out.println(userChoice);  
+                System.out.println(userChoice);
+  
                 switch (scanner.nextInt()) {
                 case Constant.LOGIN: 
                     login();
@@ -48,56 +57,50 @@ public class InstagramView {
                     break;
 
                 default :
-                    System.out.println("Entered data not match");
+                    CustomLogger.warn(Constant.USER_INPUT_NOT_EXIST);
                     break;
                 }
             } catch (InputMismatchException exception) {
-                System.out.println("Entered data is invalid");
+                CustomLogger.error(Constant.USER_INPUT_MISMATCH);
                 scanner.next();
             }
         } while(!choice);
     }
 
     /**
-     * Login the user 
+     * Allow the user to Login if their account
+     * alredy exist.
      */
-    public void login() {
-        UserView userView;
-        String accountName;
- 	String password;
-        userView = new UserView();	    
+    private void login() {
+        UserView userView = new UserView();
         System.out.println("Enter account name");
-        accountName = scanner.next();
+        String accountName = scanner.next();
         System.out.println("Enter the password");
-        password = scanner.next();
+        String password = scanner.next();
         User user = instagramController.login(accountName, password);
 
         if (null != user) {
             userView.homeMenu(user);
         } else {
             userInput();
-            CustomLogger.info("No account exist");
+            CustomLogger.info(Constant.NO_ACCOUNT_EXIST_TO_LOGIN);
         }
-     }
+    }
 
     /**
-     * creates the account for user.         
+     * Allow the user to create
+     * new account.         
      */   
     private void create() {
-        boolean isValid = false;
-        User user = null;
-        String  accountName = getAccountName(); 
-        String  userName = getUserName();
-        long mobileNumber = getMobileNumber();
-        String  password = getPassword();     
-        user = new User(accountName, userName,
-                        mobileNumber, password);
+        boolean isValid = false;     
+        User user = new User(getAccountName(), getUserName(),
+                             getMobileNumber(), getPassword());
 
         if (instagramController.create(user) != null) {
-	    CustomLogger.info("Account created sucessfully"); 
+	    CustomLogger.info(Constant.ACCOUNT_CREATED); 
             userInput();
         } else {
-            CustomLogger.info("Account not created");
+            CustomLogger.info(Constant.ACCOUNT_NOT_CREATED);
         }
     }
 
@@ -105,12 +108,12 @@ public class InstagramView {
      * Create account name for user.
      *
      * @return String accountName
-     *         accountName of the user
+     *         accountName of the user.
      */ 
-        public String getAccountName() {
-            String accountName; 
-            boolean isValid = false;
-            User user = null;
+    public String getAccountName() {
+        String accountName; 
+        boolean isValid = false;
+        User user = null;
 
         do {
             System.out.println(Constant.ACCOUNTNAME_FORMATE);
@@ -119,36 +122,39 @@ public class InstagramView {
             user = instagramController.search(accountName);
 
             if (isValid) { 
-                if (user == null) {
+                if (user.getAccountName() == null) {
                     return accountName;
                 } else {
-                    System.out.println("account name alredy exist");
+                    System.out.println(Constant.ACCOUNT_NAME_ALREDY_EXIST);
                     isValid = false;
                 }
             }  else {
-                 CustomLogger.warn("Entered wrong format try again");
                  isValid = false;
+                 CustomLogger.warn(Constant.WRONG_ACCOUNTNAME_FORMATE);
+                 
             }
         } while (!isValid);
         return accountName;
     }
 
     /**
-     * creates the first name for user.
+     * creates the name for user.
      *
      * @return String userName
      *         name of the user
      */ 
     public String getUserName() {
+        boolean isValid;
+        isValid = false;
         String userName; 
-        boolean isValid = false;
+
         do {
             System.out.println(Constant.NAME_FORMATE);
             userName = scanner.next();
             isValid = instagramController.isValidName(userName);
 
             if (!isValid) {
-                CustomLogger.warn("Entered wrong format try again");
+                CustomLogger.warn(Constant.WRONG_USERNAME_FORMATE);
             } 
         } while (!isValid);
         return userName;
@@ -161,8 +167,9 @@ public class InstagramView {
      *         mobileNumber of the user
      */     
     public long getMobileNumber() {
-        long mobileNumber; 
         boolean isValid = false;
+        long mobileNumber; 
+
         do {
             System.out.println(Constant.MOBILENUMBER_FORMATE);
             mobileNumber = scanner.nextLong();
@@ -170,7 +177,7 @@ public class InstagramView {
             isValid = instagramController.isValidMobileNumber(mobileNumber);
 
             if (!isValid) {
-                CustomLogger.warn("Entered wrong format try again");
+                CustomLogger.warn(Constant.WRONG_MOBILENUMBER_FORMATE);
             } 
         } while (!isValid); 
         return mobileNumber;
@@ -183,15 +190,16 @@ public class InstagramView {
      *         password of the user.
      */   
     public String getPassword() {
-        String password; 
         boolean isValid = false;
-        
+        String password;   
+
         do {
             System.out.println(Constant.PASSWORD_FORMATE);
             password = scanner.next();
             isValid = instagramController.isValidPassword(password);
+
             if (!isValid) {
-                CustomLogger.warn("Entered wrong format try again");
+                CustomLogger.warn(Constant.WRONG_PASSWORD_FORMATE);
             } 
         } while (!isValid);
         return password;

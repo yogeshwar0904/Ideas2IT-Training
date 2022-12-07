@@ -105,7 +105,9 @@ public class PostService {
     public Post update(String postId, String updateValue,
                            int choice, String userId) throws InstagramManagementException {
         Post post = postDao.getPostId(postId);
+
         if (null != post) {
+
             switch (choice) {
             case Constant.UPDATE_POST_CONTENT:
                 post.setContent(updateValue); 
@@ -121,6 +123,14 @@ public class PostService {
         throw new InstagramManagementException(Constant.ERROR_002);
     }
 
+    /**
+     * update the user post
+     *
+     * @param String postId 
+     *        post id  of the user
+     * @return Post
+     *         update the users post        
+     */ 
     public Post getPostId(String postId) {
        return postDao.getPostId(postId);
     }

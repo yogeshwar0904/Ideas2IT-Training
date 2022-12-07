@@ -1578,3 +1578,56 @@
 2022-12-03 17:54:14,118 ERROR c.i.l.CustomLogger [main] No user exist to login
 2022-12-03 17:55:23,512 ERROR c.i.l.CustomLogger [main] No post to display
 2022-12-03 17:55:42,369 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-06 14:41:14,844 ERROR c.i.l.CustomLogger [main] SQL exception occure
+2022-12-06 14:41:14,861 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-06 15:12:47,138 ERROR c.i.l.CustomLogger [main] SQL exception occure
+2022-12-06 15:12:47,148 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-06 15:33:51,592 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-06 16:24:28,867 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-06 16:30:37,404 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-06 16:48:20,125 ERROR c.i.l.CustomLogger [main] No post to display
+2022-12-06 16:55:59,295 ERROR c.i.l.CustomLogger [main] No post to display
+2022-12-06 23:39:12,147 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-07 15:03:02,701 ERROR c.i.l.CustomLogger [main] Cannot invoke "String.equals(Object)" because the return value of "com.ideas2it.model.User.getAccountName()" is null
+2022-12-07 22:24:28,801 ERROR c.i.l.CustomLogger [main] No post to display
+2022-12-07 22:25:30,700 ERROR c.i.l.CustomLogger [main] Unknown column 'post_id' in 'field list'
+2022-12-07 22:35:29,263 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-07 22:39:10,515 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-07 22:41:25,182 ERROR c.i.l.CustomLogger [main] No post to display
+2022-12-07 22:46:19,432 ERROR c.i.l.CustomLogger [main] No post to display
+2022-12-07 23:01:09,193 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-07 23:20:27,763 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-07 23:20:33,340 ERROR c.i.l.CustomLogger [main] Entered input data is invalid
+2022-12-07 23:48:04,419 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-07 23:48:24,614 ERROR c.i.l.CustomLogger [main] Entered input data is invalid
+2022-12-07 23:57:26,578 ERROR c.i.l.CustomLogger [main] Entered input not valid to post
+2022-12-07 23:58:32,206 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-08 00:05:45,030 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-08 00:05:58,712 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-08 00:06:03,434 ERROR c.i.l.CustomLogger [main] Entered input data is invalid
+2022-12-08 00:06:38,942 ERROR c.i.l.CustomLogger [main] null pointer exception
+2022-12-08 00:10:19,488 ERROR c.i.l.CustomLogger [main] null pointer exception
+2022-12-08 00:14:37,239 ERROR c.i.l.CustomLogger [main] null pointer exception
+2022-12-08 00:21:11,928 ERROR c.i.l.CustomLogger [main] Cannot invoke "com.ideas2it.model.Post.getPostId()" because "<local3>" is null
+2022-12-08 00:25:54,929 ERROR c.i.l.CustomLogger [main] Cannot invoke "com.ideas2it.model.Post.getPostId()" because "<local3>" is null
+2022-12-08 00:28:09,084 ERROR c.i.l.CustomLogger [main] Entered input not valid to post
+2022-12-08 00:29:39,418 ERROR c.i.l.CustomLogger [main] Cannot invoke "com.ideas2it.model.Post.getPostId()" because "<local3>" is null
+2022-12-08 00:31:56,514 ERROR c.i.l.CustomLogger [main] Entered input not valid to update
+2022-12-08 00:32:50,554 ERROR c.i.l.CustomLogger [main] Entered input not valid to post
+2022-12-08 00:33:10,190 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-08 00:33:51,029 ERROR c.i.l.CustomLogger [main] Cannot invoke "com.ideas2it.model.Post.getPostId()" because "<local3>" is null
+2022-12-08 00:37:36,059 ERROR c.i.l.CustomLogger [main] Entered input not valid to post
+2022-12-08 00:39:32,710 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-08 00:39:32,710 ERROR c.i.l.CustomLogger [main] Entered input not valid to post
+2022-12-08 00:39:42,427 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-08 00:39:42,427 ERROR c.i.l.CustomLogger [main] Entered input not valid to post
+2022-12-08 00:39:54,880 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-08 00:39:54,896 ERROR c.i.l.CustomLogger [main] Entered input not valid to post
+2022-12-08 00:39:54,896 ERROR c.i.l.CustomLogger [main] Entered input not valid to post
+2022-12-08 00:41:38,599 ERROR c.i.l.CustomLogger [main] Cannot invoke "com.ideas2it.model.Post.getPostId()" because "<local3>" is null
+2022-12-08 00:42:17,680 ERROR c.i.l.CustomLogger [main] Cannot invoke "com.ideas2it.model.Post.getPostId()" because "<local3>" is null
+2022-12-08 00:42:26,368 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-08 00:47:10,385 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-08 00:47:20,375 ERROR c.i.l.CustomLogger [main] Cannot invoke "com.ideas2it.model.Post.getPostId()" because "<local3>" is null
+2022-12-08 00:48:00,624 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-08 00:48:05,146 ERROR c.i.l.CustomLogger [main] Cannot invoke "com.ideas2it.model.Post.getPostId()" because "<local3>" is null

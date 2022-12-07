@@ -7,14 +7,15 @@ import com.ideas2it.constant.Constant;
 import com.ideas2it.exception.InstagramManagementException;
 import com.ideas2it.logger.CustomLogger;
 import com.ideas2it.model.Post;
-import com.ideas2it.service.PostService;
 import com.ideas2it.model.User;
+import com.ideas2it.service.PostService;
+
 
 /**
- * Get the information from PostView and pass 
- * to PostService
+ * Based on user request it perform create  
+ * post for user.
  *
- * @version     1.0 14 Sept 2022
+ * @version     1.0 12 Oct 2022
  * @author      Yogeshwar
  */
 public class PostController {
@@ -27,10 +28,14 @@ public class PostController {
     /**
      * upload the post for user
      *
-     * @param String userId
-     *        account id of the user
+     * @param user
+     *        details of the user
+     * @param String title
+     *        title of the post
      * @param String content
-     *        content of post taken
+     *        content of post.
+     * @return post
+     *        post of the user else null.
      */
     public Post uploadPost(User user, String title, String content) {
         try {
@@ -44,10 +49,10 @@ public class PostController {
     /**
      * display the post of the user
      *
-     * @param User user
-     *        details of the user
-     * @return userPosts
-     *         posts of the user
+     * @param String userId
+     *        id of the user
+     * @return List<Post>
+     *         post of the users
      */
     public List<Post> getUserPost(String userId) {
         List<Post> posts;
@@ -62,12 +67,14 @@ public class PostController {
     }
 
     /**
-     * Delete the post based on the postId 
+     * Delete the post based on the user postId 
      * 
+     * @param String userId
+     *        id of the user
      * @param  postId 
      *         id of the post
-     * @return bolean 
-     *         true or false based 
+     * @return boolean 
+     *         true if post is deleted 
      */
     public boolean delete(String postId, String userId) {
         try {
@@ -87,8 +94,10 @@ public class PostController {
      *        change detail  of user
      * @param int choice
      *        choice of user
+     * @param String userId
+     *        id of the user
      * @return post
-     *         details of post
+     *         details of post if post updated
      *          
      */   
     public Post update(String postId, String updateValue, int choice, String userId) { 
@@ -100,6 +109,15 @@ public class PostController {
         return null; 
     } 
 
+
+    /**
+     * To get the post id if that id already exist. 
+     * 
+     * @param  postId 
+     *         id of the post
+     * @return postId 
+     *         if post id already exist.
+     */
     public Post getPostId(String postId) {
        return postService.getPostId(postId);
     }
@@ -107,9 +125,10 @@ public class PostController {
     /**
      * displayPost will gets all the post which are posted by the user
      * stores it in the List and prints the post
-     * if the List of post is empty then it will print a No post found
+     * if the List of post is empty then it will print a no post found
      *
-     * @param user - the object of the user
+     * @return List<Post>
+     *         list of all user post.
      */
     public List<Post> getAllUsersPost() {
         List<Post> listOfPost = null;

@@ -11,6 +11,13 @@ import com.ideas2it.model.User;
 import com.ideas2it.view.InstagramView;
 import com.ideas2it.view.PostView;
 
+/**
+ * Shows the home page, based on the user
+ * option it takes to the further pages.
+ *
+ * @version 1.0 22-Nov-2022
+ * @author  Yogeshwar S
+ */
 public class UserView {
     private InstagramController instagramController;
     private InstagramView instagramView;
@@ -26,18 +33,24 @@ public class UserView {
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Based on user choice, allow the user to login the 
+     * profile menu.
+     *
+     * @param User user
+     *         details of the user.
+     */
     public void homeMenu(User user) {
-        boolean isRunning;
-        StringBuilder userChoice;
-        isRunning = false;
-        userChoice = new StringBuilder();
+        boolean isRunning = false;
+        StringBuilder userChoice = new StringBuilder();
         userChoice.append("Enter 1 for profile menu")
-                  .append("\nEnter 2 for Exit");
+                  .append("\n Enter 2 for Exit");
         System.out.println(postController.getAllUsersPost());
-
+        
         do {
             try {
                 System.out.println(userChoice);
+
                 switch (scanner.nextInt()) {
                 case Constant.PROFILE_MENU: 
                     profileMenu(user);
@@ -49,41 +62,38 @@ public class UserView {
                     break;
 
                 default :
-                    System.out.println("Entered data not match");
+                    CustomLogger.warn(Constant.HOMEMENU_NO_FEATURES_EXIST);
                     break;
                 }
             } catch (InputMismatchException exception) {
-                CustomLogger.error("Entered data is invalid");
+                CustomLogger.error(Constant.HOMEMENU_INVALID_OPTION);
                 scanner.next();
             }
         } while(!isRunning);
     }
 
     /**
-     * To add, remove, display, 
-     * update and search the account of users.
+     * Based on user choice To add, remove, display,  
+     * update and search the account of user and 
+     * post their pictures.
+     *
+     * @param User user
+     *         details of the user.
      */ 
     public void profileMenu(User user) {   
-        boolean isRunning;
-        StringBuilder userControl;
-        isRunning = false;
-        userControl = new StringBuilder();
-        userControl.append("\n Enter 1 for remove user")
-                   .append("\n Enter 2 for display the user")
-                   .append("\n Enter 3 for update the user")
-                   .append("\n Enter 4 for search")
-                   .append("\nEnter 5 for post menu")
-                   .append("\n Enter 6 for home menu");
-
+        boolean isRunning = false;
+        StringBuilder userControl = new StringBuilder();
+        userControl.append("\n Enter 1 for display the user")
+                   .append("\n Enter 2 for update the user")
+                   .append("\n Enter 3 for search")
+                   .append("\n Enter 4 for post menu")
+                   .append("\n Enter 5 for home menu")
+                   .append("\n Enter 6 for remove user");
         do {
             try {
                 System.out.println(userControl);
-                switch (scanner.nextInt()) {
-                case Constant.REMOVE:
-                    deleteAccount(user);
-                    isRunning = true;
-                    break;
 
+                switch (scanner.nextInt()) {
                 case Constant.DISPLAY:
                     display();
                     break;
@@ -106,71 +116,76 @@ public class UserView {
                     isRunning = true;
                     break;
 
+                case Constant.REMOVE:
+                    deleteAccount(user);
+                    isRunning = true;
+                    break;
+
                 default:
-                    CustomLogger.error("Entered value is Invalid!!");
+                    CustomLogger.warn(Constant.PROFILEMENU_NO_FEATURES_EXIST);
                     break;
                 }
             } catch (InputMismatchException inputMismatch) {
-                CustomLogger.warn("Enter only Numbers");
+                CustomLogger.error(Constant.PROFILEMENU_INVALID_OPTION);
                 scanner.next();
             }
         } while (!isRunning);
     }
 
     /**
-     * remove the Account 
+     * To deactivate the account of user. 
+     *
+     * @param User user
+     *         details of the user.
      */
     private void deleteAccount(User user) {
-        String accountName;
-        String password;
-        accountName = user.getAccountName();
-        password = user.getPassword();
+        String accountName = user.getAccountName();
+        String password = user.getPassword();
 
         if (instagramController.deleteAccount(accountName, password)) {
-            CustomLogger.info("Account deleted successfully"); 
+            CustomLogger.info(Constant.ACCOUNT_DELETED); 
             instagramView.userInput();      
         } else {
-            CustomLogger.warn("Entered invalid data");
+            CustomLogger.info(Constant.ACCOUNT_NOT_DELETED);
         }
     }
       
     /**
-     * search the Account    
+     * To search the particular user account.    
      */
     private void search() {
-        String accountName;
-        CustomLogger.info("Enter the account name you want to search");
-        accountName = scanner.next();  
+        System.out.println("Enter the account name you want to search");
+        String accountName = scanner.next();  
         User user = instagramController.search(accountName);
 
         if (null == user) {
-            CustomLogger.info("No account found");
+            CustomLogger.info(Constant.NO_ACCOUNT_FOUND);
         } else {
             System.out.println(user);   
         } 
     }
 
     /**
-     * display the Account
+     * display the Account.
      */
     private void display() {
         System.out.println(instagramController.display());
     }
 
     /**
-     * update the Account    
+     * update the Account  
+     *
+     * @param User user
+     *         details of the user.  
      */
     private void update(User user) {
-        boolean isRunning;
-        User userUpdate;
-        String accountName;
-        userUpdate = new User();
+        boolean isRunning = false;
+        String accountName = user.getAccountName();
         StringBuilder userControl = new StringBuilder();
-        accountName = user.getAccountName();
+        User userUpdate = new User();
         userControl.append("\n Enter 1 for update user name")
                    .append("\n Enter 2 for update mobile number")
                    .append("\n Enter 3 for update password");
-        isRunning = false;
 
         do {
             try {
@@ -203,10 +218,7 @@ public class UserView {
                     break;
 
                 default:
-                    userControl.delete(0, userControl.length() - 1);
-                    userControl.append("Entered value is Invalid!! ")
-                               .append("\n enter correct option to update");
-                    CustomLogger.warn(userControl.toString());
+                    CustomLogger.warn(Constant.NO_FEATURES_EXIST_TO_UPDATE);
                     break;
                 }
 
@@ -219,7 +231,7 @@ public class UserView {
                 }
  
             } catch (InputMismatchException intputMismatch) {
-                CustomLogger.error("Enter only Numbers"); 
+                CustomLogger.error(Constant.INVALID_OPTION_TO_UPDATE); 
                 scanner.next();     
             }
         } while (!isRunning);

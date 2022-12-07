@@ -1,7 +1,7 @@
 package com.ideas2it.util;
 
-import java.util.regex.Pattern;   
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;   
 
 import com.ideas2it.constant.Constant;
 
@@ -11,7 +11,7 @@ import com.ideas2it.constant.Constant;
  */
 public class InstagramUtil {  
 
-    public static boolean isValidAccountName(String accountName) {
+    public static boolean isValidAccountName(String accountName) { 
         return Pattern.matches(Constant.VALIDATE_ACCOUNTNAME, accountName);
     }
     
