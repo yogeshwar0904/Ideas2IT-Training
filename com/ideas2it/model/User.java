@@ -5,7 +5,7 @@ import java.util.List;
 import com.ideas2it.model.Post;
 
 /**
- * Create the account for new user.
+ * Create the account for user.
  *
  * @version     1.0 13 Sept 2022
  * @author      Yogeshwar

@@ -3,237 +3,203 @@ package com.ideas2it.view;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import com.ideas2it.constant.Constant;
-import com.ideas2it.controller.InstagramController;
-import com.ideas2it.controller.PostController;
-import com.ideas2it.logger.CustomLogger;
 import com.ideas2it.model.User;
-import com.ideas2it.view.InstagramView;
 import com.ideas2it.view.PostView;
+import com.ideas2it.view.ProfileView;
+import com.ideas2it.controller.ProfileController;
+import com.ideas2it.constant.Constant;
+import com.ideas2it.logger.CustomLogger;
 
 /**
- * Shows the home page, based on the user
- * option it takes to the further pages.
+ * Shows the login option, create option to the user based on 
+ * the user option it takes to the further pages.
  *
  * @version 1.0 22-Nov-2022
  * @author  Yogeshwar S
  */
 public class UserView {
-    private InstagramController instagramController;
-    private InstagramView instagramView;
-    private PostController postController;
-    private PostView postView;
+    private ProfileController profileController;
     private Scanner scanner;
 
     public UserView() {
-        this.instagramController = new InstagramController();
-        this.instagramView = new InstagramView();
-        this.postController = new PostController();
-        this.postView = new PostView();
+        this.profileController = new ProfileController();
         this.scanner = new Scanner(System.in);
     }
 
     /**
-     * Based on user choice, allow the user to login the 
-     * profile menu.
-     *
-     * @param User user
-     *         details of the user.
+     * Allow the user to login to their account or 
+     * create new account for user. 
      */
-    public void homeMenu(User user) {
+    public void userInput() {
         boolean isRunning = false;
         StringBuilder userChoice = new StringBuilder();
-        userChoice.append("Enter 1 for profile menu")
-                  .append("\n Enter 2 for Exit");
-        System.out.println(postController.getAllUsersPost());
-        
+        userChoice.append("Enter 1 for Login")
+                  .append("\nEnter 2 for Create account")
+                  .append("\nEnter 3 for Exit");
+
         do {
             try {
                 System.out.println(userChoice);
-
+  
                 switch (scanner.nextInt()) {
-                case Constant.PROFILE_MENU: 
-                    profileMenu(user);
+                case Constant.LOGIN: 
+                    login();
                     isRunning = true;
                     break;
 
-                case Constant.PROFILE_EXIT:
+                case Constant.CREATE: 
+                    create();
+                    isRunning = true;
+                    break;
+
+                case Constant.EXIT:
                     isRunning = true;
                     break;
 
                 default :
-                    CustomLogger.warn(Constant.HOMEMENU_NO_FEATURES_EXIST);
+                    CustomLogger.warn(Constant.USER_INPUT_NOT_EXIST);
                     break;
                 }
             } catch (InputMismatchException exception) {
-                CustomLogger.error(Constant.HOMEMENU_INVALID_OPTION);
+                CustomLogger.error(Constant.USER_INPUT_MISMATCH);
                 scanner.next();
             }
         } while(!isRunning);
     }
 
     /**
-     * Based on user choice To add, remove, display,  
-     * update and search the account of user and 
-     * post their pictures.
-     *
-     * @param User user
-     *         details of the user.
-     */ 
-    public void profileMenu(User user) {   
-        boolean isRunning = false;
-        StringBuilder userControl = new StringBuilder();
-        userControl.append("\n Enter 1 for display the user")
-                   .append("\n Enter 2 for update the user")
-                   .append("\n Enter 3 for search")
-                   .append("\n Enter 4 for post menu")
-                   .append("\n Enter 5 for home menu")
-                   .append("\n Enter 6 for remove user");
-        do {
-            try {
-                System.out.println(userControl);
-
-                switch (scanner.nextInt()) {
-                case Constant.DISPLAY:
-                    display();
-                    break;
-
-                case Constant.UPDATE:
-                    update(user);
-                    break;
-
-                case Constant.SEARCH:
-                    search();
-                    break;
-
-                case Constant.POST_MENU: 
-                    postView.postMenu(user);
-                    isRunning = true;
-                    break;
-
-                case Constant.BACK_TO_HOMEMENU:
-                    homeMenu(user);
-                    isRunning = true;
-                    break;
-
-                case Constant.REMOVE:
-                    deleteAccount(user);
-                    isRunning = true;
-                    break;
-
-                default:
-                    CustomLogger.warn(Constant.PROFILEMENU_NO_FEATURES_EXIST);
-                    break;
-                }
-            } catch (InputMismatchException inputMismatch) {
-                CustomLogger.error(Constant.PROFILEMENU_INVALID_OPTION);
-                scanner.next();
-            }
-        } while (!isRunning);
-    }
-
-    /**
-     * To deactivate the account of user. 
-     *
-     * @param User user
-     *         details of the user.
+     * Allow the user to Login if their account
+     * alredy exist.
      */
-    private void deleteAccount(User user) {
-        String accountName = user.getAccountName();
-        String password = user.getPassword();
+    private void login() {
+        ProfileView ProfileView = new ProfileView();
+        System.out.println("Enter account name");
+        String accountName = scanner.next();
+        System.out.println("Enter the password");
+        String password = scanner.next();
+        User user = profileController.login(accountName, password);
 
-        if (instagramController.deleteAccount(accountName, password)) {
-            CustomLogger.info(Constant.ACCOUNT_DELETED); 
-            instagramView.userInput();      
+        if (null != user) {
+            ProfileView.showHomeMenu(user);
         } else {
-            CustomLogger.info(Constant.ACCOUNT_NOT_DELETED);
+            userInput();
+            CustomLogger.info(Constant.NO_ACCOUNT_EXIST_TO_LOGIN);
         }
     }
-      
-    /**
-     * To search the particular user account.    
-     */
-    private void search() {
-        System.out.println("Enter the account name you want to search");
-        String accountName = scanner.next();  
-        User user = instagramController.search(accountName);
 
-        if (null == user) {
-            CustomLogger.info(Constant.NO_ACCOUNT_FOUND);
+    /**
+     * Allow the user to create
+     * new account.         
+     */   
+    private void create() {
+        boolean isValid = false;     
+        User user = new User(getAccountName(), getUserName(),
+                             getMobileNumber(), getPassword());
+
+        if (profileController.create(user) != null) {
+	    CustomLogger.info(Constant.ACCOUNT_CREATED); 
+            userInput();
         } else {
-            System.out.println(user);   
-        } 
+            CustomLogger.info(Constant.ACCOUNT_NOT_CREATED);
+        }
     }
 
     /**
-     * display the Account.
-     */
-    private void display() {
-        System.out.println(instagramController.display());
-    }
-
-    /**
-     * update the Account  
+     * Create account name for user.
      *
-     * @param User user
-     *         details of the user.  
-     */
-    private void update(User user) {
-        boolean isRunning = false;
-        String accountName = user.getAccountName();
-        StringBuilder userControl = new StringBuilder();
-        User userUpdate = new User();
-        userControl.append("\n Enter 1 for update user name")
-                   .append("\n Enter 2 for update mobile number")
-                   .append("\n Enter 3 for update password");
+     * @return String accountName
+     *         accountName of the user.
+     */ 
+    public String getAccountName() {
+        String accountName; 
+        boolean isValid = false;
+        User user = null;
 
         do {
-            try {
-                System.out.println(userControl);
-                scanner.skip("\r\n");     
-        
-                switch (scanner.nextInt()) {
-                case Constant.UPDATE_USER_NAME:
-                    String updateUserName;
-                    updateUserName = instagramView.getUserName();
-                    userUpdate = instagramController.update(accountName, updateUserName,
-                                                     Constant.UPDATE_USER_NAME);
-                    isRunning = true;
-                    break;
+            System.out.println(Constant.ACCOUNTNAME_FORMATE);
+            accountName = scanner.next();
+            isValid = profileController.isValidAccountName(accountName);
+            user = profileController.search(accountName);
 
-                case Constant.UPDATE_MOBILE_NUMBER:
-                    long mobileNumber;
-                    mobileNumber = instagramView.getMobileNumber(); 
-                    userUpdate = instagramController.update(accountName, String.valueOf(mobileNumber),
-                                                     Constant.UPDATE_MOBILE_NUMBER);
-                    isRunning = true;
-                    break;
-
-                case Constant.UPDATE_PASSWORD:
-                    String updatePassword;
-                    updatePassword = instagramView.getPassword();
-                    userUpdate = instagramController.update(accountName, updatePassword,
-                                                     Constant.UPDATE_PASSWORD);
-                    isRunning = true;
-                    break;
-
-                default:
-                    CustomLogger.warn(Constant.NO_FEATURES_EXIST_TO_UPDATE);
-                    break;
-                }
-
-                if (user.getPassword().equals(userUpdate.getPassword()) 
-                       && user.getUserName().equals(userUpdate.getUserName())
-                       && user.getMobileNumber() == userUpdate.getMobileNumber()) {
-                    CustomLogger.info("account not updated");  
+            if (isValid) { 
+                if (user.getAccountName() == null) {
+                    return accountName;
                 } else {
-                    CustomLogger.info("account updated Successfully");
+                    System.out.println(Constant.ACCOUNT_NAME_ALREDY_EXIST);
+                    isValid = false;
                 }
- 
-            } catch (InputMismatchException intputMismatch) {
-                CustomLogger.error(Constant.INVALID_OPTION_TO_UPDATE); 
-                scanner.next();     
+            } else {
+                isValid = false;
+                CustomLogger.warn(Constant.WRONG_ACCOUNTNAME_FORMATE);   
             }
-        } while (!isRunning);
+        } while (!isValid);
+        return accountName;
     }
+
+    /**
+     * creates the name for user.
+     *
+     * @return String userName
+     *         name of the user
+     */ 
+    public String getUserName() {
+        boolean isValid = false;
+        String userName; 
+
+        do {
+            System.out.println(Constant.NAME_FORMATE);
+            userName = scanner.next();
+            isValid = profileController.isValidName(userName);
+
+            if (!isValid) {
+                CustomLogger.warn(Constant.WRONG_USERNAME_FORMATE);
+            } 
+        } while (!isValid);
+        return userName;
+    }
+
+    /**
+     * creates mobile number for user.
+     *      
+     * @return long mobileNumber
+     *         mobileNumber of the user
+     */     
+    public long getMobileNumber() {
+        boolean isValid = false;
+        long mobileNumber; 
+
+        do {
+            System.out.println(Constant.MOBILENUMBER_FORMATE);
+            mobileNumber = scanner.nextLong();
+            scanner.skip("\r\n");
+            isValid = profileController.isValidMobileNumber(mobileNumber);
+
+            if (!isValid) {
+                CustomLogger.warn(Constant.WRONG_MOBILENUMBER_FORMATE);
+            } 
+        } while (!isValid); 
+        return mobileNumber;
+    }
+
+    /**
+     * creates password for user.
+     *
+     * @return String password
+     *         password of the user.
+     */   
+    public String getPassword() {
+        boolean isValid = false;
+        String password;   
+
+        do {
+            System.out.println(Constant.PASSWORD_FORMATE);
+            password = scanner.next();
+            isValid = profileController.isValidPassword(password);
+
+            if (!isValid) {
+                CustomLogger.warn(Constant.WRONG_PASSWORD_FORMATE);
+            } 
+        } while (!isValid);
+        return password;
+    } 
 }

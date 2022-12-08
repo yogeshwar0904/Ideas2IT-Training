@@ -3,15 +3,15 @@ package com.ideas2it.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.ideas2it.model.Post;
 import com.ideas2it.model.User;
-import com.ideas2it.logger.CustomLogger;
 import com.ideas2it.databaseconnection.DatabaseConnection;
+import com.ideas2it.logger.CustomLogger;
 
 /**
  * To perform create,update,search and detele for the user
@@ -35,7 +35,7 @@ public class PostDao {
         StringBuilder query = new StringBuilder();
         query.append("INSERT INTO ")
              .append("post (user_id, post_id, title, content)")
-             .append("VALUES(?,?,?,?)");
+             .append("VALUES(?, ?, ?, ?)");
 
         try {     
             connection = DatabaseConnection.getConnection();

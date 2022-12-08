@@ -3,13 +3,12 @@ package com.ideas2it.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ideas2it.constant.Constant;
-import com.ideas2it.exception.InstagramManagementException;
-import com.ideas2it.logger.CustomLogger;
 import com.ideas2it.model.Post;
 import com.ideas2it.model.User;
 import com.ideas2it.service.PostService;
-
+import com.ideas2it.constant.Constant;
+import com.ideas2it.exception.InstagramManagementException;
+import com.ideas2it.logger.CustomLogger;
 
 /**
  * Based on user request it perform create  
@@ -96,9 +95,8 @@ public class PostController {
      *        choice of user
      * @param String userId
      *        id of the user
-     * @return post
-     *         details of post if post updated
-     *          
+     * @return Post post 
+     *         details of post if post updated         
      */   
     public Post update(String postId, String updateValue, int choice, String userId) { 
         try {
@@ -115,7 +113,7 @@ public class PostController {
      * 
      * @param  postId 
      *         id of the post
-     * @return postId 
+     * @return String postId 
      *         if post id already exist.
      */
     public Post getPostId(String postId) {

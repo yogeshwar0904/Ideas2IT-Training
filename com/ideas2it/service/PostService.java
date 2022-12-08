@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.ideas2it.constant.Constant;
-import com.ideas2it.dao.PostDao;
-import com.ideas2it.exception.InstagramManagementException;
 import com.ideas2it.model.Post;
 import com.ideas2it.model.User;
-import com.ideas2it.service.InstagramService;
+import com.ideas2it.service.ProfileService;
+import com.ideas2it.dao.PostDao;
+import com.ideas2it.constant.Constant;
+import com.ideas2it.exception.InstagramManagementException;
 
 /**
  * perform the upload, delete, display 
@@ -20,11 +20,11 @@ import com.ideas2it.service.InstagramService;
  */
 public class PostService {
     private PostDao postDao;
-    private InstagramService instagramService;
+    private ProfileService profileService;
 
     public PostService() {
         this.postDao = new PostDao();
-        this.instagramService = new InstagramService();
+        this.profileService = new ProfileService();
     }
 
     /**
@@ -107,7 +107,6 @@ public class PostService {
         Post post = postDao.getPostId(postId);
 
         if (null != post) {
-
             switch (choice) {
             case Constant.UPDATE_POST_CONTENT:
                 post.setContent(updateValue); 

@@ -210,3 +210,13 @@
 2022-12-07 23:05:16,140 INFO c.i.l.CustomLogger [main] account updated Successfully
 2022-12-07 23:06:11,312 INFO c.i.l.CustomLogger [main] account updated Successfully
 2022-12-08 00:31:39,147 INFO c.i.l.CustomLogger [main] account updated Successfully
+2022-12-08 00:50:42,334 INFO c.i.l.CustomLogger [main] post updated Successfully
+2022-12-08 11:14:09,304 INFO c.i.l.CustomLogger [main] Account created sucessfully
+2022-12-08 11:14:51,096 INFO c.i.l.CustomLogger [main] Post created successfully
+2022-12-08 11:16:51,476 INFO c.i.l.CustomLogger [main] Account deleted successfully
+2022-12-08 11:16:54,583 INFO c.i.l.CustomLogger [main] No account is exist to login
+2022-12-08 11:21:37,502 INFO c.i.l.CustomLogger [main] Post created successfully
+2022-12-08 11:24:23,578 INFO c.i.l.CustomLogger [main] No account is exist to login
+2022-12-08 11:24:23,579 INFO c.i.l.CustomLogger [main] No account is exist to login
+2022-12-08 11:24:23,582 INFO c.i.l.CustomLogger [main] No account is exist to login
+2022-12-08 11:58:06,130 INFO c.i.l.CustomLogger [main] Post created successfully

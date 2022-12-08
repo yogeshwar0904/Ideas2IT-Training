@@ -13,21 +13,25 @@ public class Post {
     private String content;
     private String title;
     private User user;
+ 
+    public Post() {}
+
     public Post(String postId, String title, String content) {
         this.postId = postId;
         this.title = title;
         this.content = content;
     }
+
     public Post(User user, String title, String content) {
         this.user = user;
         this.title = title;
         this.content = content;
     }
+
     public String getTitle() {
         return title;
     }
 
-    public Post() {}
     public void setTitle(String title) {
         this.title = title;
     }
@@ -39,7 +43,6 @@ public class Post {
     public void setContent(String content) {
         this.content = content;
     } 
-
 
    public String getPostId() {
         return postId;
@@ -62,7 +65,6 @@ public class Post {
         post.append("\nPostId : ").append(postId)
             .append("\nPostTitle : ").append(title)
             .append("\nPostContent : ").append(content);
-
         return post.toString();
     }
 }

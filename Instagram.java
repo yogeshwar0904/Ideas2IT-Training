@@ -4,9 +4,10 @@
  * view the others post.
  */
 
-import com.ideas2it.view.InstagramView;
+import com.ideas2it.view.UserView;
 
-/** Call the User sugestion method to run the 
+/** 
+ * Call the User suggestion method to run the 
  * application.
  *
  * @version     2.0 14 Sept 2022
@@ -14,7 +15,7 @@ import com.ideas2it.view.InstagramView;
  */
 public class Instagram {     
     public static void main(String[] args) { 
-        InstagramView instagramView = new InstagramView();
-        instagramView.userInput();
+        UserView userView = new UserView();
+        userView.userInput();
     }
-} 
+}  

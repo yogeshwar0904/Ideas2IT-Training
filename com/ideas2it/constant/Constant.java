@@ -49,6 +49,10 @@ public class Constant {
     public static final int UPDATE_POST_CONTENT = 1;  
     public static final int UPDATE_POST_TITLE = 2; 
 
+    public static final String URL = "jdbc:mysql://localhost:3306/instagram";
+    public static final String USER_NAME = "root";
+    public static final String PASSWORD = "Printf";
+
     public static final String ERROR_01 = "No user exist";
     public static final String ERROR_02 = "No account found to update";
     public static final String ERROR_03 = "No account exist to delete";
@@ -88,7 +92,11 @@ public class Constant {
     public static final String NO_FEATURES_EXIST_IN_POST = "Entered input data have no features in post";
     public static final String INVALID_OPTION_TO_POST = "Entered input not valid to post";
 
-
+    public static final String POST_UPLOADED = "Post created successfully";
+    public static final String POST_NOT_UPLOAD = "Post not created";
+    public static final String POST_DELETED = " post deleted successfully";
+    public static final String POST_NOT_DELETED = "post not deleted";
+    public static final String NO_POST = "No Post Uploaded yet";
 
 
 

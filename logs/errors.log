@@ -1631,3 +1631,13 @@
 2022-12-08 00:47:20,375 ERROR c.i.l.CustomLogger [main] Cannot invoke "com.ideas2it.model.Post.getPostId()" because "<local3>" is null
 2022-12-08 00:48:00,624 ERROR c.i.l.CustomLogger [main] Enter only Numbers
 2022-12-08 00:48:05,146 ERROR c.i.l.CustomLogger [main] Cannot invoke "com.ideas2it.model.Post.getPostId()" because "<local3>" is null
+2022-12-08 00:49:52,298 ERROR c.i.l.CustomLogger [main] Enter only Numbers
+2022-12-08 00:49:58,346 ERROR c.i.l.CustomLogger [main] Cannot invoke "com.ideas2it.model.Post.getPostId()" because "<local3>" is null
+2022-12-08 00:50:47,109 ERROR c.i.l.CustomLogger [main] No post to display
+2022-12-08 11:04:17,888 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-08 11:12:47,838 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-08 11:17:48,306 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-08 11:18:59,381 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-08 11:20:06,183 ERROR c.i.l.CustomLogger [main] No user exist to login
+2022-12-08 11:58:40,882 ERROR c.i.l.CustomLogger [main] exception
+2022-12-08 16:38:38,480 ERROR c.i.l.CustomLogger [main] exception

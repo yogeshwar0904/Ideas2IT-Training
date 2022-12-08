@@ -1,15 +1,13 @@
 package com.ideas2it.service;
 
 import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
+import com.ideas2it.model.User;
+import com.ideas2it.dao.ProfileDao;
 import com.ideas2it.constant.Constant;
-import com.ideas2it.dao.InstagramDao;
 import com.ideas2it.exception.InstagramManagementException;
 import com.ideas2it.logger.CustomLogger;
-import com.ideas2it.model.User;
 
 /**
  * perform the create, update, delete,
@@ -19,11 +17,11 @@ import com.ideas2it.model.User;
  * @version     1.0 14 Sept 2022
  * @author      Yogeshwar
  */
-public class InstagramService {
-    private InstagramDao instagramDao;
+public class ProfileService {
+    private ProfileDao profileDao;
 
-    public InstagramService() {
-        this.instagramDao = new InstagramDao();
+    public ProfileService() {
+        this.profileDao = new ProfileDao();
     }
 
     /**
@@ -36,7 +34,7 @@ public class InstagramService {
      */
      public User login(String accountName, String password) throws InstagramManagementException { 
          User user;
-         user = instagramDao.login(accountName,password);
+         user = profileDao.login(accountName,password);
 
          if(null != user&& user.getPassword().equals(password)) { 
              return user;
@@ -59,7 +57,7 @@ public class InstagramService {
         String userId;
         userId = UUID.randomUUID().toString();
         user.setUserId(userId);
-        return instagramDao.create(user);
+        return profileDao.create(user);
     } 
   
     /**
@@ -73,10 +71,10 @@ public class InstagramService {
      */ 
     public boolean deleteAccount(String accountName, 
                         String password) throws InstagramManagementException { 
-        User user = instagramDao.getAccountName(accountName);
+        User user = profileDao.getAccountName(accountName);
 
         if (null != user && user.getPassword().equals(password)) {
-            return instagramDao.deleteAccount(accountName, password);
+            return profileDao.deleteAccount(accountName, password);
         } else {
            throw new InstagramManagementException(Constant.ERROR_03);
         }
@@ -91,7 +89,7 @@ public class InstagramService {
      */
     public User search(String accountName) throws 
                     InstagramManagementException  { 
-        User user = instagramDao.getAccountName(accountName);
+        User user = profileDao.getAccountName(accountName);
 
         if( null == user) {
             throw new InstagramManagementException(Constant.ERROR_01);
@@ -107,10 +105,10 @@ public class InstagramService {
      * @return List<String>
      *         accountNames of user
      */
-    public List<String> display() throws InstagramManagementException {
-        List<String> accountNames = instagramDao.display(); 
+    public List<String> getAllUserAccount() throws InstagramManagementException {
+        List<String> accountNames = profileDao.getAllAccountName(); 
 
-        if(accountNames.isEmpty()) {
+        if (accountNames.isEmpty()) {
             throw new InstagramManagementException(Constant.ERROR_04);
         }  
         return accountNames;  
@@ -128,8 +126,8 @@ public class InstagramService {
      */   
     public User update(String accountName, String updateValue,
                            int choice) throws InstagramManagementException {
-        User user = instagramDao.getAccountName(accountName);
-        String userId = instagramDao.getUserId(accountName);
+        User user = profileDao.getAccountName(accountName);
+        String userId = profileDao.getUserId(accountName);
 
         if (null != user) {
             switch (choice) {
@@ -149,7 +147,7 @@ public class InstagramService {
                 CustomLogger.info("invalid!");
                 break;         
             }
-            return instagramDao.update(accountName, user,userId);
+            return profileDao.update(accountName, user,userId);
         }
         throw new InstagramManagementException(Constant.ERROR_02);
     }

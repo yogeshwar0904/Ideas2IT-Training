@@ -3,13 +3,12 @@ package com.ideas2it.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ideas2it.constant.Constant;
-import com.ideas2it.exception.InstagramManagementException;
 import com.ideas2it.model.User;
-import com.ideas2it.logger.CustomLogger;
-import com.ideas2it.service.InstagramService;
+import com.ideas2it.service.ProfileService;
+import com.ideas2it.constant.Constant;
 import com.ideas2it.util.InstagramUtil;
-
+import com.ideas2it.exception.InstagramManagementException;
+import com.ideas2it.logger.CustomLogger;
 
 /**
  * Based on user request it perform login, create  
@@ -18,12 +17,12 @@ import com.ideas2it.util.InstagramUtil;
  * @version     1.0 14 Sept 2022
  * @author      Yogeshwar
  */
-public class InstagramController {
-    private InstagramService instagramService;
+public class ProfileController {
+    private ProfileService profileService;
     private InstagramUtil instagramUtil;
 
-    public InstagramController() {
-        this.instagramService = new InstagramService(); 
+    public ProfileController() {
+        this.profileService = new ProfileService(); 
         this.instagramUtil = new InstagramUtil();
     }
 
@@ -35,13 +34,13 @@ public class InstagramController {
      * @param password
      *        password of user
      * @return User user
-     *         details of the user.
+     *        details of the user.
      */
      public User login(String accountName, String password) {
          try {
-             return instagramService.login(accountName, password);
+             return profileService.login(accountName, password);
          } catch (InstagramManagementException exception) {
-            CustomLogger.error(exception.getMessage());
+             CustomLogger.error(exception.getMessage());
          }
          return null; 
      }
@@ -55,7 +54,7 @@ public class InstagramController {
      *        details of the user           
      */ 
     public User create(User user) {
-        return instagramService.add(user);    
+        return profileService.add(user);    
     }
 
     /**
@@ -69,7 +68,7 @@ public class InstagramController {
      */  
     public boolean deleteAccount(String accountName, String password) { 
         try {
-            return instagramService.deleteAccount(accountName, password);
+            return profileService.deleteAccount(accountName, password);
         } catch (InstagramManagementException exception) {
             CustomLogger.error(exception.getMessage());
         }
@@ -87,7 +86,7 @@ public class InstagramController {
      */   
     public User search(String accountName) { 
         try {
-            return instagramService.search(accountName);
+            return profileService.search(accountName);
         } catch(InstagramManagementException exception) {
             CustomLogger.error(exception.getMessage());
         }
@@ -100,9 +99,9 @@ public class InstagramController {
      * @return Map<String, User> 
      *         accounts of user         
      */   
-    public List<String> display() { 
+    public List<String> getAllUserAccount() { 
         try {
-            return instagramService.display();
+            return profileService.getAllUserAccount();
         } catch(InstagramManagementException exception) {
             CustomLogger.error(exception.getMessage());
         }
@@ -121,11 +120,10 @@ public class InstagramController {
      * @return user
      *         details of user if account
      *         updated succesfully.
-     *          
      */   
     public User update(String accountName, String updateValue, int choice) { 
         try {
-            return instagramService.update(accountName, updateValue, choice); 
+            return profileService.update(accountName, updateValue, choice); 
         } catch (InstagramManagementException exception) {
             CustomLogger.error(exception.getMessage());
         } 
