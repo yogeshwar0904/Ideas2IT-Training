@@ -11,8 +11,8 @@ import com.ideas2it.exception.InstagramManagementException;
 import com.ideas2it.logger.CustomLogger;
 
 /**
- * Based on user request it perform create  
- * post for user.
+ * Based on user request it perform create, update, 
+ * delete, display post for user.
  *
  * @version     1.0 12 Oct 2022
  * @author      Yogeshwar
@@ -27,14 +27,14 @@ public class PostController {
     /**
      * upload the post for user
      *
-     * @param user
+     * @param User user
      *        details of the user
      * @param String title
      *        title of the post
      * @param String content
      *        content of post.
      * @return post
-     *        post of the user else null.
+     *        post of the user if post created succesfully.
      */
     public Post uploadPost(User user, String title, String content) {
         try {
@@ -68,10 +68,10 @@ public class PostController {
     /**
      * Delete the post based on the user postId 
      * 
-     * @param String userId
-     *        id of the user
      * @param  postId 
      *         id of the post
+     * @param String userId
+     *        id of the user
      * @return boolean 
      *         true if post is deleted 
      */
@@ -96,7 +96,7 @@ public class PostController {
      * @param String userId
      *        id of the user
      * @return Post post 
-     *         details of post if post updated         
+     *        details of post if post updated         
      */   
     public Post update(String postId, String updateValue, int choice, String userId) { 
         try {
@@ -106,7 +106,6 @@ public class PostController {
         } 
         return null; 
     } 
-
 
     /**
      * To get the post id if that id already exist. 

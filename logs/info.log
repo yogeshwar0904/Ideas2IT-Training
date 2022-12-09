@@ -220,3 +220,6 @@
 2022-12-08 11:24:23,579 INFO c.i.l.CustomLogger [main] No account is exist to login
 2022-12-08 11:24:23,582 INFO c.i.l.CustomLogger [main] No account is exist to login
 2022-12-08 11:58:06,130 INFO c.i.l.CustomLogger [main] Post created successfully
+2022-12-09 12:53:10,459 INFO c.i.l.CustomLogger [main] no post to update
+2022-12-09 22:41:20,199 INFO c.i.l.CustomLogger [main] Post created successfully
+2022-12-09 22:56:50,740 INFO c.i.l.CustomLogger [main] no post to update

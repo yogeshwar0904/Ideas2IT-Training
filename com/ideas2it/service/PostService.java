@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import com.ideas2it.model.Post;
 import com.ideas2it.model.User;
-import com.ideas2it.service.ProfileService;
+import com.ideas2it.dao.daoImpl.PostDaoImpl;
 import com.ideas2it.dao.PostDao;
 import com.ideas2it.constant.Constant;
 import com.ideas2it.exception.InstagramManagementException;
@@ -20,23 +20,27 @@ import com.ideas2it.exception.InstagramManagementException;
  */
 public class PostService {
     private PostDao postDao;
-    private ProfileService profileService;
 
     public PostService() {
-        this.postDao = new PostDao();
-        this.profileService = new ProfileService();
+        this.postDao = new PostDaoImpl();
     }
 
     /**
-     * upload the post for user
-     *   
-     * @param String accountName
-     *        account name of the user
-     * @param string postLocation
-     *        location of post taken
+     * upload the post for user.
+     *
+     * @param User user 
+     *        details of user
+     * @param String title 
+     *        title of user post
+     * @param String content 
+     *        content of user post
+     * @return Post post
+     *        post of user if upload succesfully
+     * @throws InstagramManagementException
+     *        post not uploaded  
      */
     public Post uploadPost(User user, String title, String content) 
-                    throws InstagramManagementException {
+                              throws InstagramManagementException {
         String postId;
         Post post;
         postId = UUID.randomUUID().toString();
@@ -50,60 +54,73 @@ public class PostService {
      * 
      * @param  postId 
      *         id of the post
-     * @return isDeleted - 
-     *         true or false based on the response
+     * @return boolean true 
+     *         if post deleted succesfully
+     * @throws InstagramManagementException
+     *         post not deleted 
      */
-    public boolean delete(String postId, String userId) throws InstagramManagementException { 
+    public boolean delete(String postId, String userId) 
+                             throws InstagramManagementException { 
         boolean isDeleted;
         isDeleted = (postDao.delete(postId, userId) > 0);
         return isDeleted;
     }
 
     /**
-     * Gets the post based on there userId 
+     * Gets the post based on the user id 
      * 
-     * @param  userId   - id of the user
-     * @return userPosts - posts of the particular user
+     * @param  String userId   
+     *         id of the user
+     * @return List<Post> userPosts 
+     *         posts of the particular user
+     * @throws InstagramManagementException
+     *         post not exist 
      */
     public List<Post> displayPost(String userId) 
-                      throws InstagramManagementException {
-        List<Post> userPosts;
-        userPosts = postDao.displayPost(userId);
+                                     throws InstagramManagementException {
+        List<Post> userPosts = postDao.displayPost(userId);
         
         if (userPosts.isEmpty()) {
-            throw new InstagramManagementException(Constant.ERROR_001);
+            throw new InstagramManagementException(Constant
+                                         .NOT_YET_POST_UPLOADED);
         }      
         return userPosts;
     } 
 
     /**
-     * Gets All the post
+     * Gets All the users post
      * 
-     * @param  userId   - id of the user
-     * @return userPosts - posts of the particular user
+     * @return List<Post> listOfPost 
+     *         posts of all user
+     * @throws InstagramManagementException
+     *         if post not exist 
      */
     public List<Post> getAllUserPost() throws InstagramManagementException {
-        List<Post> listOfPost;
-        listOfPost = postDao.displayAllUserPost();
+        List<Post> listOfPost = postDao.displayAllUserPost();
         
         if (listOfPost.isEmpty()) { 
-            throw new InstagramManagementException(Constant.ERROR_001);   
+            throw new InstagramManagementException(Constant
+                                         .NO_USER_POST_EXIST_TO_SHOW);   
         }
         return listOfPost;   
     }
 
     /**
-     * update the user post
+     * update the post of user
      *
      * @param String postId 
      *        post id  of the user
-     * @param int choice
-     *        choice of the user
-     * @return Post
-     *         update the users post        
+     * @param String updateValue
+     *        update particular data of the user post
+     * @param int choice 
+     *        choice of the user to update
+     * @param String userId 
+     *        id  of the user
+     * @throws InstagramManagementException
+     *        post not updated        
      */   
-    public Post update(String postId, String updateValue,
-                           int choice, String userId) throws InstagramManagementException {
+    public Post update(String postId, String updateValue, int choice, 
+                          String userId) throws InstagramManagementException {
         Post post = postDao.getPostId(postId);
 
         if (null != post) {
@@ -119,16 +136,17 @@ public class PostService {
             }
             return postDao.update(post, userId);
         }
-        throw new InstagramManagementException(Constant.ERROR_002);
+        throw new InstagramManagementException(Constant
+                                     .NO_POST_EXIST_TO_UPDATE);
     }
 
     /**
-     * update the user post
+     * get the id of user post
      *
      * @param String postId 
      *        post id  of the user
-     * @return Post
-     *         update the users post        
+     * @return Post post
+     *         particular post of user         
      */ 
     public Post getPostId(String postId) {
        return postDao.getPostId(postId);

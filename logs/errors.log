@@ -1641,3 +1641,6 @@
 2022-12-08 11:20:06,183 ERROR c.i.l.CustomLogger [main] No user exist to login
 2022-12-08 11:58:40,882 ERROR c.i.l.CustomLogger [main] exception
 2022-12-08 16:38:38,480 ERROR c.i.l.CustomLogger [main] exception
+2022-12-09 01:04:02,178 ERROR c.i.l.CustomLogger [main] exception
+2022-12-09 14:33:49,843 ERROR c.i.l.CustomLogger [main] exception
+2022-12-09 23:00:07,794 ERROR c.i.l.CustomLogger [main] exception

@@ -36,14 +36,14 @@ public class PostView {
      *        details of user.
      */ 
     public void showPostMenu(User user) {
-        boolean choice = false;
+        boolean isRunning = false;
         ProfileView profileView = new ProfileView();
         StringBuilder postMenu = new StringBuilder();   
         postMenu.append(" Enter 1 for add post") 
-                   .append("\n Enter 2 for display post")
-                   .append("\n Enter 3 for delete post")
-                   .append("\n Enter 4 for update post")
-                   .append("\n Enter 5 for profile menu");
+                .append("\n Enter 2 for display post")
+                .append("\n Enter 3 for delete post")
+                .append("\n Enter 4 for update post")
+                .append("\n Enter 5 for profile menu");
         do {
             try {
                 System.out.println(postMenu);
@@ -67,7 +67,7 @@ public class PostView {
 
                 case Constant.BACK_TO_PROFILEMENU:
                     profileView.showProfileMenu(user);
-                    choice = true;
+                    isRunning = true;
                     break;
 
                 default:
@@ -80,7 +80,7 @@ public class PostView {
             } catch (Exception exception) {
                 CustomLogger.error("exception");
             }
-        } while (!choice);
+        } while (!isRunning);
     }
 
     /**
@@ -94,7 +94,6 @@ public class PostView {
 
         if(null == post) {
 	    CustomLogger.info(Constant.POST_NOT_UPLOAD);
-            System.out.println(Constant.POST_NOT_UPLOAD);
         } else {
             CustomLogger.info(Constant.POST_UPLOADED);
         }
@@ -141,7 +140,7 @@ public class PostView {
      *        details of user.   
      */
     private void update(User user) {
-        boolean choice = false;
+        boolean isRunning = false;
         Post post = null;
         StringBuilder postUpdateMenu = new StringBuilder();
         System.out.println("Enter the post Id to update");
@@ -149,7 +148,7 @@ public class PostView {
 
         if (null != postController.getPostId(postId)) { 
             postUpdateMenu.append(" Enter 1 for update post content")
-                      .append("\n Enter 2 for update post tittle");
+                          .append("\n Enter 2 for update post tittle");
            
             do {
                 try {
@@ -161,17 +160,17 @@ public class PostView {
                         scanner.nextLine(); 
                         String updatePostContent = getContent();
                         post = postController.update(postId, updatePostContent,
-                                                     Constant.UPDATE_POST_CONTENT,
-                                                     user.getUserId());
-                        choice = true;
+                                                  Constant.UPDATE_POST_CONTENT,
+                                                  user.getUserId());
+                        isRunning = true;
                         break;
 
                     case Constant.UPDATE_POST_TITLE:
                         String updatePostTitle = getTitle();
                         post = postController.update(postId, updatePostTitle,
-                                                     Constant.UPDATE_POST_TITLE,
-                                                     user.getUserId());
-                        choice = true;
+                                                  Constant.UPDATE_POST_TITLE,
+                                                  user.getUserId());
+                        isRunning = true;
                         break;
 
                     default:
@@ -186,11 +185,12 @@ public class PostView {
                     }
                 } catch (InputMismatchException inputMismatch) { 
                     CustomLogger.error(inputMismatch.getMessage()); 
-                    scanner.nextLine();    
+                    //scanner.next();    
                 } catch (NullPointerException exception) { 
-                    CustomLogger.error(exception.getMessage());     
+                    CustomLogger.error(exception.getMessage());
+                    scanner.next();     
                 }
-            } while (!choice); 
+            } while (!isRunning); 
         } else {
             CustomLogger.info("no post to update");
         } 

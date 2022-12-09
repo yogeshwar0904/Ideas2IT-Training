@@ -58,13 +58,14 @@ public class ProfileController {
     }
 
     /**
-     * remove the user
+     * Deactivate user account
      *
-     * @param accountName 
-     *        name of the account
-     * @param password
-     *        password of the account
-     * @return null if sucessfully deleted         
+     * @param String accountName 
+     *        name of the user account
+     * @param String password
+     *        password of the user account
+     * @return boolean
+     *        true if sucessfully account deleted         
      */  
     public boolean deleteAccount(String accountName, String password) { 
         try {
@@ -76,13 +77,13 @@ public class ProfileController {
     }
 
     /** 
-     * search the user
+     * search the particular user account
      *
      * @param String accountName 
      *        account name of user
-     * @return user
-     *         account name of user 
-     *         if account name exist   
+     * @return User user
+     *        account name of user 
+     *        if account name exist   
      */   
     public User search(String accountName) { 
         try {
@@ -94,10 +95,10 @@ public class ProfileController {
     }
 
     /**
-     * display the user
+     * get all the user account name
      *
-     * @return Map<String, User> 
-     *         accounts of user         
+     * @return List<String> 
+     *         account name of all user         
      */   
     public List<String> getAllUserAccount() { 
         try {
@@ -135,8 +136,9 @@ public class ProfileController {
      *
      * @param string accountName
      *        account name of user
-     * @return if account name valid return true
-     *         else return false         
+     * @return boolean true
+     *        if account name valid
+     *        else return false         
      */  
     public boolean isValidAccountName(String accountName) {
         return instagramUtil.isValidAccountName(accountName);
@@ -147,8 +149,9 @@ public class ProfileController {
      *
      * @param name
      *        name of user  
-     * @return if name valid return true
-     *         else return false       
+     * @return boolean true
+     *        if name valid 
+     *        else return false       
      */
     public boolean isValidName(String name) {
         return instagramUtil.isValidName(name);
@@ -159,8 +162,9 @@ public class ProfileController {
      *
      * @param mobileNumber
      *        mobile number of user
-     * @return if mobile number valid return true
-     *         else return false               
+     * @return boolean true
+     *        if mobile number valid 
+     *        else return false               
      */
     public boolean isValidMobileNumber(long mobileNumber) {
         return instagramUtil.isValidMobileNumber(mobileNumber);
@@ -171,8 +175,9 @@ public class ProfileController {
      *
      * @param password
      *        password of user
-     * @return if password valid return true
-     *         else return false              
+     * @return boolean true 
+     *        if password valid
+     *        else return false              
      */ 
     public boolean isValidPassword(String password) {
         return instagramUtil.isValidPassword(password);

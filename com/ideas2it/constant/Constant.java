@@ -37,8 +37,7 @@ public class Constant {
 
     public static final int UPDATE_USER_NAME = 1;
     public static final int UPDATE_MOBILE_NUMBER = 2;
-    public static final int UPDATE_PASSWORD = 3; 
- 
+    public static final int UPDATE_PASSWORD = 3;
 
     public static final int ADD_POST = 1;
     public static final int DISPLAY_POST = 2;
@@ -53,15 +52,14 @@ public class Constant {
     public static final String USER_NAME = "root";
     public static final String PASSWORD = "Printf";
 
-    public static final String ERROR_01 = "No user exist";
-    public static final String ERROR_02 = "No account found to update";
-    public static final String ERROR_03 = "No account exist to delete";
-    public static final String ERROR_04 = "No account found";
-    public static final String ERROR_05 = "No user exist to login";    
+    public static final String NO_ACCOUNT_EXIST_TO_SEARCH = "No user exist to search";
+    public static final String UNABLE_TO_UPDATE = "No account found to update";
+    public static final String NO_ACCOUNT_EXIST_TO_DELETE = "No account exist to delete";
+    public static final String NO_ACCOUNT_EXIST_TO_SHOW = "No account found to show";    
 
-    public static final String ERROR_001 = "No post to display";
-    public static final String ERROR_002 = "No post exist to update";
-    public static final String ERROR_003 = "No post found to display";
+    public static final String NOT_YET_POST_UPLOADED = "Not yet post uploaded";
+    public static final String NO_USER_POST_EXIST_TO_SHOW = "No user post to display";
+    public static final String NO_POST_EXIST_TO_UPDATE = "No post exist to update";
 
     public static final String USER_INPUT_MISMATCH = "Entered input data is invalid";
     public static final String USER_INPUT_NOT_EXIST = "Entered input not exist";
