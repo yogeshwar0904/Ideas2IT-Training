@@ -1644,3 +1644,50 @@
 2022-12-09 01:04:02,178 ERROR c.i.l.CustomLogger [main] exception
 2022-12-09 14:33:49,843 ERROR c.i.l.CustomLogger [main] exception
 2022-12-09 23:00:07,794 ERROR c.i.l.CustomLogger [main] exception
+2022-12-10 11:06:00,917 ERROR c.i.l.CustomLogger [main] Not yet post uploaded
+2022-12-10 15:45:19,918 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-10 15:50:42,400 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-10 18:16:49,396 ERROR c.i.l.CustomLogger [main] Not yet post uploaded
+2022-12-10 18:16:49,396 ERROR c.i.l.CustomLogger [main] exception
+2022-12-10 18:19:44,262 ERROR c.i.l.CustomLogger [main] Not yet post uploaded
+2022-12-10 18:19:44,262 ERROR c.i.l.CustomLogger [main] exception
+2022-12-10 18:28:25,308 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-10 18:28:52,331 ERROR c.i.l.CustomLogger [main] Entered input data is invalid
+2022-12-10 18:32:20,036 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-10 18:34:23,551 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-10 18:36:52,826 ERROR c.i.l.CustomLogger [main] No post exist to delete
+2022-12-10 18:40:37,232 ERROR c.i.l.CustomLogger [main] No post exist to delete
+2022-12-10 18:57:57,066 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-10 19:06:15,480 ERROR c.i.l.CustomLogger [main] No user post to display
+2022-12-10 19:06:38,949 ERROR c.i.l.CustomLogger [main] Not yet post uploaded
+2022-12-10 19:06:38,949 ERROR c.i.l.CustomLogger [main] exception
+2022-12-10 19:08:56,340 ERROR c.i.l.CustomLogger [main] No user post to display
+2022-12-10 21:30:42,654 ERROR c.i.l.CustomLogger [main] Entered input data is invalid
+2022-12-10 21:38:17,970 ERROR c.i.l.CustomLogger [main] Entered input data is invalid
+2022-12-10 21:38:33,106 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-10 21:38:53,640 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-10 21:40:14,041 ERROR c.i.l.CustomLogger [main] Not yet post uploaded
+2022-12-10 21:40:14,041 ERROR c.i.l.CustomLogger [main] exception
+2022-12-10 21:40:28,254 ERROR c.i.l.CustomLogger [main] Not yet post uploaded
+2022-12-10 21:40:46,161 ERROR c.i.l.CustomLogger [main] exception
+2022-12-10 21:52:10,820 ERROR c.i.l.CustomLogger [main] Not yet post uploaded
+2022-12-10 22:07:26,575 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-10 22:07:57,660 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-10 22:10:11,234 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-10 22:40:49,624 ERROR c.i.l.CustomLogger [main] Entered input data is invalid
+2022-12-10 23:00:30,083 ERROR c.i.l.CustomLogger [main] exception
+2022-12-10 23:21:44,279 ERROR c.i.l.CustomLogger [main] exception
+2022-12-10 23:21:44,289 ERROR c.i.l.CustomLogger [main] exception
+2022-12-10 23:24:19,593 ERROR c.i.l.CustomLogger [main] Not yet post uploaded
+2022-12-10 23:24:19,593 ERROR c.i.l.CustomLogger [main] exception
+2022-12-10 23:38:13,097 ERROR c.i.l.CustomLogger [main] exception
+2022-12-10 23:39:12,610 ERROR c.i.l.CustomLogger [main] exception
+2022-12-10 23:39:12,624 ERROR c.i.l.CustomLogger [main] exception
+2022-12-10 23:42:29,722 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-10 23:42:53,700 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-10 23:43:07,474 ERROR c.i.l.CustomLogger [main] Entered input data is invalid
+2022-12-10 23:44:15,472 ERROR c.i.l.CustomLogger [main] No post exist to delete
+2022-12-10 23:44:42,161 ERROR c.i.l.CustomLogger [main] No post exist to delete
+2022-12-10 23:46:41,924 ERROR c.i.l.CustomLogger [main] exception
+2022-12-10 23:48:06,875 ERROR c.i.l.CustomLogger [main] No post exist to delete
+2022-12-10 23:48:59,872 ERROR c.i.l.CustomLogger [main] No post exist to delete

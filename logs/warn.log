@@ -351,3 +351,6 @@
 2022-12-09 00:50:45,774 WARN c.i.l.CustomLogger [main] Entered input data have no features in post
 2022-12-09 12:53:37,568 WARN c.i.l.CustomLogger [main] Entered input data have no features in post
 2022-12-09 22:57:21,986 WARN c.i.l.CustomLogger [main] Entered input data have no features in post
+2022-12-10 18:27:53,839 WARN c.i.l.CustomLogger [main] Entered wrong format user name try again
+2022-12-10 18:34:38,651 WARN c.i.l.CustomLogger [main] Entered wrong format account name try again
+2022-12-10 19:05:27,945 WARN c.i.l.CustomLogger [main] Entered wrong format mobile number try again

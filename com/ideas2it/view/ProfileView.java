@@ -1,6 +1,7 @@
 package com.ideas2it.view;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import com.ideas2it.model.User;
@@ -95,7 +96,7 @@ public class ProfileView {
 
                 switch (scanner.nextInt()) {
                 case Constant.DISPLAY:
-                    display();
+                    showUserProfileDetails(user);
                     break;
 
                 case Constant.UPDATE:
@@ -103,7 +104,7 @@ public class ProfileView {
                     break;
 
                 case Constant.SEARCH:
-                    search();
+                    searchParticularAccountName();
                     break;
 
                 case Constant.POST_MENU: 
@@ -139,10 +140,9 @@ public class ProfileView {
      *         details of the user.
      */
     private void deactivateAccount(User user) {
-        String accountName = user.getAccountName();
-        String password = user.getPassword();
+        String accountName = user.getAccountName(); 
 
-        if (profileController.deleteAccount(accountName, password)) {
+        if (profileController.deactivateAccount(accountName)) {
             CustomLogger.info(Constant.ACCOUNT_DELETED); 
             userView.userInput();      
         } else {
@@ -153,23 +153,16 @@ public class ProfileView {
     /**
      * To search the particular user account.    
      */
-    private void search() {
+    private void searchParticularAccountName() {
         System.out.println("Enter the account name you want to search");
         String accountName = scanner.next();  
-        User user = profileController.search(accountName);
+        User user = profileController.searchParticularAccountName(accountName);
 
         if (null == user) {
             CustomLogger.info(Constant.NO_ACCOUNT_FOUND);
         } else {
             System.out.println(user);   
         } 
-    }
-
-    /**
-     * display the Account.
-     */
-    private void display() {
-        System.out.println(profileController.getAllUserAccount());
     }
 
     /**
@@ -235,5 +228,21 @@ public class ProfileView {
                 scanner.next();     
             }
         } while (!isRunning);
+    }
+
+    /**
+     * display the details of user
+     *
+     * @param User user
+     *        details of user.
+     */ 
+    public void showUserProfileDetails(User user) {
+        List<User> userDetails = profileController
+                                        .getUserProfileDetails(user.getAccountName());
+         if (!userDetails.isEmpty()) {
+             System.out.println(userDetails);
+         } else {
+             CustomLogger.info(Constant.UNABLE_TO_SHOW_PROFILE);  
+         }
     }
 }

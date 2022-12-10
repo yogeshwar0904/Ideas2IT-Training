@@ -31,7 +31,7 @@ public interface ProfileDao {
      * @return User user
      *        details of user 
      */   
-    public User getAccountName(String accountName);
+    public User getParticularAccountName(String accountName);
 
     /**
      * To get id of user
@@ -48,20 +48,10 @@ public interface ProfileDao {
      *
      * @param String accountName
      *        account name of user
-     * @param String password
-     *        password of user
      * @return boolean 
      *        true if account deactivated                    
      */ 
-    public boolean deactivateAccount(String accountName, String password);
-
-    /**
-     * Display all account name of user
-     *
-     * @return List<String> accountNames 
-     *         all user account name.                  
-     */ 
-    public List<String> getAllAccountName();
+    public boolean updateAccountActiveStatus(String accountName);
            
     /**
      * update the profile of user
@@ -88,4 +78,14 @@ public interface ProfileDao {
      *         details of user
      */
     public User login(String accountName, String password);
+
+    /**
+     * get the particular user profile details
+     *
+     * @param String accountName
+     *        account name of user
+     * @return List<User> 
+     *        details of user account                   
+     */ 
+    public List<User> getUserProfileDetails(String accountName);
 }

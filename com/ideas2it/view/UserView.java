@@ -119,7 +119,7 @@ public class UserView {
             System.out.println(Constant.ACCOUNTNAME_FORMATE);
             accountName = scanner.next();
             isValid = profileController.isValidAccountName(accountName);
-            user = profileController.search(accountName);
+            user = profileController.searchParticularAccountName(accountName);
 
             if (isValid) { 
                 if (user.getAccountName() == null) {

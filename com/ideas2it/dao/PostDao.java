@@ -53,7 +53,7 @@ public interface PostDao {
      * @return int noOfRowsDeleted
      *        count of rows if post deleted
      */
-    public int delete(String postId, String userId); 
+    public boolean delete(String postId, String userId); 
 
     /**
      * update the post of user

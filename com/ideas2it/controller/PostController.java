@@ -54,15 +54,12 @@ public class PostController {
      *         post of the users
      */
     public List<Post> getUserPost(String userId) {
-        List<Post> posts;
-        posts = null; 
-
         try {
-            posts = postService.displayPost(userId);
+            return postService.displayPost(userId);
         } catch (InstagramManagementException exception) {
             CustomLogger.error(exception.getMessage());
         }
-        return posts;
+        return null;
     }
 
     /**

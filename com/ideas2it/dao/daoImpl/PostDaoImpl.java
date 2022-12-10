@@ -64,7 +64,7 @@ public class PostDaoImpl implements PostDao {
         List<Post> posts = new ArrayList();
         StringBuilder query = new StringBuilder();
         query.append("SELECT * FROM post")
-             .append(" WHERE user_id = ?;");
+             .append(" WHERE user_id = ? AND is_deleted = 0;");
         
         try {
             Connection connection = DatabaseConnection.getConnection();
@@ -95,8 +95,8 @@ public class PostDaoImpl implements PostDao {
     @Override 
     public List<Post> displayAllUserPost() {
         List<Post> posts = new ArrayList();
-        String query = "SELECT * FROM post";
-        
+        String query = "SELECT * FROM post WHERE is_deleted = 0";
+ 
         try {
             Connection connection = DatabaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
@@ -122,27 +122,27 @@ public class PostDaoImpl implements PostDao {
      * {@inheritDoc}
      */
     @Override
-    public int delete(String postId, String userId) { 
-        int noOfRowsDeleted = 0;
+    public boolean delete(String postId, String userId) { 
+        boolean isDeleted = false;
         StringBuilder query = new StringBuilder();
-        query.append("DELETE FROM post")
+        query.append("UPDATE post SET is_deleted = 1")
              .append(" WHERE post_id = ?")
-             .append("AND user_id = ?;");
- 
+             .append(" AND user_id = ?;");
+       
         try {
             Connection connection = DatabaseConnection.getConnection();            
             PreparedStatement statement = connection
                                           .prepareStatement(query.toString());
             statement.setString(1, postId);
             statement.setString(2, userId);
-            noOfRowsDeleted = statement.executeUpdate();
+            isDeleted = statement.execute();
             statement.close();
         } catch (SQLException sqlException) {
             CustomLogger.error(sqlException.getMessage());
         } finally {
             DatabaseConnection.closeConnection();
         }
-        return noOfRowsDeleted;
+        return !isDeleted;
     } 
 
     /**
@@ -153,7 +153,7 @@ public class PostDaoImpl implements PostDao {
         StringBuilder query = new StringBuilder();
         query.append("UPDATE post SET  title = ?, content = ?")
              .append(" WHERE post_id = ?")
-             .append(" AND user_id = ?;");
+             .append(" AND user_id = ? AND is_deleted = 0;");
 
         try {
             Connection connection = DatabaseConnection.getConnection();
@@ -179,11 +179,13 @@ public class PostDaoImpl implements PostDao {
     @Override 
     public Post getPostId(String postId) {
         Post post = null;
-        String query = "SELECT * From post WHERE post_id = ?;";
+        StringBuilder query = new StringBuilder();
+        query.append("SELECT * From post WHERE post_id = ?")
+             .append(" AND is_deleted = 0;");
 
         try {
             Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query.toString());
             statement.setString(1, postId);
             ResultSet resultSet = statement.executeQuery();
 
@@ -208,11 +210,13 @@ public class PostDaoImpl implements PostDao {
     @Override 
     public String getUserId(String postId) {
         String userId = null;
-        String query = "SELECT user_id From post WHERE post_id = ?;";
+        StringBuilder query = new StringBuilder();
+        query.append("SELECT user_id From post WHERE post_id = ?")
+             .append(" AND is_deleted = 0;");
 
         try {
             Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query.toString());
             statement.setString(1, postId);
             ResultSet resultSet = statement.executeQuery();
 

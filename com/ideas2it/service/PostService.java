@@ -61,9 +61,15 @@ public class PostService {
      */
     public boolean delete(String postId, String userId) 
                              throws InstagramManagementException { 
-        boolean isDeleted;
-        isDeleted = (postDao.delete(postId, userId) > 0);
-        return isDeleted;
+       // Post post = postDao.getPostId(postId);
+        String post = postDao.getUserId(postId);
+       // if (null != post) {
+         if (post == postId) {
+            return postDao.delete(postId, userId);
+        } else {
+           throw new InstagramManagementException(Constant
+                                        .NO_POST_EXIST_TO_DELETE);
+        }
     }
 
     /**
@@ -122,8 +128,10 @@ public class PostService {
     public Post update(String postId, String updateValue, int choice, 
                           String userId) throws InstagramManagementException {
         Post post = postDao.getPostId(postId);
-
-        if (null != post) {
+       //Post post = postDao.displayPost(userId);
+        List<Post> posts = postDao.displayPost(userId);
+       if ( null != post) {
+         // if ( posts.contains(postId)) {
             switch (choice) {
             case Constant.UPDATE_POST_CONTENT:
                 post.setContent(updateValue); 

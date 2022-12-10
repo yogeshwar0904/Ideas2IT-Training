@@ -68,19 +68,17 @@ public class ProfileService {
      *
      * @param accountName 
      *        name of the account
-     * @param password
-     *        password of the account
      * @return boolean true
      *        if sucessfully deleted  
      * @throws InstagramManagementException
      *        no account exist to delete       
      */ 
-    public boolean deleteAccount(String accountName, String password) throws
-                                    InstagramManagementException { 
-        User user = profileDao.getAccountName(accountName);
+    public boolean updateAccountActiveStatus(String accountName) throws
+                                             InstagramManagementException { 
+        User user = profileDao.getParticularAccountName(accountName);
 
-        if ((null != user) && (user.getPassword().equals(password))) {
-            return profileDao.deactivateAccount(accountName, password);
+        if (null != user) {
+            return profileDao.updateAccountActiveStatus(accountName);
         } else {
            throw new InstagramManagementException(Constant
                                         .NO_ACCOUNT_EXIST_TO_DELETE);
@@ -97,9 +95,9 @@ public class ProfileService {
      * @throws InstagramManagementException
      *        no account exist to search  
      */
-    public User search(String accountName) throws 
-                         InstagramManagementException {
-        User user = profileDao.getAccountName(accountName);
+    public User searchParticularAccountName(String accountName) throws 
+                                            InstagramManagementException {
+        User user = profileDao.getParticularAccountName(accountName);
 
         if( null == user) {
             throw new InstagramManagementException(Constant
@@ -110,22 +108,23 @@ public class ProfileService {
     }
 
     /**
-     * display the user
+     * display the profile of the user
      *
-     * @return List<String>
-     *         accountNames of user
+     * @return List<User>
+     *         detils of user profile
      * @throws InstagramManagementException
      *         no account exist to display 
      */
-    public List<String> getAllUserAccount() 
+    public List<User> getUserProfileDetails(String accountName) 
                             throws InstagramManagementException {
-        List<String> accountNames = profileDao.getAllAccountName(); 
+        List<User> userProfileDetails = profileDao
+                                        .getUserProfileDetails(accountName); 
 
-        if (accountNames.isEmpty()) {
+        if (userProfileDetails.isEmpty()) {
             throw new InstagramManagementException(Constant
-                                         .NO_ACCOUNT_EXIST_TO_SHOW);
+                                         .UNABLE_TO_SHOW_PROFILE);
         }  
-        return accountNames;  
+        return userProfileDetails;  
     }
 
     /**
@@ -142,7 +141,7 @@ public class ProfileService {
      */   
     public User update(String accountName, String updateValue,
                            int choice) throws InstagramManagementException {
-        User user = profileDao.getAccountName(accountName);
+        User user = profileDao.getParticularAccountName(accountName);
         String userId = profileDao.getUserId(accountName);
 
         if (null != user) {

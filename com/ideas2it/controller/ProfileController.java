@@ -27,7 +27,7 @@ public class ProfileController {
     }
 
     /**
-     * Allow the user to login.
+     * Allow the user to login. 
      *
      * @param accountName
      *        account name of user
@@ -62,14 +62,12 @@ public class ProfileController {
      *
      * @param String accountName 
      *        name of the user account
-     * @param String password
-     *        password of the user account
      * @return boolean
      *        true if sucessfully account deleted         
      */  
-    public boolean deleteAccount(String accountName, String password) { 
+    public boolean deactivateAccount(String accountName) { 
         try {
-            return profileService.deleteAccount(accountName, password);
+            return profileService.updateAccountActiveStatus(accountName);
         } catch (InstagramManagementException exception) {
             CustomLogger.error(exception.getMessage());
         }
@@ -85,9 +83,9 @@ public class ProfileController {
      *        account name of user 
      *        if account name exist   
      */   
-    public User search(String accountName) { 
+    public User searchParticularAccountName(String accountName) { 
         try {
-            return profileService.search(accountName);
+            return profileService.searchParticularAccountName(accountName);
         } catch(InstagramManagementException exception) {
             CustomLogger.error(exception.getMessage());
         }
@@ -95,14 +93,14 @@ public class ProfileController {
     }
 
     /**
-     * get all the user account name
+     * get profile details of the user
      *
-     * @return List<String> 
-     *         account name of all user         
+     * @return List<User> 
+     *         profile details of user         
      */   
-    public List<String> getAllUserAccount() { 
+    public List<User> getUserProfileDetails(String accountName) { 
         try {
-            return profileService.getAllUserAccount();
+            return profileService.getUserProfileDetails(accountName);
         } catch(InstagramManagementException exception) {
             CustomLogger.error(exception.getMessage());
         }

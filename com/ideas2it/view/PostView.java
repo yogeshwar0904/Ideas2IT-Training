@@ -108,7 +108,7 @@ public class PostView {
     private void displayPost(User user) {
         List<Post> posts = postController.getUserPost(user.getUserId());  
 
-        if (null != posts) {
+        if (!posts.isEmpty()) {
             System.out.println(posts);
         } else {
             CustomLogger.info(Constant.NO_POST);            
@@ -123,7 +123,6 @@ public class PostView {
      */ 
     private void deletePost(User user) {
         System.out.println("Enter the post Id");
-        scanner.nextLine();
         String postId = scanner.nextLine();
 
         if (postController.delete(postId, user.getUserId())) {
@@ -145,8 +144,9 @@ public class PostView {
         StringBuilder postUpdateMenu = new StringBuilder();
         System.out.println("Enter the post Id to update");
         String postId = scanner.nextLine();
-
-        if (null != postController.getPostId(postId)) { 
+        List <Post> userPosts = postController.getUserPost(user.getUserId());
+       // if (null != postController.getPostId(postId)) { 
+        if (userPosts.contains(postId)) {
             postUpdateMenu.append(" Enter 1 for update post content")
                           .append("\n Enter 2 for update post tittle");
            
@@ -184,8 +184,7 @@ public class PostView {
                         CustomLogger.info("post not updated");
                     }
                 } catch (InputMismatchException inputMismatch) { 
-                    CustomLogger.error(inputMismatch.getMessage()); 
-                    //scanner.next();    
+                    CustomLogger.error(inputMismatch.getMessage());     
                 } catch (NullPointerException exception) { 
                     CustomLogger.error(exception.getMessage());
                     scanner.next();     
@@ -195,6 +194,7 @@ public class PostView {
             CustomLogger.info("no post to update");
         } 
     }
+
     /**
      * creates content for post.
      *

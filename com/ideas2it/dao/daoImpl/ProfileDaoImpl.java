@@ -56,7 +56,7 @@ public class ProfileDaoImpl implements ProfileDao {
      * {@inheritDoc}
      */
     @Override  
-    public User getAccountName(String accountName) {
+    public User getParticularAccountName(String accountName) {
         StringBuilder query = new StringBuilder();
         User user =  new User();
         query.append("SELECT * From user WHERE account_name = ?")
@@ -119,18 +119,17 @@ public class ProfileDaoImpl implements ProfileDao {
      * {@inheritDoc}
      */
     @Override
-    public boolean deactivateAccount(String accountName, String password) {
+    public boolean updateAccountActiveStatus(String accountName) {
        boolean isDeactivate = false;
        StringBuilder query = new StringBuilder();
        query.append("UPDATE user SET is_deactivated = 1")
-            .append(" Where account_name = ? AND password = ?;");
+            .append(" Where account_name = ?;");
 
        try {
            Connection connection = DatabaseConnection.getConnection();
            PreparedStatement statement = connection
                                          .prepareStatement(query.toString());
            statement.setString(1, accountName);
-           statement.setString(2, password);
            isDeactivate = statement.execute();
            statement.execute();
            statement.close();
@@ -141,35 +140,7 @@ public class ProfileDaoImpl implements ProfileDao {
        }
        return !isDeactivate;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override 
-    public List<String> getAllAccountName() {
-        List<String> accountNames = new ArrayList();
-        StringBuilder query = new StringBuilder();
-        query.append("SELECT account_name FROM user")
-             .append(" WHERE is_deactivated = 0;");
-
-        try {
-            Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement statement = connection
-                                           .prepareStatement(query.toString());
-            ResultSet resultSet = statement.executeQuery();
-            
-            while (resultSet.next()) {
-                accountNames.add(resultSet.getString("account_name"));
-            } 
-            statement.close();
-        } catch (SQLException sqlException) {
-            CustomLogger.error(sqlException.getMessage());
-        }  finally {
-            DatabaseConnection.closeConnection();
-        }
-        return accountNames;         
-    }  
-  
+ 
     /**
      * {@inheritDoc}
      */
@@ -238,5 +209,41 @@ public class ProfileDaoImpl implements ProfileDao {
              DatabaseConnection.closeConnection(); 
          }
          return user;    
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<User> getUserProfileDetails(String accountName) {
+        List<User> userProfileDetails = new ArrayList();
+        StringBuilder query = new StringBuilder();
+        User user = null;
+        query.append("SELECT * FROM user")
+             .append(" WHERE account_name = ? AND is_deactivated = 0;");
+        
+        try {
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection
+                                          .prepareStatement(query.toString());
+            statement.setString(1, accountName);
+            ResultSet resultSet = statement.executeQuery();
+            
+            while (resultSet.next()) {
+                user = new User();
+                user.setUserId(resultSet.getString("user_id"));
+                user.setAccountName(resultSet.getString("account_name"));
+                user.setUserName(resultSet.getString("user_name"));
+                user.setMobileNumber(Long.parseLong(resultSet
+                                         .getString("mobile_number")));
+                userProfileDetails.add(user);               
+            } 
+            statement.close(); 
+        } catch (SQLException sqlException) {
+            CustomLogger.error(sqlException.getMessage());
+        } finally {
+            DatabaseConnection.closeConnection();
+        } 
+        return userProfileDetails;       
     }
 }

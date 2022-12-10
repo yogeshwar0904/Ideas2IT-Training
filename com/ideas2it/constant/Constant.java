@@ -4,8 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern; 
  
 /**
- * Keep constant value to run the
- * particular features.
+ * Contain the Constant values for validations, messages for all functions.
  *
  * @version     1.0 14 Sept 2022
  * @author      Yogeshwar
@@ -55,11 +54,13 @@ public class Constant {
     public static final String NO_ACCOUNT_EXIST_TO_SEARCH = "No user exist to search";
     public static final String UNABLE_TO_UPDATE = "No account found to update";
     public static final String NO_ACCOUNT_EXIST_TO_DELETE = "No account exist to delete";
-    public static final String NO_ACCOUNT_EXIST_TO_SHOW = "No account found to show";    
+    public static final String NO_ACCOUNT_EXIST_TO_SHOW = "No account found to show"; 
+    public static final String UNABLE_TO_SHOW_PROFILE = "Ops unable to show the profile";  
 
     public static final String NOT_YET_POST_UPLOADED = "Not yet post uploaded";
     public static final String NO_USER_POST_EXIST_TO_SHOW = "No user post to display";
     public static final String NO_POST_EXIST_TO_UPDATE = "No post exist to update";
+    public static final String NO_POST_EXIST_TO_DELETE = "No post exist to delete";
 
     public static final String USER_INPUT_MISMATCH = "Entered input data is invalid";
     public static final String USER_INPUT_NOT_EXIST = "Entered input not exist";
@@ -95,29 +96,4 @@ public class Constant {
     public static final String POST_DELETED = " post deleted successfully";
     public static final String POST_NOT_DELETED = "post not deleted";
     public static final String NO_POST = "No Post Uploaded yet";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
