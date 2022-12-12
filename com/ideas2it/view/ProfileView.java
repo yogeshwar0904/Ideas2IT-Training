@@ -38,8 +38,8 @@ public class ProfileView {
      * Based on user choice, allow the user to login the 
      * profile menu.
      *
-     * @param User user
-     *         details of the user.
+     * @param user
+     *        details of the user.
      */
     public void showHomeMenu(User user) {
         boolean isRunning = false;
@@ -78,8 +78,8 @@ public class ProfileView {
      * update and search the account of user and 
      * post their pictures.
      *
-     * @param User user
-     *         details of the user.
+     * @param user
+     *        details of the user.
      */ 
     public void showProfileMenu(User user) {   
         boolean isRunning = false;
@@ -136,8 +136,8 @@ public class ProfileView {
     /**
      * To deactivate the account of user. 
      *
-     * @param User user
-     *         details of the user.
+     * @param user
+     *        details of the user.
      */
     private void deactivateAccount(User user) {
         String accountName = user.getAccountName(); 
@@ -168,8 +168,8 @@ public class ProfileView {
     /**
      * update the Account  
      *
-     * @param User user
-     *         details of the user.  
+     * @param user
+     *        details of the user.  
      */
     private void update(User user) {
         boolean isRunning = false;
@@ -233,16 +233,16 @@ public class ProfileView {
     /**
      * display the details of user
      *
-     * @param User user
+     * @param user
      *        details of user.
      */ 
     public void showUserProfileDetails(User user) {
         List<User> userDetails = profileController
                                         .getUserProfileDetails(user.getAccountName());
-         if (!userDetails.isEmpty()) {
-             System.out.println(userDetails);
-         } else {
+        if (!userDetails.isEmpty()) {
+            System.out.println(userDetails);
+        } else {
              CustomLogger.info(Constant.UNABLE_TO_SHOW_PROFILE);  
-         }
+        }
     }
 }

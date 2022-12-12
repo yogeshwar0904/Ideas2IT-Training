@@ -42,7 +42,7 @@ public class ProfileDaoImpl implements ProfileDao {
             statement.setString(3, user.getUserName());
             statement.setLong(4, user.getMobileNumber());
             statement.setString(5, user.getPassword());
-            statement.execute(); 
+            statement.executeUpdate(); 
             statement.close();
         } catch (SQLException sqlException) {
             CustomLogger.error(sqlException.getMessage());
@@ -67,7 +67,7 @@ public class ProfileDaoImpl implements ProfileDao {
             PreparedStatement statement = connection
                                           .prepareStatement(query.toString());
             statement.setString(1, accountName);
-            ResultSet resultSet = statement.executeQuery();
+            ResultSet resultSet = statement. executeQuery();
 
             if (resultSet.next()) {
                 user.setUserId(resultSet.getString("user_id"));
@@ -120,17 +120,17 @@ public class ProfileDaoImpl implements ProfileDao {
      */
     @Override
     public boolean updateAccountActiveStatus(String accountName) {
-       boolean isDeactivate = false;
+       boolean isDeactivated = false;
        StringBuilder query = new StringBuilder();
        query.append("UPDATE user SET is_deactivated = 1")
-            .append(" Where account_name = ?;");
+            .append(" WHERE account_name = ?;");
 
        try {
            Connection connection = DatabaseConnection.getConnection();
            PreparedStatement statement = connection
                                          .prepareStatement(query.toString());
            statement.setString(1, accountName);
-           isDeactivate = statement.execute();
+           isDeactivated = statement.execute();
            statement.execute();
            statement.close();
        } catch (SQLException sqlException) {
@@ -138,7 +138,7 @@ public class ProfileDaoImpl implements ProfileDao {
        } finally {
            DatabaseConnection.closeConnection();           
        }
-       return !isDeactivate;
+       return !isDeactivated;
     }
  
     /**
@@ -155,7 +155,7 @@ public class ProfileDaoImpl implements ProfileDao {
         try {
             Connection connection = DatabaseConnection.getConnection();
             PreparedStatement statement = connection
-                                           .prepareStatement(query.toString());
+                                          .prepareStatement(query.toString());
             statement.setString(1, user.getUserName());
             statement.setLong(2, user.getMobileNumber());
             statement.setString(3, user.getPassword());
@@ -178,7 +178,7 @@ public class ProfileDaoImpl implements ProfileDao {
      * {@inheritDoc}
      */
     @Override
-    public User login(String accountName, String password) {
+    public User getUser(String accountName, String password) {
         User user = null;
         StringBuilder query = new StringBuilder();
         query.append("SELECT * From user")

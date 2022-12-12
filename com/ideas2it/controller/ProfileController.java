@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ideas2it.model.User;
 import com.ideas2it.service.ProfileService;
+import com.ideas2it.service.serviceImpl.ProfileServiceImpl;
 import com.ideas2it.constant.Constant;
 import com.ideas2it.util.InstagramUtil;
 import com.ideas2it.exception.InstagramManagementException;
@@ -22,7 +23,7 @@ public class ProfileController {
     private InstagramUtil instagramUtil;
 
     public ProfileController() {
-        this.profileService = new ProfileService(); 
+        this.profileService = new ProfileServiceImpl(); 
         this.instagramUtil = new InstagramUtil();
     }
 
@@ -36,9 +37,9 @@ public class ProfileController {
      * @return User user
      *        details of the user.
      */
-     public User login(String accountName, String password) {
+     public User getUser(String accountName, String password) {
          try {
-             return profileService.login(accountName, password);
+             return profileService.getUser(accountName, password);
          } catch (InstagramManagementException exception) {
              CustomLogger.error(exception.getMessage());
          }
@@ -126,7 +127,7 @@ public class ProfileController {
         } catch (InstagramManagementException exception) {
             CustomLogger.error(exception.getMessage());
         } 
-        return null; 
+        return null;
     } 
 
     /**

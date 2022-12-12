@@ -354,3 +354,11 @@
 2022-12-10 18:27:53,839 WARN c.i.l.CustomLogger [main] Entered wrong format user name try again
 2022-12-10 18:34:38,651 WARN c.i.l.CustomLogger [main] Entered wrong format account name try again
 2022-12-10 19:05:27,945 WARN c.i.l.CustomLogger [main] Entered wrong format mobile number try again
+2022-12-12 13:49:51,417 WARN c.i.l.CustomLogger [main] Entered input data have no features in post
+2022-12-12 14:15:43,168 WARN c.i.l.CustomLogger [main] Entered input data have no features in post
+2022-12-12 14:21:18,952 WARN c.i.l.CustomLogger [main] Entered input data have no features in post
+2022-12-12 15:06:39,613 WARN c.i.l.CustomLogger [main] No features to update in post
+2022-12-12 15:51:15,968 WARN c.i.l.CustomLogger [main] Entered wrong format account name try again
+2022-12-12 15:51:27,817 WARN c.i.l.CustomLogger [main] Entered wrong format account name try again
+2022-12-12 15:52:11,860 WARN c.i.l.CustomLogger [main] Entered wrong format password try again
+2022-12-12 17:19:21,582 WARN c.i.l.CustomLogger [main] Entered input data have no features in post

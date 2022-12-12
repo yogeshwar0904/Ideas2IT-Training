@@ -16,9 +16,9 @@ public interface ProfileDao {
     /**
      * Create account for user
      *
-     * @param User user 
+     * @param user 
      *        details of the user
-     * @return User user
+     * @return user
      *        details of user if account created
      */
     public User create(User user);
@@ -28,7 +28,7 @@ public interface ProfileDao {
      *
      * @param accountName
      *        account name of user
-     * @return User user
+     * @return user
      *        details of user 
      */   
     public User getParticularAccountName(String accountName);
@@ -38,53 +38,53 @@ public interface ProfileDao {
      *
      * @param accountName
      *        account name of user
-     * @return String
-     *         id of user 
+     * @return userId
+     *        id of user 
      */ 
     public String getUserId(String accountName);
 
     /**
      * Deactivate the user account
      *
-     * @param String accountName
+     * @param accountName
      *        account name of user
-     * @return boolean 
-     *        true if account deactivated                    
+     * @return true 
+     *        if account deactivated                    
      */ 
     public boolean updateAccountActiveStatus(String accountName);
            
     /**
      * update the profile of user
      *
-     * @param String accountName
+     * @param accountName
      *        account name of user
-     * @param User user
-     *         details of user
-     * @param String userid
+     * @param user
+     *        details of user
+     * @param userid
      *        id of user
-     * @return User user
-     *         details of user 
+     * @return user
+     *        details of user 
      */   
     public User update(String accountName, User user, String userId);
 
     /**
      * Login the user
      *
-     * @param String accountName 
+     * @param accountName 
      *        account name  of the user
-     * @param String password 
+     * @param password 
      *        password  of the user
-     * @return User user
-     *         details of user
+     * @return user
+     *        details of user
      */
-    public User login(String accountName, String password);
+    public User getUser(String accountName, String password);
 
     /**
      * get the particular user profile details
      *
      * @param String accountName
      *        account name of user
-     * @return List<User> 
+     * @return userProfileDetails 
      *        details of user account                   
      */ 
     public List<User> getUserProfileDetails(String accountName);

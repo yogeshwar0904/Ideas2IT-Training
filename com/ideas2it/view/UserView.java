@@ -77,7 +77,7 @@ public class UserView {
         String accountName = scanner.next();
         System.out.println("Enter the password");
         String password = scanner.next();
-        User user = profileController.login(accountName, password);
+        User user = profileController.getUser(accountName, password);
 
         if (null != user) {
             ProfileView.showHomeMenu(user);
@@ -107,7 +107,7 @@ public class UserView {
     /**
      * Create account name for user.
      *
-     * @return String accountName
+     * @return accountName
      *         accountName of the user.
      */ 
     public String getAccountName() {
@@ -139,7 +139,7 @@ public class UserView {
     /**
      * creates the name for user.
      *
-     * @return String userName
+     * @return userName
      *         name of the user
      */ 
     public String getUserName() {
@@ -161,7 +161,7 @@ public class UserView {
     /**
      * creates mobile number for user.
      *      
-     * @return long mobileNumber
+     * @return mobileNumber
      *         mobileNumber of the user
      */     
     public long getMobileNumber() {
@@ -184,7 +184,7 @@ public class UserView {
     /**
      * creates password for user.
      *
-     * @return String password
+     * @return password
      *         password of the user.
      */   
     public String getPassword() {

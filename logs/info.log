@@ -291,3 +291,38 @@
 2022-12-10 23:48:06,887 INFO c.i.l.CustomLogger [main] post not deleted
 2022-12-10 23:48:35,857 INFO c.i.l.CustomLogger [main] no post to update
 2022-12-10 23:48:59,873 INFO c.i.l.CustomLogger [main] post not deleted
+2022-12-12 10:24:34,907 INFO c.i.l.CustomLogger [main] Post created successfully
+2022-12-12 10:25:05,328 INFO c.i.l.CustomLogger [main] no post to update
+2022-12-12 10:40:39,444 INFO c.i.l.CustomLogger [main] No account is exist to login
+2022-12-12 10:46:01,421 INFO c.i.l.CustomLogger [main] no post to update
+2022-12-12 10:46:32,067 INFO c.i.l.CustomLogger [main] no post to update
+2022-12-12 10:47:31,395 INFO c.i.l.CustomLogger [main] no post to update
+2022-12-12 10:47:42,010 INFO c.i.l.CustomLogger [main] no post to update
+2022-12-12 11:33:28,027 INFO c.i.l.CustomLogger [main]  post deleted successfully
+2022-12-12 11:34:16,199 INFO c.i.l.CustomLogger [main] post not deleted
+2022-12-12 11:34:51,134 INFO c.i.l.CustomLogger [main] post not deleted
+2022-12-12 14:15:25,127 INFO c.i.l.CustomLogger [main] No Post Uploaded yet
+2022-12-12 14:17:56,034 INFO c.i.l.CustomLogger [main] Post created successfully
+2022-12-12 14:18:24,584 INFO c.i.l.CustomLogger [main] no post to update
+2022-12-12 14:19:02,214 INFO c.i.l.CustomLogger [main] no post to update
+2022-12-12 14:19:31,697 INFO c.i.l.CustomLogger [main] no post to update
+2022-12-12 14:19:48,263 INFO c.i.l.CustomLogger [main]  post deleted successfully
+2022-12-12 14:20:21,416 INFO c.i.l.CustomLogger [main] Post created successfully
+2022-12-12 14:20:30,881 INFO c.i.l.CustomLogger [main] post not deleted
+2022-12-12 14:20:58,599 INFO c.i.l.CustomLogger [main] post not deleted
+2022-12-12 14:22:13,223 INFO c.i.l.CustomLogger [main] no post to update
+2022-12-12 14:24:57,566 INFO c.i.l.CustomLogger [main] post updated Successfully
+2022-12-12 14:27:16,846 INFO c.i.l.CustomLogger [main] no post to update
+2022-12-12 14:42:51,226 INFO c.i.l.CustomLogger [main] post updated Successfully
+2022-12-12 14:48:16,375 INFO c.i.l.CustomLogger [main] post updated Successfully
+2022-12-12 15:05:08,323 INFO c.i.l.CustomLogger [main] post updated Successfully
+2022-12-12 15:05:57,547 INFO c.i.l.CustomLogger [main] post updated Successfully
+2022-12-12 15:06:39,628 INFO c.i.l.CustomLogger [main] post updated Successfully
+2022-12-12 15:07:35,549 INFO c.i.l.CustomLogger [main] post updated Successfully
+2022-12-12 15:08:38,880 INFO c.i.l.CustomLogger [main] post updated Successfully
+2022-12-12 15:52:18,554 INFO c.i.l.CustomLogger [main] Account created sucessfully
+2022-12-12 16:01:53,797 INFO c.i.l.CustomLogger [main] No account is exist to login
+2022-12-12 16:23:26,820 INFO c.i.l.CustomLogger [main] Account created sucessfully
+2022-12-12 17:20:11,728 INFO c.i.l.CustomLogger [main] no post to update
+2022-12-12 17:21:30,674 INFO c.i.l.CustomLogger [main] post updated Successfully
+2022-12-12 18:09:36,982 INFO c.i.l.CustomLogger [main] Account created sucessfully

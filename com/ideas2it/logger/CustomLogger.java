@@ -15,7 +15,7 @@ public class CustomLogger {
     /**
      * logs the information message.
      *
-     * @param String message
+     * @param logging message of function
      */
     public static void info(String message) {
         logger.info(message);
@@ -24,7 +24,7 @@ public class CustomLogger {
     /**
      * logs the warning message.
      *
-     * @param String message
+     * @param warn message of function
      */
     public static void warn(String message) {
         logger.warn(message);
@@ -33,7 +33,7 @@ public class CustomLogger {
     /**
      * logs the error message.
      * 
-     * @param String message
+     * @param error message of function 
      */
     public static void error(String message) {
         logger.error(message);
@@ -42,7 +42,7 @@ public class CustomLogger {
     /**
      * logs the fatal message.
      * 
-     * @param String message
+     * @param fatal message of function
      */
     public static void fatal(String message) {
         logger.fatal(message);

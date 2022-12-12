@@ -7,6 +7,12 @@ import java.sql.SQLException;
 import com.ideas2it.logger.CustomLogger;
 import com.ideas2it.constant.Constant;
 
+/**
+ * Implements connection to database server
+ *
+ * @version 1.0 01-Nov-2022
+ * @author Yogeshwar
+ */
 public class DatabaseConnection {
     private static Connection connection = null;
     private static DatabaseConnection databaseConnection;  
@@ -38,8 +44,3 @@ public class DatabaseConnection {
         }
     }
 }
-
-
-            
-
-

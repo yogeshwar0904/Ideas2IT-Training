@@ -76,7 +76,12 @@ public class User {
     public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
- 
+
+    /**
+     * To show the details of user
+     * 
+     * @param string object of user 
+     */ 
     public String toString() {
         StringBuilder showResult = new StringBuilder();
         showResult.append("\nAccount Name = ").append(getAccountName())

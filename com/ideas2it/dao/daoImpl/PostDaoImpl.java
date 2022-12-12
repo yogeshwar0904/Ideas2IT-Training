@@ -26,7 +26,7 @@ public class PostDaoImpl implements PostDao {
      * {@inheritDoc}
      */
     @Override
-    public Post uploadPost(User user, Post post) { 
+    public Post insertPost(User user, Post post) { 
         int count = 0;  
         Post currentPost = null;
         StringBuilder query = new StringBuilder();
@@ -60,12 +60,12 @@ public class PostDaoImpl implements PostDao {
      * {@inheritDoc}
      */
     @Override
-    public List<Post> displayPost(String userId) {
+    public List<Post> getUserPost(String userId) {
         List<Post> posts = new ArrayList();
         StringBuilder query = new StringBuilder();
         query.append("SELECT * FROM post")
              .append(" WHERE user_id = ? AND is_deleted = 0;");
-        
+       
         try {
             Connection connection = DatabaseConnection.getConnection();
             PreparedStatement statement = connection
@@ -93,7 +93,7 @@ public class PostDaoImpl implements PostDao {
      * {@inheritDoc}
      */
     @Override 
-    public List<Post> displayAllUserPost() {
+    public List<Post> getAllUserPost() {
         List<Post> posts = new ArrayList();
         String query = "SELECT * FROM post WHERE is_deleted = 0";
  
@@ -122,7 +122,7 @@ public class PostDaoImpl implements PostDao {
      * {@inheritDoc}
      */
     @Override
-    public boolean delete(String postId, String userId) { 
+    public boolean updateIsDeleteStatus(String postId, String userId) { 
         boolean isDeleted = false;
         StringBuilder query = new StringBuilder();
         query.append("UPDATE post SET is_deleted = 1")

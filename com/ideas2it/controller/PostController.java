@@ -6,6 +6,7 @@ import java.util.List;
 import com.ideas2it.model.Post;
 import com.ideas2it.model.User;
 import com.ideas2it.service.PostService;
+import com.ideas2it.service.serviceImpl.PostServiceImpl;
 import com.ideas2it.constant.Constant;
 import com.ideas2it.exception.InstagramManagementException;
 import com.ideas2it.logger.CustomLogger;
@@ -21,24 +22,24 @@ public class PostController {
     PostService postService;
 
     public PostController() {
-        this.postService = new PostService();
+        this.postService = new PostServiceImpl();
     }
 
     /**
      * upload the post for user
      *
-     * @param User user
+     * @param user
      *        details of the user
-     * @param String title
+     * @param title
      *        title of the post
-     * @param String content
+     * @param content
      *        content of post.
      * @return post
      *        post of the user if post created succesfully.
      */
-    public Post uploadPost(User user, String title, String content) {
+    public Post insertPost(User user, String title, String content) {
         try {
-            return postService.uploadPost(user, title, content);
+            return postService.insertPost(user, title, content);
         } catch (InstagramManagementException exception) {
             CustomLogger.error(exception.getMessage());
         }
@@ -48,14 +49,14 @@ public class PostController {
     /**
      * display the post of the user
      *
-     * @param String userId
+     * @param userId
      *        id of the user
-     * @return List<Post>
+     * @return post
      *         post of the users
      */
     public List<Post> getUserPost(String userId) {
         try {
-            return postService.displayPost(userId);
+            return postService.getUserPost(userId);
         } catch (InstagramManagementException exception) {
             CustomLogger.error(exception.getMessage());
         }
@@ -67,14 +68,14 @@ public class PostController {
      * 
      * @param  postId 
      *         id of the post
-     * @param String userId
+     * @param userId
      *        id of the user
-     * @return boolean 
-     *         true if post is deleted 
+     * @return true
+     *        if post is deleted 
      */
-    public boolean delete(String postId, String userId) {
+    public boolean updateIsDeleteStatus(String postId, String userId) {
         try {
-            return postService.delete(postId, userId);
+            return postService.updateIsDeleteStatus(postId, userId);
         } catch (InstagramManagementException exception) {
             CustomLogger.error(exception.getMessage());
         }
@@ -84,15 +85,15 @@ public class PostController {
     /**
      * update the post
      *
-     * @param string postId
+     * @param postId
      *        post id of user
-     * @param string updateValue
+     * @param updateValue
      *        change detail  of user
-     * @param int choice
+     * @param choice
      *        choice of user
-     * @param String userId
+     * @param userId
      *        id of the user
-     * @return Post post 
+     * @return post 
      *        details of post if post updated         
      */   
     public Post update(String postId, String updateValue, int choice, String userId) { 
@@ -109,7 +110,7 @@ public class PostController {
      * 
      * @param  postId 
      *         id of the post
-     * @return String postId 
+     * @return postId 
      *         if post id already exist.
      */
     public Post getPostId(String postId) {
@@ -121,7 +122,7 @@ public class PostController {
      * stores it in the List and prints the post
      * if the List of post is empty then it will print a no post found
      *
-     * @return List<Post>
+     * @return listOfPost
      *         list of all user post.
      */
     public List<Post> getAllUsersPost() {

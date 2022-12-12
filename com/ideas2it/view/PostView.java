@@ -1,7 +1,6 @@
 package com.ideas2it.view;
 
-import java.text.ParseException;
-import java.lang.NullPointerException;
+import java.lang.NumberFormatException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -32,7 +31,7 @@ public class PostView {
      * Adds post in user
      * account 
      *
-     * @param User user
+     * @param user
      *        details of user.
      */ 
     public void showPostMenu(User user) {
@@ -50,11 +49,11 @@ public class PostView {
                 
                 switch (Integer.parseInt(scanner.nextLine())) {
                 case Constant.ADD_POST:
-                    uploadPost(user);
+                    insertPost(user);
                     break;
 
                 case Constant.DISPLAY_POST:
-                    displayPost(user);
+                    getUserPost(user);
                     break;
 
                 case Constant.REMOVE_POST:
@@ -74,11 +73,8 @@ public class PostView {
                     CustomLogger.warn(Constant.NO_FEATURES_EXIST_IN_POST);
                     break;
                 }
-            } catch (InputMismatchException inputMismatch) {
+            } catch (NumberFormatException numberFormateException) {
                 CustomLogger.error(Constant.INVALID_OPTION_TO_POST);
-                scanner.next();
-            } catch (Exception exception) {
-                CustomLogger.error("exception");
             }
         } while (!isRunning);
     }
@@ -86,11 +82,11 @@ public class PostView {
     /**
      * upload the post for user
      *
-     * @param User user
+     * @param user
      *        details of user.
      */
-    private void uploadPost(User user) { 
-        Post post = postController.uploadPost(user, getTitle(), getContent());
+    private void insertPost(User user) { 
+        Post post = postController.insertPost(user, getTitle(), getContent());
 
         if(null == post) {
 	    CustomLogger.info(Constant.POST_NOT_UPLOAD);
@@ -102,13 +98,13 @@ public class PostView {
     /**
      * display the post
      *
-     * @param User user
+     * @param user
      *        details of user.
      */ 
-    private void displayPost(User user) {
+    private void getUserPost(User user) {
         List<Post> posts = postController.getUserPost(user.getUserId());  
 
-        if (!posts.isEmpty()) {
+        if (posts != null) {
             System.out.println(posts);
         } else {
             CustomLogger.info(Constant.NO_POST);            
@@ -118,14 +114,14 @@ public class PostView {
     /**
      * To delete the post.
      *
-     * @param User user
+     * @param user
      *        details of user.
      */ 
     private void deletePost(User user) {
         System.out.println("Enter the post Id");
         String postId = scanner.nextLine();
 
-        if (postController.delete(postId, user.getUserId())) {
+        if (postController.updateIsDeleteStatus(postId, user.getUserId())) {
             CustomLogger.info(Constant.POST_DELETED);
         } else {
             CustomLogger.info(Constant.POST_NOT_DELETED);
@@ -135,70 +131,70 @@ public class PostView {
     /**
      * update the post 
      *
-     * @param User user
+     * @param user
      *        details of user.   
      */
     private void update(User user) {
         boolean isRunning = false;
-        Post post = null;
         StringBuilder postUpdateMenu = new StringBuilder();
         System.out.println("Enter the post Id to update");
         String postId = scanner.nextLine();
         List <Post> userPosts = postController.getUserPost(user.getUserId());
-       // if (null != postController.getPostId(postId)) { 
-        if (userPosts.contains(postId)) {
-            postUpdateMenu.append(" Enter 1 for update post content")
-                          .append("\n Enter 2 for update post tittle");
+  
+        for (Post post : userPosts) {
+
+            if (post.getPostId().equals(postId)) {
+                postUpdateMenu.append(" Enter 1 for update post content")
+                              .append("\n Enter 2 for update post tittle");
            
-            do {
-                try {
-                    System.out.println(postUpdateMenu);
-                    scanner.skip("\r\n");     
-        
-                    switch (scanner.nextInt()) {
-                    case Constant.UPDATE_POST_CONTENT:
-                        scanner.nextLine(); 
-                        String updatePostContent = getContent();
-                        post = postController.update(postId, updatePostContent,
-                                                  Constant.UPDATE_POST_CONTENT,
-                                                  user.getUserId());
-                        isRunning = true;
-                        break;
+                do {
+                    try {
+                        System.out.println(postUpdateMenu);     
 
-                    case Constant.UPDATE_POST_TITLE:
-                        String updatePostTitle = getTitle();
-                        post = postController.update(postId, updatePostTitle,
-                                                  Constant.UPDATE_POST_TITLE,
-                                                  user.getUserId());
-                        isRunning = true;
-                        break;
+                        switch (scanner.nextInt()) {
+                        case Constant.UPDATE_POST_CONTENT:
+                            scanner.nextLine();
+                            String updatePostContent = getContent();
+                            post = postController.update(postId, updatePostContent,
+                                                      Constant.UPDATE_POST_CONTENT,
+                                                      user.getUserId());
+                            isRunning = true;
+                            break;
 
-                    default:
-                        CustomLogger.warn("No features to update in post");
-                        break;
-                    }
+                        case Constant.UPDATE_POST_TITLE:
+                            scanner.nextLine();
+                            String updatePostTitle = getTitle();
+                            post = postController.update(postId, updatePostTitle,
+                                                      Constant.UPDATE_POST_TITLE,
+                                                      user.getUserId());
+                            isRunning = true;
+                            break;
 
-                    if (postId.equals(post.getPostId())) {
-                        CustomLogger.info("post updated Successfully");
-                    } else {
-                        CustomLogger.info("post not updated");
-                    }
-                } catch (InputMismatchException inputMismatch) { 
-                    CustomLogger.error(inputMismatch.getMessage());     
-                } catch (NullPointerException exception) { 
-                    CustomLogger.error(exception.getMessage());
-                    scanner.next();     
-                }
-            } while (!isRunning); 
-        } else {
-            CustomLogger.info("no post to update");
-        } 
+                        default:
+                            CustomLogger.warn("No features to update in post");
+                            break;
+                        }
+
+                        if (postId.equals(post.getPostId())) {
+                            CustomLogger.info("post updated Successfully");
+                        } else {
+                            CustomLogger.info("post not updated");
+                        }
+                    } catch (InputMismatchException inputMismatch) { 
+                        CustomLogger.error(inputMismatch.getMessage());
+                        scanner.nextLine();     
+                    }     
+                } while (!isRunning); 
+            } else {
+                CustomLogger.info("no post to update");
+            } 
+        }
     }
 
     /**
      * creates content for post.
      *
-     * @return String content
+     * @return content
      *         content of post.
      */
     private String getContent() {
@@ -209,8 +205,8 @@ public class PostView {
     /**
      * creates title for post.
      *
-     * @return String title
-     *        title of post.
+     * @return title
+     *         title of post.
      */
     private String getTitle() {
         System.out.println("Enter your title");

@@ -1691,3 +1691,45 @@
 2022-12-10 23:46:41,924 ERROR c.i.l.CustomLogger [main] exception
 2022-12-10 23:48:06,875 ERROR c.i.l.CustomLogger [main] No post exist to delete
 2022-12-10 23:48:59,872 ERROR c.i.l.CustomLogger [main] No post exist to delete
+2022-12-12 10:23:12,129 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-12 10:24:10,156 ERROR c.i.l.CustomLogger [main] Not yet post uploaded
+2022-12-12 10:24:10,157 ERROR c.i.l.CustomLogger [main] exception
+2022-12-12 10:52:50,021 ERROR c.i.l.CustomLogger [main] exception
+2022-12-12 10:52:50,029 ERROR c.i.l.CustomLogger [main] exception
+2022-12-12 11:32:39,839 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-12 11:33:35,851 ERROR c.i.l.CustomLogger [main] Not yet post uploaded
+2022-12-12 11:33:35,851 ERROR c.i.l.CustomLogger [main] exception
+2022-12-12 11:34:16,199 ERROR c.i.l.CustomLogger [main] No post exist to delete
+2022-12-12 11:34:51,134 ERROR c.i.l.CustomLogger [main] No post exist to delete
+2022-12-12 13:39:58,673 ERROR c.i.l.CustomLogger [main] exception
+2022-12-12 13:39:58,680 ERROR c.i.l.CustomLogger [main] exception
+2022-12-12 13:39:58,685 ERROR c.i.l.CustomLogger [main] exception
+2022-12-12 13:43:57,234 ERROR c.i.l.CustomLogger [main] Not yet post uploaded
+2022-12-12 13:43:57,243 ERROR c.i.l.CustomLogger [main] exception
+2022-12-12 13:49:59,052 ERROR c.i.l.CustomLogger [main] Not yet post uploaded
+2022-12-12 13:49:59,052 ERROR c.i.l.CustomLogger [main] exception
+2022-12-12 13:51:35,576 ERROR c.i.l.CustomLogger [main] exception
+2022-12-12 13:57:15,105 ERROR c.i.l.CustomLogger [main] Not yet post uploaded
+2022-12-12 13:57:15,113 ERROR c.i.l.CustomLogger [main] Cannot invoke "java.util.List.isEmpty()" because "<local2>" is null
+2022-12-12 14:02:36,322 ERROR c.i.l.CustomLogger [main] No line found
+2022-12-12 14:02:36,324 ERROR c.i.l.CustomLogger [main] No line found
+2022-12-12 14:05:17,300 ERROR c.i.l.CustomLogger [main] For input string: "qwe"
+2022-12-12 14:07:03,241 ERROR c.i.l.CustomLogger [main] No line found
+2022-12-12 14:07:03,244 ERROR c.i.l.CustomLogger [main] No line found
+2022-12-12 14:07:29,576 ERROR c.i.l.CustomLogger [main] java.lang.NumberFormatException: For input string: "qwewqe"
+2022-12-12 14:09:53,366 ERROR c.i.l.CustomLogger [main] java.util.NoSuchElementException: No line found
+2022-12-12 14:09:53,369 ERROR c.i.l.CustomLogger [main] java.util.NoSuchElementException: No line found
+2022-12-12 14:10:19,913 ERROR c.i.l.CustomLogger [main] Entered input not valid to post
+2022-12-12 14:10:32,266 ERROR c.i.l.CustomLogger [main] Entered input not valid to post
+2022-12-12 14:10:47,618 ERROR c.i.l.CustomLogger [main] Entered input not valid to post
+2022-12-12 14:15:25,119 ERROR c.i.l.CustomLogger [main] Not yet post uploaded
+2022-12-12 14:15:35,707 ERROR c.i.l.CustomLogger [main] Entered input not valid to post
+2022-12-12 14:20:30,881 ERROR c.i.l.CustomLogger [main] No post exist to delete
+2022-12-12 14:20:58,599 ERROR c.i.l.CustomLogger [main] No post exist to delete
+2022-12-12 14:24:57,684 ERROR c.i.l.CustomLogger [main] Entered input not valid to post
+2022-12-12 14:46:35,145 ERROR c.i.l.CustomLogger [main] Entered input data is invalid
+2022-12-12 15:40:04,661 ERROR c.i.l.CustomLogger [main] No user post to display
+2022-12-12 15:50:57,233 ERROR c.i.l.CustomLogger [main] No user post to display
+2022-12-12 16:01:51,502 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-12 17:16:06,596 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-12 18:08:56,369 ERROR c.i.l.CustomLogger [main] No account is exist to login

@@ -60,6 +60,11 @@ public class Post {
         this.user = user;
     }
 
+    /**
+     * To show the details of user post
+     * 
+     * @param string object of user post
+     */
     public String toString() {
         StringBuilder post = new StringBuilder();
         post.append("\nPostId : ").append(postId)
