@@ -43,6 +43,7 @@ public class PostView {
                 .append("\n Enter 3 for delete post")
                 .append("\n Enter 4 for update post")
                 .append("\n Enter 5 for profile menu");
+
         do {
             try {
                 System.out.println(postMenu);
@@ -140,54 +141,57 @@ public class PostView {
         System.out.println("Enter the post Id to update");
         String postId = scanner.nextLine();
         List <Post> userPosts = postController.getUserPost(user.getUserId());
-  
-        for (Post post : userPosts) {
+       
+        if (null != userPosts) {
 
-            if (post.getPostId().equals(postId)) {
-                postUpdateMenu.append(" Enter 1 for update post content")
-                              .append("\n Enter 2 for update post tittle");
-           
-                do {
-                    try {
-                        System.out.println(postUpdateMenu);     
+            for (Post post : userPosts) {
+                if (post.getPostId().equals(postId)) {
+                    postUpdateMenu.append(" Enter 1 for update post content")
+                                  .append("\n Enter 2 for update post tittle");
+                    do {
+                        try {
+                            System.out.println(postUpdateMenu);     
+                            int postUpdated = Constant.POST_LOADING;
 
-                        switch (scanner.nextInt()) {
-                        case Constant.UPDATE_POST_CONTENT:
-                            scanner.nextLine();
-                            String updatePostContent = getContent();
-                            post = postController.update(postId, updatePostContent,
-                                                      Constant.UPDATE_POST_CONTENT,
-                                                      user.getUserId());
-                            isRunning = true;
-                            break;
+                            switch (scanner.nextInt()) {
+                            case Constant.UPDATE_POST_CONTENT:
+                                scanner.nextLine();
+                                String updatePostContent = getContent();
+                                postUpdated = postController.update(postId, updatePostContent,
+                                                             Constant.UPDATE_POST_CONTENT,
+                                                             user.getUserId());
+                                isRunning = true;
+                                break;
 
-                        case Constant.UPDATE_POST_TITLE:
-                            scanner.nextLine();
-                            String updatePostTitle = getTitle();
-                            post = postController.update(postId, updatePostTitle,
-                                                      Constant.UPDATE_POST_TITLE,
-                                                      user.getUserId());
-                            isRunning = true;
-                            break;
+                            case Constant.UPDATE_POST_TITLE:
+                                scanner.nextLine();
+                                String updatePostTitle = getTitle();
+                                postUpdated = postController.update(postId, updatePostTitle,
+                                                             Constant.UPDATE_POST_TITLE,
+                                                             user.getUserId());
+                                isRunning = true;
+                                break;
 
-                        default:
-                            CustomLogger.warn("No features to update in post");
-                            break;
-                        }
+                            default:
+                                CustomLogger.warn("No features to update in post");
+                                break;
+                            }
 
-                        if (postId.equals(post.getPostId())) {
-                            CustomLogger.info("post updated Successfully");
-                        } else {
-                            CustomLogger.info("post not updated");
-                        }
-                    } catch (InputMismatchException inputMismatch) { 
-                        CustomLogger.error(inputMismatch.getMessage());
-                        scanner.nextLine();     
-                    }     
-                } while (!isRunning); 
-            } else {
-                CustomLogger.info("no post to update");
-            } 
+                            if (postUpdated == Constant.POST_UPDATED) {
+                                CustomLogger.info(Constant.POST_UPDATED_SUCCESFULLY);
+                            } else {
+                                CustomLogger.info(Constant.POST_NOT_UPDATED);
+                            }
+                        } catch (InputMismatchException inputMismatch) { 
+                            CustomLogger.error(inputMismatch.getMessage());
+                            scanner.nextLine();     
+                        }     
+                    } while (!isRunning); 
+                }
+            }
+        } else {
+           System.out.println("not valid");
+           CustomLogger.info(Constant.NO_POST_EXIST_TO_UPDATE);
         }
     }
 

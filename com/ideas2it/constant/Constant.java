@@ -45,7 +45,11 @@ public class Constant {
     public static final int BACK_TO_PROFILEMENU = 5;  
 
     public static final int UPDATE_POST_CONTENT = 1;  
-    public static final int UPDATE_POST_TITLE = 2; 
+    public static final int UPDATE_POST_TITLE = 2;
+    public static final int POST_LOADING = 0;
+    public static final int POST_UPDATED = 1; 
+    public static final String POST_UPDATED_SUCCESFULLY = "post updated Successfully";
+    public static final String POST_NOT_UPDATED = "post not updated";
 
     public static final String URL = "jdbc:mysql://localhost:3306/instagram";
     public static final String USER_NAME = "root";
@@ -60,7 +64,7 @@ public class Constant {
     public static final String NOT_YET_POST_UPLOADED = "Not yet post uploaded";
     public static final String NO_USER_POST_EXIST_TO_SHOW = "No user post to display";
     public static final String NO_POST_EXIST_TO_UPDATE = "No post exist to update";
-    public static final String NO_POST_EXIST_TO_DELETE = "No post exist to delete";
+    public static final String NO_POST_EXIST_TO_DELETE = "No post exist to delete";  
 
     public static final String USER_INPUT_MISMATCH = "Entered input data is invalid";
     public static final String USER_INPUT_NOT_EXIST = "Entered input not exist";

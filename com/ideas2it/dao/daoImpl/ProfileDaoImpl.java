@@ -27,6 +27,8 @@ public class ProfileDaoImpl implements ProfileDao {
      */
     @Override
     public User create(User user) {
+        User userAccount = null;
+        int numberOfRowsAffected = 0;
         StringBuilder query = new StringBuilder();
         query.append("INSERT INTO")
              .append(" user (user_id, account_name, user_name,")
@@ -42,14 +44,18 @@ public class ProfileDaoImpl implements ProfileDao {
             statement.setString(3, user.getUserName());
             statement.setLong(4, user.getMobileNumber());
             statement.setString(5, user.getPassword());
-            statement.executeUpdate(); 
+            numberOfRowsAffected = statement.executeUpdate(); 
+
+            if(numberOfRowsAffected > 0) {
+                userAccount  = user;
+            }
             statement.close();
         } catch (SQLException sqlException) {
             CustomLogger.error(sqlException.getMessage());
         } finally {
             DatabaseConnection.closeConnection();
         }
-        return user;
+        return userAccount;
     }
 
     /**

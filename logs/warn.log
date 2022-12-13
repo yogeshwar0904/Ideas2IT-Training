@@ -362,3 +362,7 @@
 2022-12-12 15:51:27,817 WARN c.i.l.CustomLogger [main] Entered wrong format account name try again
 2022-12-12 15:52:11,860 WARN c.i.l.CustomLogger [main] Entered wrong format password try again
 2022-12-12 17:19:21,582 WARN c.i.l.CustomLogger [main] Entered input data have no features in post
+2022-12-13 16:13:36,396 WARN c.i.l.CustomLogger [main] Entered wrong format user name try again
+2022-12-13 17:20:14,496 WARN c.i.l.CustomLogger [main] Entered input data have no features in post
+2022-12-13 18:40:24,609 WARN c.i.l.CustomLogger [main] Entered wrong format password try again
+2022-12-13 18:40:53,139 WARN c.i.l.CustomLogger [main] Entered wrong format password try again

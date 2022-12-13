@@ -1733,3 +1733,18 @@
 2022-12-12 16:01:51,502 ERROR c.i.l.CustomLogger [main] No account is exist to login
 2022-12-12 17:16:06,596 ERROR c.i.l.CustomLogger [main] No account is exist to login
 2022-12-12 18:08:56,369 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-13 15:42:12,559 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-13 15:43:07,449 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-13 16:18:44,586 ERROR c.i.l.CustomLogger [main] Not yet post uploaded
+2022-12-13 16:24:00,705 ERROR c.i.l.CustomLogger [main] Not yet post uploaded
+2022-12-13 16:37:46,302 ERROR c.i.l.CustomLogger [main] Not yet post uploaded
+2022-12-13 16:41:05,386 ERROR c.i.l.CustomLogger [main] No post exist to delete
+2022-12-13 16:46:51,568 ERROR c.i.l.CustomLogger [main] Entered input not valid to update
+2022-12-13 18:06:52,217 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-13 18:09:46,012 ERROR c.i.l.CustomLogger [main] Not yet post uploaded
+2022-12-13 18:10:46,520 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-13 18:10:53,436 ERROR c.i.l.CustomLogger [main] Entered input data is invalid
+2022-12-13 18:33:58,674 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-13 18:38:42,720 ERROR c.i.l.CustomLogger [main] No account is exist to login
+2022-12-13 18:52:42,566 ERROR c.i.l.CustomLogger [main] Not yet post uploaded
+2022-12-13 18:55:10,766 ERROR c.i.l.CustomLogger [main] No account is exist to login

@@ -47,7 +47,7 @@ public class ProfileServiceImpl implements ProfileService {
      */
     @Override
     public User add(User user) {
-        String userId = UUID.randomUUID().toString();
+        String userId = UUID.randomUUID().toString(); 
         user.setUserId(userId);
         return profileDao.create(user);
     } 

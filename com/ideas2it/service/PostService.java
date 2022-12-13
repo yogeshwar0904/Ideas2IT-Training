@@ -83,9 +83,9 @@ public interface PostService {
      * @throws InstagramManagementException
      *        post not updated        
      */   
-    public Post update(String postId, String updateValue, 
-                       int choice, String userId) 
-                       throws InstagramManagementException; 
+    public int update(String postId, String updateValue, 
+                      int choice, String userId) 
+                      throws InstagramManagementException; 
  
     /**
      * get the id of user post

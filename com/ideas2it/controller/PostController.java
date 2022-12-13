@@ -96,13 +96,14 @@ public class PostController {
      * @return post 
      *        details of post if post updated         
      */   
-    public Post update(String postId, String updateValue, int choice, String userId) { 
+    public int update(String postId, String updateValue, int choice, String userId) { 
+        int updateStatus  = Constant.POST_LOADING;
         try {
-            return postService.update(postId, updateValue, choice, userId); 
+            updateStatus  = postService.update(postId, updateValue, choice, userId); 
         } catch (InstagramManagementException exception) {
             CustomLogger.error(exception.getMessage());
         } 
-        return null; 
+        return updateStatus; 
     } 
 
     /**

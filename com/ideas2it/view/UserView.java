@@ -42,14 +42,12 @@ public class UserView {
                 System.out.println(userChoice);
   
                 switch (scanner.nextInt()) {
-                case Constant.LOGIN: 
-                    login();
-                    isRunning = true;
+                case Constant.LOGIN:  
+                    isRunning = login();
                     break;
 
                 case Constant.CREATE: 
-                    create();
-                    isRunning = true;
+                    isRunning = create();
                     break;
 
                 case Constant.EXIT:
@@ -71,7 +69,8 @@ public class UserView {
      * Allow the user to Login if their account
      * alredy exist.
      */
-    private void login() {
+    private boolean login() {
+        boolean isContinue = false;
         ProfileView ProfileView = new ProfileView();
         System.out.println("Enter account name");
         String accountName = scanner.next();
@@ -81,27 +80,28 @@ public class UserView {
 
         if (null != user) {
             ProfileView.showHomeMenu(user);
+            isContinue = true;
         } else {
-            userInput();
             CustomLogger.info(Constant.NO_ACCOUNT_EXIST_TO_LOGIN);
         }
+        return isContinue;
     }
 
     /**
      * Allow the user to create
      * new account.         
      */   
-    private void create() {
-        boolean isValid = false;     
+    private boolean create() {
+        boolean isContinue = false;     
         User user = new User(getAccountName(), getUserName(),
                              getMobileNumber(), getPassword());
 
         if (profileController.create(user) != null) {
 	    CustomLogger.info(Constant.ACCOUNT_CREATED); 
-            userInput();
         } else {
             CustomLogger.info(Constant.ACCOUNT_NOT_CREATED);
         }
+        return isContinue;
     }
 
     /**

@@ -19,7 +19,8 @@ public class DatabaseConnection {
  
     private DatabaseConnection() {
         try {
-            connection = DriverManager.getConnection(Constant.URL, Constant.USER_NAME, Constant.PASSWORD);
+            connection = DriverManager.getConnection(Constant.URL, 
+                                       Constant.USER_NAME, Constant.PASSWORD);
         } catch (SQLException exception) {
              CustomLogger.fatal("Not connected to database");
         }

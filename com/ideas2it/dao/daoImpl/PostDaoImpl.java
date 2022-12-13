@@ -26,9 +26,9 @@ public class PostDaoImpl implements PostDao {
      * {@inheritDoc}
      */
     @Override
-    public Post insertPost(User user, Post post) { 
-        int count = 0;  
+    public Post insertPost(User user, Post post) {   
         Post currentPost = null;
+        int numberOfRowsAffected = 0;
         StringBuilder query = new StringBuilder();
         query.append("INSERT INTO ")
              .append(" post (user_id, post_id, title, content)")
@@ -42,9 +42,9 @@ public class PostDaoImpl implements PostDao {
             statement.setString(2, post.getPostId());
             statement.setString(3, post.getTitle());
             statement.setString(4, post.getContent());
-            count = statement.executeUpdate();
+            numberOfRowsAffected = statement.executeUpdate();
 
-            if(count > 0) {
+            if(numberOfRowsAffected > 0) {
                 currentPost = post;
             }
             statement.close();
@@ -122,8 +122,8 @@ public class PostDaoImpl implements PostDao {
      * {@inheritDoc}
      */
     @Override
-    public boolean updateIsDeleteStatus(String postId, String userId) { 
-        boolean isDeleted = false;
+    public int updateIsDeleteStatus(String postId, String userId) { 
+        int postDeactivateStatus = 0;
         StringBuilder query = new StringBuilder();
         query.append("UPDATE post SET is_deleted = 1")
              .append(" WHERE post_id = ?")
@@ -135,21 +135,22 @@ public class PostDaoImpl implements PostDao {
                                           .prepareStatement(query.toString());
             statement.setString(1, postId);
             statement.setString(2, userId);
-            isDeleted = statement.execute();
+            postDeactivateStatus = statement.executeUpdate();
             statement.close();
         } catch (SQLException sqlException) {
             CustomLogger.error(sqlException.getMessage());
         } finally {
             DatabaseConnection.closeConnection();
         }
-        return !isDeleted;
+        return postDeactivateStatus;
     } 
 
     /**
      * {@inheritDoc}
      */
     @Override   
-    public Post update(Post post, String userId) {
+    public int update(Post post, String userId) {
+        int postUpdated = 0;
         StringBuilder query = new StringBuilder();
         query.append("UPDATE post SET  title = ?, content = ?")
              .append(" WHERE post_id = ?")
@@ -163,14 +164,14 @@ public class PostDaoImpl implements PostDao {
             statement.setString(2, post.getContent());
             statement.setString(3, post.getPostId());
             statement.setString(4, userId);
-            statement.execute();
+            postUpdated = statement.executeUpdate();
             statement.close();
         } catch(SQLException sqlException) {
             CustomLogger.error(sqlException.getMessage()); 
         } finally {
             DatabaseConnection.closeConnection();
         }
-        return post;   
+        return postUpdated;   
     }
 
     /**

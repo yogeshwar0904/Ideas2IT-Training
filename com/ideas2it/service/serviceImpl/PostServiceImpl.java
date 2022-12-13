@@ -49,12 +49,13 @@ public class PostServiceImpl implements PostService {
 
         for(Post post : userPosts) {
             if (post.getPostId().equals(postId)) {
-                isDeleted = postDao.updateIsDeleteStatus(postId, userId);
+                isDeleted = postDao.updateIsDeleteStatus(postId,
+                                    userId) > Constant.POST_LOADING;
                 return isDeleted;
             }
         }
 
-        if (false == isDeleted) {
+        if (!isDeleted) {
                 throw new InstagramManagementException(Constant
                                              .NO_POST_EXIST_TO_DELETE);
         }
@@ -94,24 +95,20 @@ public class PostServiceImpl implements PostService {
      * {@inheritDoc}
      */
     @Override  
-    public Post update(String postId, String updateValue, int choice, 
+    public int update(String postId, String updateValue, int choice, 
                           String userId) throws InstagramManagementException {
         Post post = postDao.getPostId(postId);
- 
+
         if (null != post) {
             switch (choice) {
             case Constant.UPDATE_POST_CONTENT:
-                post.setContent(updateValue); 
-                break;
+                post.setContent(updateValue);
+                return postDao.update(post, userId);
 
             case Constant.UPDATE_POST_TITLE:
                 post.setTitle(updateValue);
-                break;
-
-            default:
-                break;         
+                return postDao.update(post, userId);         
             }
-            return postDao.update(post, userId);
         }
         throw new InstagramManagementException(Constant
                                      .NO_POST_EXIST_TO_UPDATE);
