@@ -116,7 +116,7 @@ public class ProfileServiceImpl implements ProfileService {
                 break;
 
             case Constant.UPDATE_MOBILE_NUMBER:
-                user.setMobileNumber(Long.parseLong(updateValue));
+                user.setMobileNumber(updateValue);
                 break;
 
             case Constant.UPDATE_PASSWORD:	

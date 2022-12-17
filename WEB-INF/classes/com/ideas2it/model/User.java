@@ -14,14 +14,14 @@ public class User {
     private String userId;
     private String accountName;
     private String userName;
-    private long mobileNumber;
+    private String mobileNumber;
     private String password;
     private List<Post> posts;
   
     public User() {}
 
     public User(String accountName, String userName,
-                long mobileNumber, String password) {
+                String mobileNumber, String password) {
         this.userId = userId;
         this.accountName = accountName;
         this.userName = userName;
@@ -53,11 +53,11 @@ public class User {
         this.userName = userName;
     }
 
-    public long getMobileNumber() {
+    public String getMobileNumber() {
         return mobileNumber;   
     }
 
-    public void setMobileNumber(long mobileNumber) {
+    public void setMobileNumber(String mobileNumber) {
         this.mobileNumber = mobileNumber;
     }
 

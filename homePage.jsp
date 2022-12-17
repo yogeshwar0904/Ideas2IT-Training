@@ -7,13 +7,13 @@
 </head>
 <body>
 <div>
-<c:forEach items="${listOfPosts}" var = "post">    
+<c:forEach items="${getAllUsersPost}" var = "post">    
     ${post}<br>
 </c:forEach>
 </div>
-<form action ="viewProfile" method = "get">
+<form action ="homePage" method = "post">
 
-<input type="submit" value = "ViewProfile">
+<input type="submit" value = "Home Page">
 </form>
 </body>
 </html>

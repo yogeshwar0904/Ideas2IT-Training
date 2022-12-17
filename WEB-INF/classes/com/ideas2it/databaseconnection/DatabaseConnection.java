@@ -25,10 +25,11 @@ public class DatabaseConnection {
 
         try {
             if (null == connection || connection.isClosed()) {
+                Class.forName("com.mysql.cj.jdbc.Driver");
                 connection = DriverManager.getConnection(Constant.URL, 
                                    Constant.USER_NAME, Constant.PASSWORD);
             } 
-        } catch (SQLException sqlException) {
+        } catch (ClassNotFoundException | SQLException sqlException) {
             CustomLogger.fatal(sqlException.getMessage());
         }
         return connection;
@@ -40,7 +41,9 @@ public class DatabaseConnection {
     public static void closeConnection() {
 
         try {
-            connection.close();
+            if (null != connection) {
+                connection.close();
+            }
         } catch (SQLException sqlException) {
             CustomLogger.fatal(sqlException.getMessage());         
         }

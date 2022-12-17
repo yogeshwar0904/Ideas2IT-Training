@@ -13,8 +13,8 @@
       <label>User Name :</label>
       <input type = "text" placeholder = "User Name" name = "userName"><br><br>
       <label>Mobile Number:</label>
-      <input type = "number" placeholder = "Mobile Number" name = "mobileNumber"><br><br>
-      <label>Set Username :</label>
+      <input type = "text" placeholder = "Mobile Number" name = "mobileNumber"><br><br>
+      <label>Password:</label>
       <input type = "password" placeholder = "Password" name = "password"><br><br>
       <input type = "submit" value="Create Account">
     </form>

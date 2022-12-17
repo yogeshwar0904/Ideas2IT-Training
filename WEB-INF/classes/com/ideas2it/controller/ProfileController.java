@@ -1,4 +1,4 @@
-package com.ideas2it.controller;
+ package com.ideas2it.controller;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -33,56 +33,102 @@ public class ProfileController extends HttpServlet {
         this.profileService = new ProfileServiceImpl(); 
     }
 
-    protected  void doPost(HttpServletRequest request, 
-                    HttpServletResponse response) throws 
-                    ServletException, IOException {
+    protected  void doPost(HttpServletRequest request,                            
+                           HttpServletResponse response) throws 
+                           ServletException, IOException {
         String path = request.getServletPath();
-        String accountName;
-        String userName;
-        String mobileNumber;
-        String password;
-        String message;
-        User user = null;
 
         switch (path) {
         case "/login":
-            accountName = request.getParameter("accountName");
-            password = request.getParameter("password");
-            user = this.getUser(accountName, password);
-          
-            if (null != user) {
-                HttpSession session = request.getSession();
-                session.setAttribute("userAccount", getUser(accountName, password));
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("homePage");
-                requestDispatcher.forward(request, response);
-            } else {
-                message = "Sorry Email Id or Password is wrong";
-                request.setAttribute("Message", message);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("loginPage.jsp");
-                requestDispatcher.forward(request, response);
-            }
+            login(request, response);
             break;
   
         case "/register":
-            accountName = request.getParameter("accountname");
-            userName = request.getParameter("username");
-            mobileNumber = request.getParameter("mobilenumber");
-            password = request.getParameter("password");
-            user = new User();
-            user.setAccountName(accountName);
-            user.setUserName(userName);
-            user.setMobileNumber(Long.parseLong(mobileNumber));
-            user.setPassword(password);
-            create(user);
-            message = "Account Created SuccessFully";
-            request.setAttribute("Message", message);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("profile.jsp");
-            requestDispatcher.forward(request, response);
+            register(request, response);
+            break;
+    
+        case "/delete":
+            register(request, response);
+            break;
+
+        case "/Exit":
+            break;
+        }
+    }
+
+    protected  void doGet(HttpServletRequest request,                            
+                           HttpServletResponse response) throws 
+                           ServletException, IOException {
+        String path = request.getServletPath();
+
+        switch (path) {
+        case "/update":
+            login(request, response);
+            break;
+  
+        case "/showUserDetails":
+            register(request, response);
+            break;
+
+        case "/delete":
+            register(request, response);
+            break;
+
+        case "/postMenu":
+            register(request, response);
             break;
     
         case "/Exit":
             break;
         }
+   }
+
+    protected void login(HttpServletRequest request,
+                         HttpServletResponse response) throws IOException,
+                                                        ServletException {
+         String accountName = request.getParameter("accountName");
+         String password = request.getParameter("password");
+         User user = this.getUser(accountName, password);
+         String message;
+          
+         if (null != user) {
+             HttpSession session = request.getSession();
+             session.setAttribute("userAccount", getUser(accountName, password));
+             RequestDispatcher requestDispatcher = request.getRequestDispatcher("login.jsp");
+             requestDispatcher.forward(request, response);
+         } else {
+             message = "Sorry Email Id or Password is wrong";
+             request.setAttribute("Message", message);
+             RequestDispatcher requestDispatcher = request.getRequestDispatcher("login.jsp");
+             requestDispatcher.forward(request, response);
+         }
+    }
+
+    /**
+     * Register new account for the user
+     *
+     * @param user
+     *        details of the user
+     * @return users
+     *        details of the user           
+     */ 
+    private void register(HttpServletRequest request,  
+                          HttpServletResponse response) throws IOException,
+                                                       ServletException {
+        String accountName = request.getParameter("accountName");
+        String userName = request.getParameter("userName");
+        String mobileNumber = request.getParameter("mobileNumber");
+        String password = request.getParameter("password");
+        User user = new User();
+        user.setAccountName(accountName);
+        user.setUserName(userName);
+        user.setMobileNumber(mobileNumber);
+        user.setPassword(password);
+        String message = "Account Created SuccessFully";
+        request.setAttribute("Message", message);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("login.jsp");
+        requestDispatcher.forward(request, response);
+        profileService.add(user);    
     }
 
     /** 
@@ -105,18 +151,6 @@ public class ProfileController extends HttpServlet {
      }
 
     /**
-     * Create account for the user
-     *
-     * @param user
-     *        details of the user
-     * @return users
-     *        details of the user           
-     */ 
-    public User create(User user) {
-        return profileService.add(user);    
-    }
-
-    /**
      * Deactivate user account
      *
      * @param String accountName 
@@ -125,8 +159,8 @@ public class ProfileController extends HttpServlet {
      *        true if sucessfully account deleted         
      */  
     public boolean deactivateAccount(String accountName) { 
-        try {
-            return profileService.updateAccountActiveStatus(accountName);
+        try {  
+            profileService.updateAccountActiveStatus(accountName);
         } catch (InstagramManagementException exception) {
             CustomLogger.error(exception.getMessage());
         }
