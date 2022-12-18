@@ -1,4 +1,4 @@
- package com.ideas2it.controller;
+package com.ideas2it.controller;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import java.util.ArrayList;
 import java.io.IOException;
 import java.util.List;
 
@@ -33,6 +32,13 @@ public class ProfileController extends HttpServlet {
         this.profileService = new ProfileServiceImpl(); 
     }
 
+    /** 
+     * Gets the request and response form the browser and performs the 
+     * task based on the request
+     * 
+     * @param request  - The request object is used to get the request parameters.
+     * @param response - This is the response object that is used to send data back to the client.
+     */
     protected  void doPost(HttpServletRequest request,                            
                            HttpServletResponse response) throws 
                            ServletException, IOException {
@@ -47,8 +53,12 @@ public class ProfileController extends HttpServlet {
             register(request, response);
             break;
     
+        case "/update":
+            login(request, response);
+            break;
+
         case "/delete":
-            register(request, response);
+            delete(request, response);
             break;
 
         case "/Exit":
@@ -56,26 +66,24 @@ public class ProfileController extends HttpServlet {
         }
     }
 
+    /** 
+     * Gets the request and response form the browser and performs the 
+     * task based on the request
+     * 
+     * @param request  - The request object is used to get the request parameters.
+     * @param response - This is the response object that is used to send data back to the client.
+     */
     protected  void doGet(HttpServletRequest request,                            
                            HttpServletResponse response) throws 
                            ServletException, IOException {
         String path = request.getServletPath();
 
-        switch (path) {
-        case "/update":
-            login(request, response);
-            break;
-  
+        switch (path) { 
         case "/showUserDetails":
-            register(request, response);
-            break;
-
-        case "/delete":
-            register(request, response);
+            getUserProfileDetails(request, response);
             break;
 
         case "/postMenu":
-            register(request, response);
             break;
     
         case "/Exit":
@@ -83,9 +91,15 @@ public class ProfileController extends HttpServlet {
         }
    }
 
-    protected void login(HttpServletRequest request,
-                         HttpServletResponse response) throws IOException,
-                                                        ServletException {
+    /**
+     * Allows the user to login when the email and password is Valid
+     *
+     * @param request  - The request object is used to get the request parameters.
+     * @param response - This is the response object that is used to send data back to the client.
+     */
+    private void login(HttpServletRequest request,
+                       HttpServletResponse response) throws IOException,
+                                                     ServletException {
          String accountName = request.getParameter("accountName");
          String password = request.getParameter("password");
          User user = this.getUser(accountName, password);
@@ -105,13 +119,11 @@ public class ProfileController extends HttpServlet {
     }
 
     /**
-     * Register new account for the user
+     * Register new account for the user.
      *
-     * @param user
-     *        details of the user
-     * @return users
-     *        details of the user           
-     */ 
+     * @param request  - The request object is used to get the request parameters.
+     * @param response - This is the response object that is used to send data back to the client.
+     */
     private void register(HttpServletRequest request,  
                           HttpServletResponse response) throws IOException,
                                                        ServletException {
@@ -132,7 +144,7 @@ public class ProfileController extends HttpServlet {
     }
 
     /** 
-     * Allow the user to login. 
+     * gets the user account name and password.  
      *
      * @param accountName
      *        account name of user
@@ -151,14 +163,14 @@ public class ProfileController extends HttpServlet {
      }
 
     /**
-     * Deactivate user account
+     * delete user account
      *
      * @param String accountName 
      *        name of the user account
      * @return boolean
      *        true if sucessfully account deleted         
      */  
-    public boolean deactivateAccount(String accountName) { 
+    public boolean delete(String accountName) { 
         try {  
             profileService.updateAccountActiveStatus(accountName);
         } catch (InstagramManagementException exception) {
