@@ -65,7 +65,7 @@ public interface ProfileDao {
      * @return user
      *        details of user 
      */   
-    public User update(String accountName, User user, String userId);
+    public User update(User user);
 
     /**
      * Login the user

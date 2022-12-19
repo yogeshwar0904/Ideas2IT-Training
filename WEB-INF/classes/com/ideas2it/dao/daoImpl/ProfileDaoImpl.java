@@ -150,12 +150,12 @@ public class ProfileDaoImpl implements ProfileDao {
      * {@inheritDoc}
      */
     @Override  
-    public User update(String accountName, User user, String userId) {
+    public User update(User user) {
         boolean isUpdated = false;
         StringBuilder query = new StringBuilder();
         query.append("UPDATE user SET user_name = ?,")
              .append(" mobile_number = ?, password = ?")
-             .append(" WHERE user_id = ? AND is_deactivated = 0;");
+             .append(" WHERE account_name = ? AND is_deactivated = 0;");
 
         try {
             Connection connection = DatabaseConnection.getConnection();
@@ -164,7 +164,7 @@ public class ProfileDaoImpl implements ProfileDao {
             statement.setString(1, user.getUserName());
             statement.setString(2, user.getMobileNumber());
             statement.setString(3, user.getPassword());
-            statement.setString(4, user.getUserId());
+            statement.setString(4, user.getAccountName());
             isUpdated = statement.execute();
  
             if (!isUpdated) {

@@ -3,17 +3,11 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-<title>Instagram</title>
+<title>update</title>
 </head>
-<body>
-<div>
-<c:forEach items="${getAllUsersPost}" var = "post">    
-    ${post}<br>
-</c:forEach>
-</div>
-<form action ="homePage" method = "post">
+<li><a href = "userProfile.jsp">User Profile</a></li>
+<li><a href = "showProfile.jsp">Show Profile</a></li>
+<li><a href = "post.jsp">Post Menu</a></li>
 
-<input type="submit" value = "Home Page">
-</form>
-</body>
 </html>
+

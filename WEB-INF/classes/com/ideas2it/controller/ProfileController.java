@@ -54,14 +54,11 @@ public class ProfileController extends HttpServlet {
             break;
     
         case "/update":
-            login(request, response);
+            update(request, response);
             break;
 
         case "/delete":
             delete(request, response);
-            break;
-
-        case "/Exit":
             break;
         }
     }
@@ -80,16 +77,13 @@ public class ProfileController extends HttpServlet {
 
         switch (path) { 
         case "/showUserDetails":
-            getUserProfileDetails(request, response);
+            //getUserProfileDetails(request, response);
             break;
 
         case "/postMenu":
             break;
-    
-        case "/Exit":
-            break;
         }
-   }
+    }
 
     /**
      * Allows the user to login when the email and password is Valid
@@ -100,18 +94,15 @@ public class ProfileController extends HttpServlet {
     private void login(HttpServletRequest request,
                        HttpServletResponse response) throws IOException,
                                                      ServletException {
-         String accountName = request.getParameter("accountName");
-         String password = request.getParameter("password");
-         User user = this.getUser(accountName, password);
-         String message;
+         User user = this.getUser(request.getParameter("accountName"),
+                                  request.getParameter("password"));
           
          if (null != user) {
              HttpSession session = request.getSession();
-             session.setAttribute("userAccount", getUser(accountName, password));
-             RequestDispatcher requestDispatcher = request.getRequestDispatcher("login.jsp");
-             requestDispatcher.forward(request, response);
+             session.setAttribute("accountName", request.getParameter("accountName"));
+             response.sendRedirect("homePage.jsp");
          } else {
-             message = "Sorry Email Id or Password is wrong";
+             String message = "Sorry Email Id or Password is wrong";
              request.setAttribute("Message", message);
              RequestDispatcher requestDispatcher = request.getRequestDispatcher("login.jsp");
              requestDispatcher.forward(request, response);
@@ -127,20 +118,64 @@ public class ProfileController extends HttpServlet {
     private void register(HttpServletRequest request,  
                           HttpServletResponse response) throws IOException,
                                                        ServletException {
-        String accountName = request.getParameter("accountName");
-        String userName = request.getParameter("userName");
-        String mobileNumber = request.getParameter("mobileNumber");
-        String password = request.getParameter("password");
         User user = new User();
-        user.setAccountName(accountName);
-        user.setUserName(userName);
-        user.setMobileNumber(mobileNumber);
-        user.setPassword(password);
+        user.setAccountName(request.getParameter("accountName"));
+        user.setUserName(request.getParameter("userName"));
+        user.setMobileNumber(request.getParameter("mobileNumber"));
+        user.setPassword(request.getParameter("password"));
         String message = "Account Created SuccessFully";
         request.setAttribute("Message", message);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("login.jsp");
         requestDispatcher.forward(request, response);
         profileService.add(user);    
+    }
+
+    /**
+     * Updates the details of the user.
+     *
+     * @param request  - The request object is used to get the request parameters.
+     * @param response - This is the response object that is used to send data back to the client.
+     */
+    private void update(HttpServletRequest request,
+                        HttpServletResponse response) throws IOException,
+                                                       ServletException {
+        try {
+            HttpSession session = request.getSession();
+            String accountName = (String)session.getAttribute("accountName");
+            String userName = (String)session.getAttribute("userName");
+            User user = this.searchParticularAccountName(accountName);
+            user.setAccountName(accountName);
+            user.setUserName(request.getParameter("userName"));
+            user.setPassword(request.getParameter("password"));
+            user.setMobileNumber(request.getParameter("mobileNumber"));
+            profileService.update(user);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("homePage.jsp");
+            requestDispatcher.forward(request, response);
+        } catch (InstagramManagementException customException) {
+            CustomLogger.error(customException.getMessage());
+        }
+    }
+
+    /**
+     * delete the account of the user.
+     *
+     * @param request  - The request object is used to get the request parameters.
+     * @param response - This is the response object that is used to send data back to the client.
+     */
+    private void delete(HttpServletRequest request,
+                        HttpServletResponse response) throws IOException,
+                                                       ServletException {
+        try {
+            HttpSession session = request.getSession();
+            String accountName = (String)session.getAttribute("accountName");
+            String mobileNumber = (String)session.getAttribute("mobileNumber");
+            profileService.updateAccountActiveStatus(accountName);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher
+                                                          ("login.jsp");
+            requestDispatcher.forward(request, response);
+        } catch (InstagramManagementException customException) {
+            CustomLogger.error(customException.getMessage());
+        }
     }
 
     /** 
@@ -161,23 +196,6 @@ public class ProfileController extends HttpServlet {
          }
          return null; 
      }
-
-    /**
-     * delete user account
-     *
-     * @param String accountName 
-     *        name of the user account
-     * @return boolean
-     *        true if sucessfully account deleted         
-     */  
-    public boolean delete(String accountName) { 
-        try {  
-            profileService.updateAccountActiveStatus(accountName);
-        } catch (InstagramManagementException exception) {
-            CustomLogger.error(exception.getMessage());
-        }
-        return false;
-    }
 
     /** 
      * search the particular user account
@@ -211,26 +229,4 @@ public class ProfileController extends HttpServlet {
         }
         return null;
     }
-
-    /**
-     * update the user
-     *
-     * @param string accountName
-     *        account name of user
-     * @param string updateValue
-     *        update detail  of user
-     * @param int choice
-     *        choice of user
-     * @return user
-     *         details of user if account
-     *         updated succesfully.
-     */   
-    public User update(String accountName, String updateValue, int choice) { 
-        try {
-            return profileService.update(accountName, updateValue, choice); 
-        } catch (InstagramManagementException exception) {
-            CustomLogger.error(exception.getMessage());
-        } 
-        return null;
-    } 
 }

@@ -89,7 +89,5 @@ public interface ProfileService {
      * @throws InstagramManagementException
      *        no account exist to update       
      */   
-    public User update(String accountName, String updateValue,
-                       int choice) throws InstagramManagementException;
-
+    public User update(User user) throws InstagramManagementException;
 }

@@ -76,7 +76,7 @@ public class ProfileServiceImpl implements ProfileService {
                                             InstagramManagementException {
         User user = profileDao.getParticularAccountName(accountName);
 
-        if( null == user) {
+        if (null == user) {
             throw new InstagramManagementException(Constant
                                          .NO_ACCOUNT_EXIST_TO_SEARCH);
         } else {
@@ -104,31 +104,7 @@ public class ProfileServiceImpl implements ProfileService {
      * {@inheritDoc}
      */
     @Override  
-    public User update(String accountName, String updateValue,
-                           int choice) throws InstagramManagementException {
-        User user = profileDao.getParticularAccountName(accountName);
-        String userId = profileDao.getUserId(accountName);
-
-        if (null != user) {
-            switch (choice) {
-            case Constant.UPDATE_USER_NAME:
-                user.setUserName(updateValue);
-                break;
-
-            case Constant.UPDATE_MOBILE_NUMBER:
-                user.setMobileNumber(updateValue);
-                break;
-
-            case Constant.UPDATE_PASSWORD:	
-                user.setPassword(updateValue);
-                break;
-
-            default:
-                CustomLogger.info("invalid!");
-                break;         
-            }
-            return profileDao.update(accountName, user, userId);
-        }
-        throw new InstagramManagementException(Constant.UNABLE_TO_UPDATE);
+    public User update(User user) throws InstagramManagementException {
+        return profileDao.update(user);     
     }
 }
