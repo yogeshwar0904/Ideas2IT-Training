@@ -36,12 +36,14 @@ public class ProfileController extends HttpServlet {
      * Gets the request and response form the browser and performs the 
      * task based on the request
      * 
-     * @param request  - The request object is used to get the request parameters.
-     * @param response - This is the response object that is used to send data back to the client.
+     * @param request  - The request object is used to 
+     *                   get the request parameters.
+     * @param response - This is the response object that
+     *                   is used to send data back to the client.
      */
     protected  void doPost(HttpServletRequest request,                            
                            HttpServletResponse response) throws 
-                           ServletException, IOException {
+                           IOException, ServletException {
         String path = request.getServletPath();
 
         switch (path) {
@@ -67,12 +69,14 @@ public class ProfileController extends HttpServlet {
      * Gets the request and response form the browser and performs the 
      * task based on the request
      * 
-     * @param request  - The request object is used to get the request parameters.
-     * @param response - This is the response object that is used to send data back to the client.
+     * @param request  - The request object is used to 
+     *                   get the request parameters.
+     * @param response - This is the response object that 
+     *                   is used to send data back to the client.
      */
     protected  void doGet(HttpServletRequest request,                            
                            HttpServletResponse response) throws 
-                           ServletException, IOException {
+                           IOException, ServletException {
         String path = request.getServletPath();
 
         switch (path) { 
@@ -88,8 +92,10 @@ public class ProfileController extends HttpServlet {
     /**
      * Allows the user to login when the email and password is Valid
      *
-     * @param request  - The request object is used to get the request parameters.
-     * @param response - This is the response object that is used to send data back to the client.
+     * @param request  - The request object is used to
+     *                   get the request parameters.
+     * @param response - This is the response object that
+     *                   is used to send data back to the client.
      */
     private void login(HttpServletRequest request,
                        HttpServletResponse response) throws IOException,
@@ -99,12 +105,13 @@ public class ProfileController extends HttpServlet {
           
          if (null != user) {
              HttpSession session = request.getSession();
-             session.setAttribute("accountName", request.getParameter("accountName"));
+             session.setAttribute("accountName", request
+                                  .getParameter("accountName"));
              response.sendRedirect("homePage.jsp");
          } else {
-             String message = "Sorry Email Id or Password is wrong";
-             request.setAttribute("Message", message);
-             RequestDispatcher requestDispatcher = request.getRequestDispatcher("login.jsp");
+             request.setAttribute("Message", Constant.LOGIN_ERROR);
+             RequestDispatcher requestDispatcher = request
+                               .getRequestDispatcher("login.jsp");
              requestDispatcher.forward(request, response);
          }
     }
@@ -112,20 +119,22 @@ public class ProfileController extends HttpServlet {
     /**
      * Register new account for the user.
      *
-     * @param request  - The request object is used to get the request parameters.
-     * @param response - This is the response object that is used to send data back to the client.
+     * @param request  - The request object is used to 
+     *                   get the request parameters.
+     * @param response - This is the response object that 
+     *                   is used to send data back to the client.
      */
     private void register(HttpServletRequest request,  
                           HttpServletResponse response) throws IOException,
                                                        ServletException {
         User user = new User();
         user.setAccountName(request.getParameter("accountName"));
-        user.setUserName(request.getParameter("userName"));
+        user.setUserName(getAccountName(request,response));
         user.setMobileNumber(request.getParameter("mobileNumber"));
         user.setPassword(request.getParameter("password"));
-        String message = "Account Created SuccessFully";
-        request.setAttribute("Message", message);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("login.jsp");
+        request.setAttribute("Message", Constant.ACCOUNT_CREATED);
+        RequestDispatcher requestDispatcher = request
+                          .getRequestDispatcher("login.jsp");
         requestDispatcher.forward(request, response);
         profileService.add(user);    
     }
@@ -133,8 +142,10 @@ public class ProfileController extends HttpServlet {
     /**
      * Updates the details of the user.
      *
-     * @param request  - The request object is used to get the request parameters.
-     * @param response - This is the response object that is used to send data back to the client.
+     * @param request  - The request object is used 
+     *                   to get the request parameters.
+     * @param response - This is the response object that
+     *                   is used to send data back to the client.
      */
     private void update(HttpServletRequest request,
                         HttpServletResponse response) throws IOException,
@@ -149,18 +160,25 @@ public class ProfileController extends HttpServlet {
             user.setPassword(request.getParameter("password"));
             user.setMobileNumber(request.getParameter("mobileNumber"));
             profileService.update(user);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("homePage.jsp");
+            RequestDispatcher requestDispatcher = request
+                              .getRequestDispatcher("homePage.jsp");
             requestDispatcher.forward(request, response);
         } catch (InstagramManagementException customException) {
             CustomLogger.error(customException.getMessage());
+            RequestDispatcher requestDispatcher = request
+                              .getRequestDispatcher("errorPage.jsp");
+            request.setAttribute("Error", customException.getMessage());
+            request.forward(requset, response);
         }
     }
 
     /**
      * delete the account of the user.
      *
-     * @param request  - The request object is used to get the request parameters.
-     * @param response - This is the response object that is used to send data back to the client.
+     * @param request  - The request object is used 
+     *                   to get the request parameters.
+     * @param response - This is the response object that 
+     *                   is used to send data back to the client.
      */
     private void delete(HttpServletRequest request,
                         HttpServletResponse response) throws IOException,
@@ -175,6 +193,10 @@ public class ProfileController extends HttpServlet {
             requestDispatcher.forward(request, response);
         } catch (InstagramManagementException customException) {
             CustomLogger.error(customException.getMessage());
+            RequestDispatcher requestDispatcher = request
+                              .getRequestDispatcher("errorPage.jsp");
+            request.setAttribute("Error", customException.getMessage());
+            request.forward(requset, response);
         }
     }
 
@@ -221,12 +243,130 @@ public class ProfileController extends HttpServlet {
      * @return List<User> 
      *         profile details of user         
      */   
-    public List<User> getUserProfileDetails(String accountName) { 
+    public List<User> getUserProfileDetails(HttpServletRequest request, 
+                      HttpServletResponse response, String accountName) { 
         try {
             return profileService.getUserProfileDetails(accountName);
         } catch(InstagramManagementException exception) {
             CustomLogger.error(exception.getMessage());
         }
         return null;
+    }
+
+    /**
+     * Create account name for user.
+     *
+     * @return accountName
+     *         accountName of the user.
+     */ 
+    public String getAccountName(HttpServletRequest request, 
+                                 HttpServletResponse response ) {
+        String accountName = request.getParameter("accountName"); 
+        boolean isValid = false;
+        User user = null;
+
+        do {
+            System.out.println(Constant.ACCOUNTNAME_FORMATE);
+            accountName = scanner.next();
+            isValid = profileController.isValidAccountName(accountName);
+            user = profileController.searchParticularAccountName(accountName);
+
+            if (isValid) { 
+                if (user.getAccountName() == null) {
+                    return accountName;
+                } else {
+                    System.out.println(Constant.ACCOUNT_NAME_ALREDY_EXIST);
+                    isValid = false;
+                }
+            } else {
+                isValid = false;
+                CustomLogger.warn(Constant.WRONG_ACCOUNTNAME_FORMATE);   
+            }
+        } while (!isValid);
+        return accountName;
+    }
+
+    /**
+     * creates the name for user.
+     *
+     * @return userName
+     *         name of the user
+     */ 
+    public String getUserName() {
+        boolean isValid = false;
+        String userName; 
+
+        do {
+            System.out.println(Constant.NAME_FORMATE);
+            userName = scanner.next();
+            isValid = profileController.isValidName(userName);
+
+            if (!isValid) {
+                CustomLogger.warn(Constant.WRONG_USERNAME_FORMATE);
+            } 
+        } while (!isValid);
+        return userName;
+    }
+
+    /**
+     * creates mobile number for user.
+     *      
+     * @return mobileNumber
+     *         mobileNumber of the user
+     */     
+    public long getMobileNumber() {
+        boolean isValid = false;
+        long mobileNumber; 
+
+        do {
+            System.out.println(Constant.MOBILENUMBER_FORMATE);
+            mobileNumber = scanner.nextLong();
+            scanner.skip("\r\n");
+            isValid = profileController.isValidMobileNumber(mobileNumber);
+
+            if (!isValid) {
+                CustomLogger.warn(Constant.WRONG_MOBILENUMBER_FORMATE);
+            } 
+        } while (!isValid); 
+        return mobileNumber;
+    }
+
+    /**
+     * creates password for user.
+     *
+     * @return password
+     *         password of the user.
+     */   
+    public String getPassword() {
+        boolean isValid = false;
+        String password;   
+
+        do {
+            System.out.println(Constant.PASSWORD_FORMATE);
+            password = scanner.next();
+            isValid = profileController.isValidPassword(password);
+
+            if (!isValid) {
+                CustomLogger.warn(Constant.WRONG_PASSWORD_FORMATE);
+            } 
+        } while (!isValid);
+        return password;
+    } 
+
+    /**
+     * Redirect to the register page with the warning message
+     * when user register their details wrongly.
+     * 
+     * @param request  - The request object is used to get the request parameters.
+     * @param response - This is the response object that is used to send data back to the client.
+     */
+    private void redirectToRegisterPage(HttpServletRequest request,
+                                      HttpServletResponse response,
+                                      String message) throws IOException,
+                                                       ServletException {
+        request.setAttribute("Message", message);
+        RequestDispatcher requestDispatcher = request
+                                    .getRequestDispatcher("register.jsp");
+        requestDispatcher.forward(request, response);
     }
 }

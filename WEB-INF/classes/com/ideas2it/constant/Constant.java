@@ -55,6 +55,9 @@ public class Constant {
     public static final String USER_NAME = "root";
     public static final String PASSWORD = "Printf";
 
+    public static final String LOGIN_ERROR = "Sorry Email Id or Password is wrong";  
+    public static final String ACCOUNT_CREATED = "Account Created Successfully"; 
+
     public static final String NO_ACCOUNT_EXIST_TO_SEARCH = "No user exist to search";
     public static final String UNABLE_TO_UPDATE = "No account found to update";
     public static final String NO_ACCOUNT_EXIST_TO_DELETE = "No account exist to delete";

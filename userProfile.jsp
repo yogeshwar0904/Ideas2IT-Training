@@ -16,7 +16,5 @@
 <form action = "delete" method="post">
 <input type="submit" value = "Delete Account">
 </form>
-
-<label>Message</label>
 </body>
 </html>
