@@ -27,7 +27,7 @@ public interface ProfileService {
      * @throws InstagramManagementException
      *        account does not exist  
      */
-     public User getUser(String accountName, String password) 
+    public User getUser(String accountName, String password) 
                          throws InstagramManagementException;
 
     /**
@@ -38,7 +38,7 @@ public interface ProfileService {
      * @return user
      *        details of user if account created succesfully       
      */
-    public User add(User user); 
+    public User add(User user) throws InstagramManagementException; 
   
     /**
      * remove the user
@@ -63,8 +63,8 @@ public interface ProfileService {
      * @throws InstagramManagementException
      *        no account exist to search  
      */
-    public User searchParticularAccountName(String accountName) throws 
-                                            InstagramManagementException;
+    public User searchParticularAccountName(String accountName)
+                throws InstagramManagementException;
 
     /**
      * display the profile of the user

@@ -72,7 +72,6 @@ public class Constant {
     public static final String USER_INPUT_MISMATCH = "Entered input data is invalid";
     public static final String USER_INPUT_NOT_EXIST = "Entered input not exist";
     public static final String NO_ACCOUNT_EXIST_TO_LOGIN = "No account is exist to login";
-    public static final String ACCOUNT_CREATED = "Account created sucessfully";
     public static final String ACCOUNT_NOT_CREATED = "Account not created";
 
     public static final String ACCOUNT_NAME_ALREDY_EXIST = "Entered account name alredy exist try with another name";

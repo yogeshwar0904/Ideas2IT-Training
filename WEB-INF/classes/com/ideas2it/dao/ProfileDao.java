@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ideas2it.model.Post;
 import com.ideas2it.model.User;
+import com.ideas2it.exception.InstagramManagementException;
 
 /**
  *  To perform create, update, search and detele for the user
@@ -21,7 +22,7 @@ public interface ProfileDao {
      * @return user
      *        details of user if account created
      */
-    public User create(User user);
+    public User create(User user) throws InstagramManagementException;
 
     /**
      * To get account name of user
@@ -31,7 +32,8 @@ public interface ProfileDao {
      * @return user
      *        details of user 
      */   
-    public User getParticularAccountName(String accountName);
+    public User getParticularAccountName(String accountName) 
+                throws InstagramManagementException;
 
     /**
      * To get id of user
@@ -51,7 +53,8 @@ public interface ProfileDao {
      * @return true 
      *        if account deactivated                    
      */ 
-    public boolean updateAccountActiveStatus(String accountName);
+    public boolean updateAccountActiveStatus(String accountName) 
+                   throws InstagramManagementException;
            
     /**
      * update the profile of user
@@ -65,7 +68,7 @@ public interface ProfileDao {
      * @return user
      *        details of user 
      */   
-    public User update(User user);
+    public User update(User user) throws InstagramManagementException;
 
     /**
      * Login the user
@@ -77,7 +80,8 @@ public interface ProfileDao {
      * @return user
      *        details of user
      */
-    public User getUser(String accountName, String password);
+    public User getUser(String accountName, String password) 
+                throws InstagramManagementException;
 
     /**
      * get the particular user profile details
@@ -87,5 +91,6 @@ public interface ProfileDao {
      * @return userProfileDetails 
      *        details of user account                   
      */ 
-    public List<User> getUserProfileDetails(String accountName);
+    public List<User> getUserProfileDetails(String accountName) 
+                      throws InstagramManagementException;
 }

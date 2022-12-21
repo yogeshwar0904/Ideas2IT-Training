@@ -33,6 +33,11 @@
 
 <servlet-mapping>
     <servlet-name>homePage</servlet-name>
+    <url-pattern>/getUserProfileDetails</url-pattern>
+  </servlet-mapping>
+
+<servlet-mapping>
+    <servlet-name>homePage</servlet-name>
     <url-pattern>/delete</url-pattern>
   </servlet-mapping>
 

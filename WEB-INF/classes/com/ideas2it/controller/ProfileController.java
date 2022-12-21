@@ -80,8 +80,8 @@ public class ProfileController extends HttpServlet {
         String path = request.getServletPath();
 
         switch (path) { 
-        case "/showUserDetails":
-            //getUserProfileDetails(request, response);
+        case "/getUserProfileDetails":
+            getUserProfileDetails(request, response);
             break;
 
         case "/postMenu":
@@ -100,20 +100,26 @@ public class ProfileController extends HttpServlet {
     private void login(HttpServletRequest request,
                        HttpServletResponse response) throws IOException,
                                                      ServletException {
-         User user = this.getUser(request.getParameter("accountName"),
+        User user = null;
+
+        try {
+            user = profileService.getUser(request.getParameter("accountName"), 
                                   request.getParameter("password"));
           
-         if (null != user) {
-             HttpSession session = request.getSession();
-             session.setAttribute("accountName", request
-                                  .getParameter("accountName"));
-             response.sendRedirect("homePage.jsp");
-         } else {
-             request.setAttribute("Message", Constant.LOGIN_ERROR);
-             RequestDispatcher requestDispatcher = request
-                               .getRequestDispatcher("login.jsp");
-             requestDispatcher.forward(request, response);
-         }
+            if (null != user) {
+                HttpSession session = request.getSession();
+                session.setAttribute("accountName", user);
+                response.sendRedirect("homePage.jsp");
+            } else {
+                request.setAttribute("Message", Constant.LOGIN_ERROR);
+                RequestDispatcher requestDispatcher = request
+                                  .getRequestDispatcher("login.jsp");
+                requestDispatcher.forward(request, response);
+            }        
+        } catch (InstagramManagementException customException) {
+            CustomLogger.error(customException.getMessage());
+            response.sendRedirect("login.jsp");
+        }
     }
 
     /**
@@ -128,15 +134,31 @@ public class ProfileController extends HttpServlet {
                           HttpServletResponse response) throws IOException,
                                                        ServletException {
         User user = new User();
-        user.setAccountName(request.getParameter("accountName"));
-        user.setUserName(getAccountName(request,response));
-        user.setMobileNumber(request.getParameter("mobileNumber"));
-        user.setPassword(request.getParameter("password"));
-        request.setAttribute("Message", Constant.ACCOUNT_CREATED);
-        RequestDispatcher requestDispatcher = request
-                          .getRequestDispatcher("login.jsp");
-        requestDispatcher.forward(request, response);
-        profileService.add(user);    
+        String accountName = getAccountName(request, response);
+        try {
+            if (accountName == null) {
+                request.setAttribute("message", Constant.ACCOUNT_NAME_ALREDY_EXIST);
+                RequestDispatcher requestDispatcher = request
+                                            .getRequestDispatcher("register.jsp");
+                requestDispatcher.forward(request, response);
+            } else {
+                user.setAccountName(accountName);
+                user.setUserName(request.getParameter("userName"));
+                user.setMobileNumber(request.getParameter("mobileNumber"));
+                user.setPassword(request.getParameter("password"));
+                profileService.add(user);
+                request.setAttribute("Message", Constant.ACCOUNT_CREATED);
+                RequestDispatcher requestDispatcher = request
+                                            .getRequestDispatcher("login.jsp");
+                requestDispatcher.forward(request, response);
+            }
+        } catch (InstagramManagementException customException) {
+            CustomLogger.error(customException.getMessage());
+            RequestDispatcher requestDispatcher = request
+                              .getRequestDispatcher("errorPage.jsp");
+            request.setAttribute("Error", customException.getMessage());
+            requestDispatcher.forward(request, response);
+        }    
     }
 
     /**
@@ -151,11 +173,9 @@ public class ProfileController extends HttpServlet {
                         HttpServletResponse response) throws IOException,
                                                        ServletException {
         try {
-            HttpSession session = request.getSession();
-            String accountName = (String)session.getAttribute("accountName");
-            String userName = (String)session.getAttribute("userName");
-            User user = this.searchParticularAccountName(accountName);
-            user.setAccountName(accountName);
+            User user = profileService.searchParticularAccountName(request
+                                      .getParameter("accountName"));
+            user.setAccountName(request.getParameter("userName"));
             user.setUserName(request.getParameter("userName"));
             user.setPassword(request.getParameter("password"));
             user.setMobileNumber(request.getParameter("mobileNumber"));
@@ -168,7 +188,7 @@ public class ProfileController extends HttpServlet {
             RequestDispatcher requestDispatcher = request
                               .getRequestDispatcher("errorPage.jsp");
             request.setAttribute("Error", customException.getMessage());
-            request.forward(requset, response);
+            requestDispatcher.forward(request, response);
         }
     }
 
@@ -184,189 +204,71 @@ public class ProfileController extends HttpServlet {
                         HttpServletResponse response) throws IOException,
                                                        ServletException {
         try {
-            HttpSession session = request.getSession();
-            String accountName = (String)session.getAttribute("accountName");
-            String mobileNumber = (String)session.getAttribute("mobileNumber");
-            profileService.updateAccountActiveStatus(accountName);
+            profileService.updateAccountActiveStatus(request.getParameter("accountName"));
             RequestDispatcher requestDispatcher = request.getRequestDispatcher
                                                           ("login.jsp");
+            request.setAttribute("Message", Constant.ACCOUNT_DELETED);
             requestDispatcher.forward(request, response);
         } catch (InstagramManagementException customException) {
             CustomLogger.error(customException.getMessage());
             RequestDispatcher requestDispatcher = request
                               .getRequestDispatcher("errorPage.jsp");
             request.setAttribute("Error", customException.getMessage());
-            request.forward(requset, response);
+            requestDispatcher.forward(request, response);
         }
-    }
-
-    /** 
-     * gets the user account name and password.  
-     *
-     * @param accountName
-     *        account name of user
-     * @param password
-     *        password of user
-     * @return User user
-     *        details of the user.
-     */
-     public User getUser(String accountName, String password) {
-         try {
-             return profileService.getUser(accountName, password);
-         } catch (InstagramManagementException exception) {
-             CustomLogger.error(exception.getMessage());
-         }
-         return null; 
-     }
-
-    /** 
-     * search the particular user account
-     *
-     * @param String accountName 
-     *        account name of user
-     * @return User user
-     *        account name of user 
-     *        if account name exist   
-     */   
-    public User searchParticularAccountName(String accountName) { 
-        try {
-            return profileService.searchParticularAccountName(accountName);
-        } catch(InstagramManagementException exception) {
-            CustomLogger.error(exception.getMessage());
-        }
-        return null;
     }
 
     /**
      * get profile details of the user
      *
-     * @return List<User> 
-     *         profile details of user         
-     */   
-    public List<User> getUserProfileDetails(HttpServletRequest request, 
-                      HttpServletResponse response, String accountName) { 
+     * @param request  - The request object is used 
+     *                   to get the request parameters.
+     * @param response - This is the response object that
+     *                   is used to send data back to the client.
+     */ 
+    public void getUserProfileDetails(HttpServletRequest request, 
+                      HttpServletResponse response) throws IOException,
+                                                       ServletException {
         try {
-            return profileService.getUserProfileDetails(accountName);
-        } catch(InstagramManagementException exception) {
-            CustomLogger.error(exception.getMessage());
+            HttpSession session = request.getSession();
+            List<User> userDetails = profileService.getUserProfileDetails((String) session.getAttribute("accountName"));
+            request.setAttribute("userProfile", userDetails);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher
+                                                          ("userProfile.jsp");
+            requestDispatcher.forward(request, response);
+        } catch(InstagramManagementException customException) {
+            CustomLogger.error(customException.getMessage());
+            RequestDispatcher requestDispatcher = request
+                              .getRequestDispatcher("errorPage.jsp");
+            request.setAttribute("Error", customException.getMessage());
+            requestDispatcher.forward(request, response);
         }
-        return null;
     }
 
     /**
      * Create account name for user.
      *
-     * @return accountName
-     *         accountName of the user.
-     */ 
-    public String getAccountName(HttpServletRequest request, 
-                                 HttpServletResponse response ) {
-        String accountName = request.getParameter("accountName"); 
-        boolean isValid = false;
-        User user = null;
-
-        do {
-            System.out.println(Constant.ACCOUNTNAME_FORMATE);
-            accountName = scanner.next();
-            isValid = profileController.isValidAccountName(accountName);
-            user = profileController.searchParticularAccountName(accountName);
-
-            if (isValid) { 
-                if (user.getAccountName() == null) {
-                    return accountName;
-                } else {
-                    System.out.println(Constant.ACCOUNT_NAME_ALREDY_EXIST);
-                    isValid = false;
-                }
-            } else {
-                isValid = false;
-                CustomLogger.warn(Constant.WRONG_ACCOUNTNAME_FORMATE);   
-            }
-        } while (!isValid);
-        return accountName;
-    }
-
-    /**
-     * creates the name for user.
-     *
-     * @return userName
-     *         name of the user
-     */ 
-    public String getUserName() {
-        boolean isValid = false;
-        String userName; 
-
-        do {
-            System.out.println(Constant.NAME_FORMATE);
-            userName = scanner.next();
-            isValid = profileController.isValidName(userName);
-
-            if (!isValid) {
-                CustomLogger.warn(Constant.WRONG_USERNAME_FORMATE);
-            } 
-        } while (!isValid);
-        return userName;
-    }
-
-    /**
-     * creates mobile number for user.
-     *      
-     * @return mobileNumber
-     *         mobileNumber of the user
-     */     
-    public long getMobileNumber() {
-        boolean isValid = false;
-        long mobileNumber; 
-
-        do {
-            System.out.println(Constant.MOBILENUMBER_FORMATE);
-            mobileNumber = scanner.nextLong();
-            scanner.skip("\r\n");
-            isValid = profileController.isValidMobileNumber(mobileNumber);
-
-            if (!isValid) {
-                CustomLogger.warn(Constant.WRONG_MOBILENUMBER_FORMATE);
-            } 
-        } while (!isValid); 
-        return mobileNumber;
-    }
-
-    /**
-     * creates password for user.
-     *
-     * @return password
-     *         password of the user.
-     */   
-    public String getPassword() {
-        boolean isValid = false;
-        String password;   
-
-        do {
-            System.out.println(Constant.PASSWORD_FORMATE);
-            password = scanner.next();
-            isValid = profileController.isValidPassword(password);
-
-            if (!isValid) {
-                CustomLogger.warn(Constant.WRONG_PASSWORD_FORMATE);
-            } 
-        } while (!isValid);
-        return password;
-    } 
-
-    /**
-     * Redirect to the register page with the warning message
-     * when user register their details wrongly.
-     * 
-     * @param request  - The request object is used to get the request parameters.
-     * @param response - This is the response object that is used to send data back to the client.
+     * @param accountName  
+     *        account name of the user.          
+     * @return account name - if account name is valid
      */
-    private void redirectToRegisterPage(HttpServletRequest request,
-                                      HttpServletResponse response,
-                                      String message) throws IOException,
+    public String getAccountName(HttpServletRequest request, 
+                      HttpServletResponse response) throws IOException,
                                                        ServletException {
-        request.setAttribute("Message", message);
-        RequestDispatcher requestDispatcher = request
-                                    .getRequestDispatcher("register.jsp");
-        requestDispatcher.forward(request, response);
+        try {
+            String accountName = request.getParameter("accountName");
+            User user = profileService.searchParticularAccountName(accountName);
+
+            if (user.getAccountName() == null) {
+                return accountName;
+            }
+        } catch (InstagramManagementException customException) {
+            CustomLogger.error(customException.getMessage());
+            RequestDispatcher requestDispatcher = request
+                              .getRequestDispatcher("errorPage.jsp");
+            request.setAttribute("Error", customException.getMessage());
+            requestDispatcher.forward(request, response);
+        }
+        return null;
     }
 }

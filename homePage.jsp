@@ -6,8 +6,6 @@
 <title>update</title>
 </head>
 <li><a href = "userProfile.jsp">User Profile</a></li>
-<li><a href = "showProfile.jsp">Show Profile</a></li>
 <li><a href = "post.jsp">Post Menu</a></li>
-
 </html>
 

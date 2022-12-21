@@ -31,22 +31,16 @@ public class ProfileServiceImpl implements ProfileService {
      */
     @Override
      public User getUser(String accountName, String password) 
-                          throws InstagramManagementException { 
-         User user = profileDao.getUser(accountName,password);
-
-         if(null != user) { 
-             return user;
-         } else {
-             throw new InstagramManagementException(Constant
-                                          .NO_ACCOUNT_EXIST_TO_LOGIN);
-         } 
+                         throws InstagramManagementException {                    
+         User user = profileDao.getUser(accountName,password); 
+         return user;
     } 
  
     /**
      * {@inheritDoc}
      */
     @Override
-    public User add(User user) {
+    public User add(User user) throws InstagramManagementException {
         String userId = UUID.randomUUID().toString(); 
         user.setUserId(userId);
         return profileDao.create(user);
@@ -59,13 +53,7 @@ public class ProfileServiceImpl implements ProfileService {
     public boolean updateAccountActiveStatus(String accountName) throws
                                              InstagramManagementException { 
         User user = profileDao.getParticularAccountName(accountName);
-
-        if (null != user) {
-            return profileDao.updateAccountActiveStatus(accountName);
-        } else {
-           throw new InstagramManagementException(Constant
-                                        .NO_ACCOUNT_EXIST_TO_DELETE);
-        }
+        return profileDao.updateAccountActiveStatus(accountName);
     }
    
     /**
@@ -73,15 +61,9 @@ public class ProfileServiceImpl implements ProfileService {
      */
     @Override
     public User searchParticularAccountName(String accountName) throws 
-                                            InstagramManagementException {
+                                            InstagramManagementException { 
         User user = profileDao.getParticularAccountName(accountName);
-
-        if (null == user) {
-            throw new InstagramManagementException(Constant
-                                         .NO_ACCOUNT_EXIST_TO_SEARCH);
-        } else {
-            return user;
-        } 
+        return user;    
     }
 
     /**
@@ -91,12 +73,7 @@ public class ProfileServiceImpl implements ProfileService {
     public List<User> getUserProfileDetails(String accountName) 
                             throws InstagramManagementException {
         List<User> userProfileDetails = profileDao
-                                        .getUserProfileDetails(accountName); 
-
-        if (userProfileDetails.isEmpty()) {
-            throw new InstagramManagementException(Constant
-                                         .UNABLE_TO_SHOW_PROFILE);
-        }  
+                                        .getUserProfileDetails(accountName);   
         return userProfileDetails;  
     }
 

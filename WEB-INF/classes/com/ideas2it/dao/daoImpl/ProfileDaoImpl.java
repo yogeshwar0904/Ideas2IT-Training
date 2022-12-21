@@ -11,7 +11,9 @@ import java.util.List;
 import com.ideas2it.model.Post;
 import com.ideas2it.model.User;
 import com.ideas2it.dao.ProfileDao;
+import com.ideas2it.constant.Constant;
 import com.ideas2it.databaseconnection.DatabaseConnection;
+import com.ideas2it.exception.InstagramManagementException;
 import com.ideas2it.logger.CustomLogger;
 
 /**
@@ -26,7 +28,7 @@ public class ProfileDaoImpl implements ProfileDao {
      * {@inheritDoc}
      */
     @Override
-    public User create(User user) {
+    public User create(User user) throws InstagramManagementException {
         User userAccount = null;
         int numberOfRowsAffected = 0;
         StringBuilder query = new StringBuilder();
@@ -52,6 +54,8 @@ public class ProfileDaoImpl implements ProfileDao {
             statement.close();
         } catch (SQLException sqlException) {
             CustomLogger.error(sqlException.getMessage());
+            throw new InstagramManagementException(Constant
+                                     .ACCOUNT_NOT_CREATED);
         } finally {
             DatabaseConnection.closeConnection();
         }
@@ -62,7 +66,8 @@ public class ProfileDaoImpl implements ProfileDao {
      * {@inheritDoc}
      */
     @Override  
-    public User getParticularAccountName(String accountName) {
+    public User getParticularAccountName(String accountName) throws 
+                                     InstagramManagementException {
         StringBuilder query = new StringBuilder();
         User user =  new User();
         query.append("SELECT * From user WHERE account_name = ?")
@@ -85,6 +90,7 @@ public class ProfileDaoImpl implements ProfileDao {
             statement.close();
          } catch(SQLException sqlException) {
              CustomLogger.error(sqlException.getMessage());
+             throw new InstagramManagementException(Constant.NO_ACCOUNT_EXIST_TO_SHOW);
          } finally {
              DatabaseConnection.closeConnection();
          }
@@ -124,7 +130,8 @@ public class ProfileDaoImpl implements ProfileDao {
      * {@inheritDoc}
      */
     @Override
-    public boolean updateAccountActiveStatus(String accountName) {
+    public boolean updateAccountActiveStatus(String accountName) 
+                   throws InstagramManagementException {
        boolean isDeactivated = false;
        StringBuilder query = new StringBuilder();
        query.append("UPDATE user SET is_deactivated = 1")
@@ -140,6 +147,8 @@ public class ProfileDaoImpl implements ProfileDao {
            statement.close();
        } catch (SQLException sqlException) {
            CustomLogger.error(sqlException.getMessage());
+           throw new InstagramManagementException(Constant
+                                     .NO_ACCOUNT_EXIST_TO_DELETE);
        } finally {
            DatabaseConnection.closeConnection();           
        }
@@ -150,7 +159,7 @@ public class ProfileDaoImpl implements ProfileDao {
      * {@inheritDoc}
      */
     @Override  
-    public User update(User user) {
+    public User update(User user) throws InstagramManagementException {
         boolean isUpdated = false;
         StringBuilder query = new StringBuilder();
         query.append("UPDATE user SET user_name = ?,")
@@ -173,6 +182,8 @@ public class ProfileDaoImpl implements ProfileDao {
             statement.close();
         } catch(SQLException sqlException) {
             CustomLogger.error(sqlException.getMessage()); 
+             throw new InstagramManagementException(Constant
+                                     .UNABLE_TO_UPDATE);
         } finally {
             DatabaseConnection.closeConnection();
         }
@@ -183,7 +194,8 @@ public class ProfileDaoImpl implements ProfileDao {
      * {@inheritDoc}
      */
     @Override
-    public User getUser(String accountName, String password) {
+    public User getUser(String accountName, String password) 
+                        throws InstagramManagementException {
         User user = null;
         StringBuilder query = new StringBuilder();
         query.append("SELECT * From user")
@@ -209,6 +221,8 @@ public class ProfileDaoImpl implements ProfileDao {
             statement.close();
          } catch(SQLException sqlException) {
              CustomLogger.error(sqlException.getMessage());
+             throw new InstagramManagementException(Constant
+                                     .NO_ACCOUNT_EXIST_TO_LOGIN);
          } finally {
              DatabaseConnection.closeConnection(); 
          }
@@ -219,7 +233,8 @@ public class ProfileDaoImpl implements ProfileDao {
      * {@inheritDoc}
      */
     @Override
-    public List<User> getUserProfileDetails(String accountName) {
+    public List<User> getUserProfileDetails(String accountName) 
+                      throws InstagramManagementException {
         List<User> userProfileDetails = new ArrayList();
         StringBuilder query = new StringBuilder();
         User user = null;
@@ -244,6 +259,8 @@ public class ProfileDaoImpl implements ProfileDao {
             statement.close(); 
         } catch (SQLException sqlException) {
             CustomLogger.error(sqlException.getMessage());
+            throw new InstagramManagementException(Constant
+                                     .UNABLE_TO_SHOW_PROFILE);
         } finally {
             DatabaseConnection.closeConnection();
         } 
