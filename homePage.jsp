@@ -5,7 +5,10 @@
 <head>
 <title>update</title>
 </head>
-<li><a href = "userProfile.jsp">User Profile</a></li>
+<li><form action="getUserProfileDetails" method="get">
+<input type="submit" value="User Profile">
+</form>
+</li>
 <li><a href = "post.jsp">Post Menu</a></li>
 </html>
 

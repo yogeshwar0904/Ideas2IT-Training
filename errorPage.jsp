@@ -9,7 +9,7 @@
 <body>
  <center>
   <h1>Error</h1>
-  <h2><%=customException.getMessage() %><br/> </h2>
+  <h2><%=request.getAttribute("Error")%> </h2>
  </center> 
 </body>
 </html>

@@ -25,11 +25,65 @@ import com.ideas2it.logger.CustomLogger;
  * @version     1.0 12 Oct 2022
  * @author      Yogeshwar
  */
-public class PostController {
-    PostService postService;
+public class PostController extends HttpServlet {
+    private PostService postService;
 
     public PostController() {
         this.postService = new PostServiceImpl();
+    }
+
+    /** 
+     * Gets the request and response form the browser and performs the 
+     * task based on the request
+     * 
+     * @param request  - The request object is used to 
+     *                   get the request parameters.
+     * @param response - This is the response object that
+     *                   is used to send data back to the client.
+     */
+    protected  void doPost(HttpServletRequest request,                            
+                           HttpServletResponse response) throws 
+                           IOException, ServletException {
+        String path = request.getServletPath();
+
+        switch (path) {
+        case "/addPost":
+            addPost(request, response);
+            break;
+  
+        case "/editPost":
+            editPost(request, response);
+            break;
+
+        case "/deletePost":
+            delete(request, response);
+            break;
+        }
+    }
+
+    /** 
+     * Gets the request and response form the browser and performs the 
+     * task based on the request
+     * 
+     * @param request  - The request object is used to 
+     *                   get the request parameters.
+     * @param response - This is the response object that 
+     *                   is used to send data back to the client.
+     */
+    protected  void doGet(HttpServletRequest request,                            
+                          HttpServletResponse response) throws 
+                          IOException, ServletException {
+        String path = request.getServletPath();
+
+        switch (path) { 
+        case "/viewPost":
+            viewPost(request, response);
+            break;
+
+        case "/viewAllUserPost":
+            viewAllUserPost(request, response);
+            break;
+        }
     }
 
     /**
@@ -44,13 +98,27 @@ public class PostController {
      * @return post
      *        post of the user if post created succesfully.
      */
-    public Post insertPost(User user, String title, String content) {
+    public void addPost(HttpServletRequest request, 
+                      HttpServletResponse response) throws IOException,
+                                                     ServletException {
+        Post post = new Post();
+
         try {
-            return postService.insertPost(user, title, content);
-        } catch (InstagramManagementException exception) {
-            CustomLogger.error(exception.getMessage());
-        }
-        return null;
+            post.setTitle(request.getParameter("title"));
+            post.setContent(request.getParameter("content"));
+            postService.insertPost(post);
+            request.setAttribute("Message", Constant.POST_UPLOADED);
+            RequestDispatcher requestDispatcher = request
+                                            .getRequestDispatcher("homePage.jsp");
+            requestDispatcher.forward(request, response);
+            }
+        } catch (InstagramManagementException customException) {
+            CustomLogger.error(customException.getMessage());
+            RequestDispatcher requestDispatcher = request
+                              .getRequestDispatcher("errorPage.jsp");
+            request.setAttribute("Error", Constant.POST_NOT_UPLOAD);
+            requestDispatcher.forward(request, response);
+        }    
     }
 
     /**
@@ -61,7 +129,9 @@ public class PostController {
      * @return post
      *         post of the users
      */
-    public List<Post> getUserPost(String userId) {
+    public void viewPost(HttpServletRequest request, 
+                         HttpServletResponse response) throws IOException,
+                                                       ServletException {
         try {
             return postService.getUserPost(userId);
         } catch (InstagramManagementException exception) {
@@ -80,7 +150,9 @@ public class PostController {
      * @return true
      *        if post is deleted 
      */
-    public boolean updateIsDeleteStatus(String postId, String userId) {
+    public void delete(HttpServletRequest request, 
+                       HttpServletResponse response) throws IOException,
+                                                      ServletException {
         try {
             return postService.updateIsDeleteStatus(postId, userId);
         } catch (InstagramManagementException exception) {
@@ -103,7 +175,9 @@ public class PostController {
      * @return post 
      *        details of post if post updated         
      */   
-    public int update(String postId, String updateValue, int choice, String userId) { 
+    public void update(HttpServletRequest request, 
+                       HttpServletResponse response) throws IOException,
+                                                      ServletException { 
         int updateStatus  = Constant.POST_LOADING;
         try {
             updateStatus  = postService.update(postId, updateValue, choice, userId); 
@@ -121,7 +195,9 @@ public class PostController {
      * @return postId 
      *         if post id already exist.
      */
-    public Post getPostId(String postId) {
+    public Post getPostId(HttpServletRequest request, 
+                      HttpServletResponse response) throws IOException,
+                                                     ServletException {
        return postService.getPostId(postId);
     }
 
@@ -133,7 +209,9 @@ public class PostController {
      * @return listOfPost
      *         list of all user post.
      */
-    public List<Post> getAllUsersPost() {
+    public void viewAllUserPost(HttpServletRequest request, 
+                      HttpServletResponse response) throws IOException,
+                                                     ServletException {
         List<Post> listOfPost = null;
          
         try {

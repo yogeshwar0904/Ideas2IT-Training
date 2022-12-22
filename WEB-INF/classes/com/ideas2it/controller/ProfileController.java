@@ -59,6 +59,10 @@ public class ProfileController extends HttpServlet {
             update(request, response);
             break;
 
+        case "/getUserProfileDetails":
+            getUserProfileDetails(request, response);
+            break;
+
         case "/delete":
             delete(request, response);
             break;
@@ -108,7 +112,7 @@ public class ProfileController extends HttpServlet {
           
             if (null != user) {
                 HttpSession session = request.getSession();
-                session.setAttribute("accountName", user);
+                session.setAttribute("accountName", user.getAccountName());
                 response.sendRedirect("homePage.jsp");
             } else {
                 request.setAttribute("Message", Constant.LOGIN_ERROR);
@@ -135,6 +139,7 @@ public class ProfileController extends HttpServlet {
                                                        ServletException {
         User user = new User();
         String accountName = getAccountName(request, response);
+
         try {
             if (accountName == null) {
                 request.setAttribute("message", Constant.ACCOUNT_NAME_ALREDY_EXIST);
@@ -175,13 +180,18 @@ public class ProfileController extends HttpServlet {
         try {
             User user = profileService.searchParticularAccountName(request
                                       .getParameter("accountName"));
-            user.setAccountName(request.getParameter("userName"));
             user.setUserName(request.getParameter("userName"));
             user.setPassword(request.getParameter("password"));
             user.setMobileNumber(request.getParameter("mobileNumber"));
-            profileService.update(user);
+
+            if (null != profileService.update(user)) {
+		
+                request.setAttribute("message", "updated success");
+            } else  {
+                request.setAttribute("message", "not updated");
+            }
             RequestDispatcher requestDispatcher = request
-                              .getRequestDispatcher("homePage.jsp");
+                              .getRequestDispatcher("getUserProfileDetails");
             requestDispatcher.forward(request, response);
         } catch (InstagramManagementException customException) {
             CustomLogger.error(customException.getMessage());
@@ -204,7 +214,9 @@ public class ProfileController extends HttpServlet {
                         HttpServletResponse response) throws IOException,
                                                        ServletException {
         try {
-            profileService.updateAccountActiveStatus(request.getParameter("accountName"));
+            HttpSession session = request.getSession();
+            profileService.updateAccountActiveStatus(session
+                                           .getAttribute("accountName").toString());
             RequestDispatcher requestDispatcher = request.getRequestDispatcher
                                                           ("login.jsp");
             request.setAttribute("Message", Constant.ACCOUNT_DELETED);
@@ -231,18 +243,15 @@ public class ProfileController extends HttpServlet {
                                                        ServletException {
         try {
             HttpSession session = request.getSession();
-            List<User> userDetails = profileService.getUserProfileDetails((String) session.getAttribute("accountName"));
-            request.setAttribute("userProfile", userDetails);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher
-                                                          ("userProfile.jsp");
-            requestDispatcher.forward(request, response);
+            String accountName = session.getAttribute("accountName").toString();
+            request.setAttribute("user", profileService.getUserProfileDetails(accountName));
         } catch(InstagramManagementException customException) {
             CustomLogger.error(customException.getMessage());
-            RequestDispatcher requestDispatcher = request
-                              .getRequestDispatcher("errorPage.jsp");
-            request.setAttribute("Error", customException.getMessage());
-            requestDispatcher.forward(request, response);
+            response.sendRedirect("errorPage.jsp");
         }
+        RequestDispatcher requestDispatcher = request
+                          .getRequestDispatcher("userProfile.jsp");
+        requestDispatcher.forward(request, response);
     }
 
     /**

@@ -69,12 +69,12 @@ public interface ProfileService {
     /**
      * display the profile of the user
      *
-     * @return userProfileDetails
+     * @return user
      *         detils of user profile
      * @throws InstagramManagementException
      *         no account exist to display 
      */
-    public List<User> getUserProfileDetails(String accountName) 
+    public User getUserProfileDetails(String accountName) 
                             throws InstagramManagementException;
 
     /**

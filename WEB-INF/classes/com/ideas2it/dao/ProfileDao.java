@@ -88,9 +88,9 @@ public interface ProfileDao {
      *
      * @param String accountName
      *        account name of user
-     * @return userProfileDetails 
+     * @return user 
      *        details of user account                   
      */ 
-    public List<User> getUserProfileDetails(String accountName) 
+    public User getUserProfileDetails(String accountName) 
                       throws InstagramManagementException;
 }

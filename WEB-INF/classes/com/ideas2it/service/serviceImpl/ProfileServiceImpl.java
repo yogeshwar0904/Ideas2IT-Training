@@ -62,19 +62,16 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public User searchParticularAccountName(String accountName) throws 
                                             InstagramManagementException { 
-        User user = profileDao.getParticularAccountName(accountName);
-        return user;    
+        return profileDao.getParticularAccountName(accountName);    
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<User> getUserProfileDetails(String accountName) 
+    public User getUserProfileDetails(String accountName) 
                             throws InstagramManagementException {
-        List<User> userProfileDetails = profileDao
-                                        .getUserProfileDetails(accountName);   
-        return userProfileDetails;  
+        return profileDao.getUserProfileDetails(accountName);    
     }
 
     /**

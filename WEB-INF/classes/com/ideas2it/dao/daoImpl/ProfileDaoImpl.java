@@ -164,7 +164,7 @@ public class ProfileDaoImpl implements ProfileDao {
         StringBuilder query = new StringBuilder();
         query.append("UPDATE user SET user_name = ?,")
              .append(" mobile_number = ?, password = ?")
-             .append(" WHERE account_name = ? AND is_deactivated = 0;");
+             .append(" WHERE account_name = ?  AND is_deactivated = 0;");
 
         try {
             Connection connection = DatabaseConnection.getConnection();
@@ -176,14 +176,13 @@ public class ProfileDaoImpl implements ProfileDao {
             statement.setString(4, user.getAccountName());
             isUpdated = statement.execute();
  
-            if (!isUpdated) {
-                return user;
+            if (isUpdated) {
+                user = null;
             }
             statement.close();
         } catch(SQLException sqlException) {
             CustomLogger.error(sqlException.getMessage()); 
-             throw new InstagramManagementException(Constant
-                                     .UNABLE_TO_UPDATE);
+             throw new InstagramManagementException(user.getAccountName());
         } finally {
             DatabaseConnection.closeConnection();
         }
@@ -233,11 +232,10 @@ public class ProfileDaoImpl implements ProfileDao {
      * {@inheritDoc}
      */
     @Override
-    public List<User> getUserProfileDetails(String accountName) 
+    public User getUserProfileDetails(String accountName) 
                       throws InstagramManagementException {
-        List<User> userProfileDetails = new ArrayList();
         StringBuilder query = new StringBuilder();
-        User user = null;
+        User user = new User();
         query.append("SELECT * FROM user")
              .append(" WHERE account_name = ? AND is_deactivated = 0;");
         
@@ -248,13 +246,12 @@ public class ProfileDaoImpl implements ProfileDao {
             statement.setString(1, accountName);
             ResultSet resultSet = statement.executeQuery();
             
-            while (resultSet.next()) {
-                user = new User();
+            if (resultSet.next()) {
                 user.setUserId(resultSet.getString("user_id"));
                 user.setAccountName(resultSet.getString("account_name"));
                 user.setUserName(resultSet.getString("user_name"));
-                user.setMobileNumber(resultSet.getString("mobile_number"));
-                userProfileDetails.add(user);               
+                user.setMobileNumber(resultSet.getString("mobile_number")); 
+                user.setPassword(resultSet.getString("password"));        
             } 
             statement.close(); 
         } catch (SQLException sqlException) {
@@ -264,6 +261,6 @@ public class ProfileDaoImpl implements ProfileDao {
         } finally {
             DatabaseConnection.closeConnection();
         } 
-        return userProfileDetails;       
+        return user;
     }
 }
