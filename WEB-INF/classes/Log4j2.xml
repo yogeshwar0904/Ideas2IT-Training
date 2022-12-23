@@ -4,7 +4,7 @@
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT"> </Console>
 
-    <RollingFile name="RollingFileInfo" fileName="loggers/info.log"
+    <RollingFile name="RollingFileInfo" fileName="${logs/info.log}"
                  filePattern="logs/$${date:yyyy-MM}/info-%d{MM-dd-yyyy}-%i.log">
 
         <PatternLayout>
@@ -20,7 +20,7 @@
 
     </RollingFile>
 
-    <RollingFile name="RollingFileError" fileName="loggers/error.log"
+    <RollingFile name="RollingFileError" fileName="logs/error.log"
                  filePattern="logs/$${date:yyyy-MM}/error-%d{MM-dd-yyyy}-%i.log">
 
         <PatternLayout>
@@ -36,7 +36,7 @@
 
     </RollingFile>
 
-    <RollingFile name="RollingFileWARN" fileName="loggers/warn.log"
+    <RollingFile name="RollingFileWARN" fileName="logs/warn.log"
                  filePattern="logs/$${date:yyyy-MM}/warn-%d{MM-dd-yyyy}-%i.log">
 
         <PatternLayout>
@@ -52,7 +52,7 @@
 
     </RollingFile>
 
-    <RollingFile name="RollingFileFATAL" fileName="loggers/fatal.log"
+    <RollingFile name="RollingFileFATAL" fileName="logs/fatal.log"
                  filePattern="logs/$${date:yyyy-MM}/fatal-%d{MM-dd-yyyy}-%i.log">
 
         <PatternLayout>

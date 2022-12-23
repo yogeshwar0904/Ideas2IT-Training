@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 import com.ideas2it.model.Post;
@@ -27,9 +27,11 @@ import com.ideas2it.logger.CustomLogger;
  */
 public class PostController extends HttpServlet {
     private PostService postService;
+    private CustomLogger logger;
 
     public PostController() {
         this.postService = new PostServiceImpl();
+        this.logger = new CustomLogger(PostController.class);
     }
 
     /** 
@@ -79,10 +81,6 @@ public class PostController extends HttpServlet {
         case "/viewPost":
             viewPost(request, response);
             break;
-
-        case "/viewAllUserPost":
-            viewAllUserPost(request, response);
-            break;
         }
     }
 
@@ -101,64 +99,26 @@ public class PostController extends HttpServlet {
     public void addPost(HttpServletRequest request, 
                       HttpServletResponse response) throws IOException,
                                                      ServletException {
+        User user = null;
         Post post = new Post();
+        HttpSession session = request.getSession();
 
         try {
+            user = (User)session.getAttribute("user");
             post.setTitle(request.getParameter("title"));
             post.setContent(request.getParameter("content"));
-            postService.insertPost(post);
+            postService.insertPost(user, post);
             request.setAttribute("Message", Constant.POST_UPLOADED);
             RequestDispatcher requestDispatcher = request
                                             .getRequestDispatcher("homePage.jsp");
             requestDispatcher.forward(request, response);
-            }
         } catch (InstagramManagementException customException) {
-            CustomLogger.error(customException.getMessage());
+            logger.error(customException.getMessage());
             RequestDispatcher requestDispatcher = request
                               .getRequestDispatcher("errorPage.jsp");
             request.setAttribute("Error", Constant.POST_NOT_UPLOAD);
             requestDispatcher.forward(request, response);
         }    
-    }
-
-    /**
-     * display the post of the user
-     *
-     * @param userId
-     *        id of the user
-     * @return post
-     *         post of the users
-     */
-    public void viewPost(HttpServletRequest request, 
-                         HttpServletResponse response) throws IOException,
-                                                       ServletException {
-        try {
-            return postService.getUserPost(userId);
-        } catch (InstagramManagementException exception) {
-            CustomLogger.error(exception.getMessage());
-        }
-        return null;
-    }
-
-    /**
-     * Delete the post based on the user postId 
-     * 
-     * @param  postId 
-     *         id of the post
-     * @param userId
-     *        id of the user
-     * @return true
-     *        if post is deleted 
-     */
-    public void delete(HttpServletRequest request, 
-                       HttpServletResponse response) throws IOException,
-                                                      ServletException {
-        try {
-            return postService.updateIsDeleteStatus(postId, userId);
-        } catch (InstagramManagementException exception) {
-            CustomLogger.error(exception.getMessage());
-        }
-        return false;
     }
 
     /**
@@ -175,17 +135,60 @@ public class PostController extends HttpServlet {
      * @return post 
      *        details of post if post updated         
      */   
-    public void update(HttpServletRequest request, 
+    public void editPost(HttpServletRequest request, 
                        HttpServletResponse response) throws IOException,
-                                                      ServletException { 
-        int updateStatus  = Constant.POST_LOADING;
+                                                      ServletException {
+        Post post = new Post();
         try {
-            updateStatus  = postService.update(postId, updateValue, choice, userId); 
+            HttpSession session = request.getSession();
+            User user = (User)session.getAttribute("user");
+            post.setTitle(request.getParameter("title"));
+            post.setContent(request.getParameter("content"));
+            postService.update(user,post); 
         } catch (InstagramManagementException exception) {
-            CustomLogger.error(exception.getMessage());
+            logger.error(exception.getMessage());
         } 
-        return updateStatus; 
     } 
+
+    /**
+     * display the post of the user
+     *
+     * @param userId
+     *        id of the user
+     * @return post
+     *         post of the users
+     */
+    public void viewPost(HttpServletRequest request, 
+                         HttpServletResponse response) throws IOException,
+                                                       ServletException {
+        try {
+            HttpSession session = request.getSession();
+            User user = (User)session.getAttribute("user");
+            postService.getUserPost(user);
+        } catch (InstagramManagementException exception) {
+            logger.error(exception.getMessage());
+        }
+    }
+
+    /**
+     * Delete the post based on the user postId 
+     * 
+     * @param  postId 
+     *         id of the post
+     * @param userId
+     *        id of the user
+     * @return true
+     *        if post is deleted 
+     */
+    public void delete(HttpServletRequest request, 
+                       HttpServletResponse response) throws IOException,
+                                                      ServletException {
+        try {
+             postService.updateIsDeleteStatus(request.getParameter("postId"), request.getParameter("userId"));
+        } catch (InstagramManagementException exception) {
+            logger.error(exception.getMessage());
+        }
+    }
 
     /**
      * To get the post id if that id already exist. 
@@ -195,30 +198,10 @@ public class PostController extends HttpServlet {
      * @return postId 
      *         if post id already exist.
      */
-    public Post getPostId(HttpServletRequest request, 
+    public void getPostId(HttpServletRequest request, 
                       HttpServletResponse response) throws IOException,
                                                      ServletException {
-       return postService.getPostId(postId);
+        postService.getPostId(request.getParameter("postId"));
     }
 
-    /**
-     * displayPost will gets all the post which are posted by the user
-     * stores it in the List and prints the post
-     * if the List of post is empty then it will print a no post found
-     *
-     * @return listOfPost
-     *         list of all user post.
-     */
-    public void viewAllUserPost(HttpServletRequest request, 
-                      HttpServletResponse response) throws IOException,
-                                                     ServletException {
-        List<Post> listOfPost = null;
-         
-        try {
-            listOfPost = postService.getAllUserPost();
-        } catch (InstagramManagementException customException) {
-            CustomLogger.error(customException.getMessage());
-        }
-        return listOfPost;
-    }
 }

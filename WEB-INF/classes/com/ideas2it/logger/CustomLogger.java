@@ -10,14 +10,18 @@ import org.apache.logging.log4j.LogManager;
  * @author Yogeshwar S
  */
 public class CustomLogger {
-    private static Logger logger = LogManager.getLogger(CustomLogger.class);
+    private Logger logger;
+
+    public CustomLogger(Class<?> className) {
+        logger = LogManager.getLogger(className);
+    }
 
     /**
      * logs the information message.
      *
      * @param logging message of function
      */
-    public static void info(String message) {
+    public void info(String message) {
         logger.info(message);
     }
 
@@ -26,7 +30,7 @@ public class CustomLogger {
      *
      * @param warn message of function
      */
-    public static void warn(String message) {
+    public void warn(String message) {
         logger.warn(message);
     }
 
@@ -35,7 +39,7 @@ public class CustomLogger {
      * 
      * @param error message of function 
      */
-    public static void error(String message) {
+    public void error(String message) {
         logger.error(message);
     }
 
@@ -44,7 +48,7 @@ public class CustomLogger {
      * 
      * @param fatal message of function
      */
-    public static void fatal(String message) {
+    public void fatal(String message) {
         logger.fatal(message);
     }
 }

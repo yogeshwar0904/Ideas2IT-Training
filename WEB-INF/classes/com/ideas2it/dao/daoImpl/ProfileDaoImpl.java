@@ -22,7 +22,12 @@ import com.ideas2it.logger.CustomLogger;
  * @version    1.2 03 Nov 2022
  * @author     Yogeshwar
  */
-public class ProfileDaoImpl implements ProfileDao {     
+public class ProfileDaoImpl implements ProfileDao {   
+    private CustomLogger logger;
+
+    public ProfileDaoImpl() {
+        this.logger = new CustomLogger(ProfileDaoImpl.class);
+    }  
 
     /**
      * {@inheritDoc}
@@ -53,7 +58,7 @@ public class ProfileDaoImpl implements ProfileDao {
             }
             statement.close();
         } catch (SQLException sqlException) {
-            CustomLogger.error(sqlException.getMessage());
+            logger.error(sqlException.getMessage());
             throw new InstagramManagementException(Constant
                                      .ACCOUNT_NOT_CREATED);
         } finally {
@@ -89,7 +94,7 @@ public class ProfileDaoImpl implements ProfileDao {
             }
             statement.close();
          } catch(SQLException sqlException) {
-             CustomLogger.error(sqlException.getMessage());
+             logger.error(sqlException.getMessage());
              throw new InstagramManagementException(Constant.NO_ACCOUNT_EXIST_TO_SHOW);
          } finally {
              DatabaseConnection.closeConnection();
@@ -119,7 +124,7 @@ public class ProfileDaoImpl implements ProfileDao {
             }
             statement.close();
          } catch(SQLException sqlException) {
-             CustomLogger.error(sqlException.getMessage());
+             logger.error(sqlException.getMessage());
          } finally {
              DatabaseConnection.closeConnection();
          }
@@ -146,7 +151,7 @@ public class ProfileDaoImpl implements ProfileDao {
            statement.execute();
            statement.close();
        } catch (SQLException sqlException) {
-           CustomLogger.error(sqlException.getMessage());
+           logger.error(sqlException.getMessage());
            throw new InstagramManagementException(Constant
                                      .NO_ACCOUNT_EXIST_TO_DELETE);
        } finally {
@@ -164,7 +169,7 @@ public class ProfileDaoImpl implements ProfileDao {
         StringBuilder query = new StringBuilder();
         query.append("UPDATE user SET user_name = ?,")
              .append(" mobile_number = ?, password = ?")
-             .append(" WHERE account_name = ?  AND is_deactivated = 0;");
+             .append(" WHERE user_id = ?  AND is_deactivated = 0;");
 
         try {
             Connection connection = DatabaseConnection.getConnection();
@@ -173,15 +178,15 @@ public class ProfileDaoImpl implements ProfileDao {
             statement.setString(1, user.getUserName());
             statement.setString(2, user.getMobileNumber());
             statement.setString(3, user.getPassword());
-            statement.setString(4, user.getAccountName());
+            statement.setString(4, user.getUserId());
             isUpdated = statement.execute();
  
             if (isUpdated) {
-                user = null;
+                return null;
             }
             statement.close();
         } catch(SQLException sqlException) {
-            CustomLogger.error(sqlException.getMessage()); 
+             logger.error(sqlException.getMessage()); 
              throw new InstagramManagementException(user.getAccountName());
         } finally {
             DatabaseConnection.closeConnection();
@@ -219,7 +224,7 @@ public class ProfileDaoImpl implements ProfileDao {
             }
             statement.close();
          } catch(SQLException sqlException) {
-             CustomLogger.error(sqlException.getMessage());
+             logger.error(sqlException.getMessage());
              throw new InstagramManagementException(Constant
                                      .NO_ACCOUNT_EXIST_TO_LOGIN);
          } finally {
@@ -255,7 +260,7 @@ public class ProfileDaoImpl implements ProfileDao {
             } 
             statement.close(); 
         } catch (SQLException sqlException) {
-            CustomLogger.error(sqlException.getMessage());
+            logger.error(sqlException.getMessage());
             throw new InstagramManagementException(Constant
                                      .UNABLE_TO_SHOW_PROFILE);
         } finally {

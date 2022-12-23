@@ -29,12 +29,10 @@ public class PostServiceImpl implements PostService {
      * {@inheritDoc}
      */
     @Override
-    public Post insertPost(User user, String title, String content) 
+    public Post insertPost(User user, Post post) 
                               throws InstagramManagementException {
-        String postId;
-        Post post;
-        postId = UUID.randomUUID().toString();
-        post = new Post(postId, title, content);
+        String postId = UUID.randomUUID().toString();
+        post.setPostId(postId);
         return postDao.insertPost(user, post);
     }
 
@@ -66,9 +64,9 @@ public class PostServiceImpl implements PostService {
      * {@inheritDoc}
      */
     @Override
-    public List<Post> getUserPost(String userId) 
+    public List<Post> getUserPost(User user) 
                                      throws InstagramManagementException {
-        List<Post> userPosts = postDao.getUserPost(userId);
+        List<Post> userPosts = postDao.getUserPost(user.getUserId());
         
         if (userPosts.isEmpty()) {
             throw new InstagramManagementException(Constant
@@ -95,23 +93,8 @@ public class PostServiceImpl implements PostService {
      * {@inheritDoc}
      */
     @Override  
-    public int update(String postId, String updateValue, int choice, 
-                          String userId) throws InstagramManagementException {
-        Post post = postDao.getPostId(postId);
-
-        if (null != post) {
-            switch (choice) {
-            case Constant.UPDATE_POST_CONTENT:
-                post.setContent(updateValue);
-                return postDao.update(post, userId);
-
-            case Constant.UPDATE_POST_TITLE:
-                post.setTitle(updateValue);
-                return postDao.update(post, userId);         
-            }
-        }
-        throw new InstagramManagementException(Constant
-                                     .NO_POST_EXIST_TO_UPDATE);
+    public int update(User user, Post post) throws InstagramManagementException {
+        return postDao.update(user, post);         
     }
 
      /**

@@ -29,7 +29,7 @@ public interface PostService {
      * @throws InstagramManagementException
      *        post not uploaded  
      */
-    public Post insertPost(User user, String title, String content)
+    public Post insertPost(User user, Post post)
                               throws InstagramManagementException;
      
     /**
@@ -56,7 +56,7 @@ public interface PostService {
      * @throws InstagramManagementException
      *        post not exist 
      */
-    public List<Post> getUserPost(String userId)
+    public List<Post> getUserPost(User user)
                                      throws InstagramManagementException; 
 
     /**
@@ -83,8 +83,7 @@ public interface PostService {
      * @throws InstagramManagementException
      *        post not updated        
      */   
-    public int update(String postId, String updateValue, 
-                      int choice, String userId) 
+    public int update(User user, Post post) 
                       throws InstagramManagementException; 
  
     /**

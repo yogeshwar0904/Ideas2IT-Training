@@ -27,9 +27,11 @@ import com.ideas2it.logger.CustomLogger;
  */
 public class ProfileController extends HttpServlet {
     private ProfileService profileService;
+    private CustomLogger logger;
 
     public ProfileController() {
         this.profileService = new ProfileServiceImpl(); 
+        this.logger = new CustomLogger(ProfileController.class);
     }
 
     /** 
@@ -109,10 +111,12 @@ public class ProfileController extends HttpServlet {
         try {
             user = profileService.getUser(request.getParameter("accountName"), 
                                   request.getParameter("password"));
+            logger.info("Inside the login method");
           
             if (null != user) {
                 HttpSession session = request.getSession();
                 session.setAttribute("accountName", user.getAccountName());
+                session.setAttribute("user", user);
                 response.sendRedirect("homePage.jsp");
             } else {
                 request.setAttribute("Message", Constant.LOGIN_ERROR);
@@ -121,7 +125,7 @@ public class ProfileController extends HttpServlet {
                 requestDispatcher.forward(request, response);
             }        
         } catch (InstagramManagementException customException) {
-            CustomLogger.error(customException.getMessage());
+            logger.error(customException.getMessage());
             response.sendRedirect("login.jsp");
         }
     }
@@ -158,7 +162,7 @@ public class ProfileController extends HttpServlet {
                 requestDispatcher.forward(request, response);
             }
         } catch (InstagramManagementException customException) {
-            CustomLogger.error(customException.getMessage());
+            logger.error(customException.getMessage());
             RequestDispatcher requestDispatcher = request
                               .getRequestDispatcher("errorPage.jsp");
             request.setAttribute("Error", customException.getMessage());
@@ -178,11 +182,12 @@ public class ProfileController extends HttpServlet {
                         HttpServletResponse response) throws IOException,
                                                        ServletException {
         try {
-            User user = profileService.searchParticularAccountName(request
-                                      .getParameter("accountName"));
+            HttpSession session = request.getSession();
+            User user = (User)session.getAttribute("user");
             user.setUserName(request.getParameter("userName"));
             user.setPassword(request.getParameter("password"));
             user.setMobileNumber(request.getParameter("mobileNumber"));
+            profileService.update(user);
 
             if (null != profileService.update(user)) {
 		
@@ -194,7 +199,7 @@ public class ProfileController extends HttpServlet {
                               .getRequestDispatcher("getUserProfileDetails");
             requestDispatcher.forward(request, response);
         } catch (InstagramManagementException customException) {
-            CustomLogger.error(customException.getMessage());
+            logger.error(customException.getMessage());
             RequestDispatcher requestDispatcher = request
                               .getRequestDispatcher("errorPage.jsp");
             request.setAttribute("Error", customException.getMessage());
@@ -222,7 +227,7 @@ public class ProfileController extends HttpServlet {
             request.setAttribute("Message", Constant.ACCOUNT_DELETED);
             requestDispatcher.forward(request, response);
         } catch (InstagramManagementException customException) {
-            CustomLogger.error(customException.getMessage());
+            logger.error(customException.getMessage());
             RequestDispatcher requestDispatcher = request
                               .getRequestDispatcher("errorPage.jsp");
             request.setAttribute("Error", customException.getMessage());
@@ -246,7 +251,7 @@ public class ProfileController extends HttpServlet {
             String accountName = session.getAttribute("accountName").toString();
             request.setAttribute("user", profileService.getUserProfileDetails(accountName));
         } catch(InstagramManagementException customException) {
-            CustomLogger.error(customException.getMessage());
+            logger.error(customException.getMessage());
             response.sendRedirect("errorPage.jsp");
         }
         RequestDispatcher requestDispatcher = request
@@ -272,7 +277,7 @@ public class ProfileController extends HttpServlet {
                 return accountName;
             }
         } catch (InstagramManagementException customException) {
-            CustomLogger.error(customException.getMessage());
+            logger.error(customException.getMessage());
             RequestDispatcher requestDispatcher = request
                               .getRequestDispatcher("errorPage.jsp");
             request.setAttribute("Error", customException.getMessage());

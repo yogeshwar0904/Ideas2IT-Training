@@ -65,7 +65,7 @@ public interface PostDao {
      * @return post
      *        updated post of user
      */   
-    public int update(Post post, String userId);
+    public int update(User user, Post post);
 
     /**
      * get id of user post

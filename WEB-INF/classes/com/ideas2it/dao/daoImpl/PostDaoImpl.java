@@ -22,6 +22,8 @@ import com.ideas2it.logger.CustomLogger;
  */
 public class PostDaoImpl implements PostDao {
 
+    private CustomLogger logger;
+
     /**
      * {@inheritDoc}
      */
@@ -49,7 +51,7 @@ public class PostDaoImpl implements PostDao {
             }
             statement.close();
         } catch (SQLException sqlException) {
-            CustomLogger.error(sqlException.getMessage());
+            logger.error(sqlException.getMessage());
         } finally {
             DatabaseConnection.closeConnection();
         }
@@ -82,7 +84,7 @@ public class PostDaoImpl implements PostDao {
             } 
             statement.close(); 
         } catch (SQLException sqlException) {
-            CustomLogger.error(sqlException.getMessage());
+            logger.error(sqlException.getMessage());
         } finally {
             DatabaseConnection.closeConnection();
         } 
@@ -111,7 +113,7 @@ public class PostDaoImpl implements PostDao {
             } 
             statement.close(); 
         } catch (SQLException sqlException) {
-            CustomLogger.error(sqlException.getMessage());
+            logger.error(sqlException.getMessage());
         } finally {
             DatabaseConnection.closeConnection();
         } 
@@ -138,7 +140,7 @@ public class PostDaoImpl implements PostDao {
             postDeactivateStatus = statement.executeUpdate();
             statement.close();
         } catch (SQLException sqlException) {
-            CustomLogger.error(sqlException.getMessage());
+            logger.error(sqlException.getMessage());
         } finally {
             DatabaseConnection.closeConnection();
         }
@@ -149,7 +151,7 @@ public class PostDaoImpl implements PostDao {
      * {@inheritDoc}
      */
     @Override   
-    public int update(Post post, String userId) {
+    public int update(User user, Post post) {
         int postUpdated = 0;
         StringBuilder query = new StringBuilder();
         query.append("UPDATE post SET  title = ?, content = ?")
@@ -163,11 +165,11 @@ public class PostDaoImpl implements PostDao {
             statement.setString(1, post.getTitle());
             statement.setString(2, post.getContent());
             statement.setString(3, post.getPostId());
-            statement.setString(4, userId);
+            statement.setString(4, user.getUserId());
             postUpdated = statement.executeUpdate();
             statement.close();
         } catch(SQLException sqlException) {
-            CustomLogger.error(sqlException.getMessage()); 
+            logger.error(sqlException.getMessage()); 
         } finally {
             DatabaseConnection.closeConnection();
         }
@@ -198,7 +200,7 @@ public class PostDaoImpl implements PostDao {
             }
             statement.close();
          } catch(SQLException sqlException) {
-             CustomLogger.error(sqlException.getMessage());
+             logger.error(sqlException.getMessage());
          } finally {
              DatabaseConnection.closeConnection();
          }
@@ -226,7 +228,7 @@ public class PostDaoImpl implements PostDao {
             }
             statement.close();
          } catch(SQLException sqlException) {
-             CustomLogger.error(sqlException.getMessage());
+             logger.error(sqlException.getMessage());
          } finally {
              DatabaseConnection.closeConnection();
          }

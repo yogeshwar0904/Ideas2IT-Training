@@ -15,7 +15,8 @@ import com.ideas2it.constant.Constant;
  */
 public class DatabaseConnection {
     private static Connection connection = null; 
-    
+    private static CustomLogger logger = new CustomLogger(DatabaseConnection.class);
+  
     private DatabaseConnection() {}
     
     /**
@@ -30,7 +31,7 @@ public class DatabaseConnection {
                                    Constant.USER_NAME, Constant.PASSWORD);
             } 
         } catch (ClassNotFoundException | SQLException sqlException) {
-            CustomLogger.fatal(sqlException.getMessage());
+            logger.fatal(sqlException.getMessage());
         }
         return connection;
     } 
@@ -45,7 +46,7 @@ public class DatabaseConnection {
                 connection.close();
             }
         } catch (SQLException sqlException) {
-            CustomLogger.fatal(sqlException.getMessage());         
+            logger.fatal(sqlException.getMessage());         
         }
     }
 }
