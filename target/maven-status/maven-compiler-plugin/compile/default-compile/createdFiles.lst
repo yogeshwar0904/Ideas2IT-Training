@@ -9,6 +9,7 @@ com\ideas2it\logger\CustomLogger.class
 com\ideas2it\dao\daoImpl\ProfileDaoImpl.class
 com\ideas2it\databaseconnection\DatabaseConnection.class
 com\ideas2it\service\serviceImpl\PostServiceImpl.class
+com\ideas2it\databaseconnection\HibernateConfig.class
 com\ideas2it\model\User.class
 com\ideas2it\service\serviceImpl\ProfileServiceImpl.class
 com\ideas2it\util\InstagramUtil.class

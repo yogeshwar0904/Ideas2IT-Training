@@ -19,10 +19,10 @@ public interface ProfileDao {
      *
      * @param user 
      *        details of the user
-     * @return user
-     *        details of user if account created
+     * @return userId
+     *        id of user if account created
      */
-    public User create(User user) throws InstagramManagementException;
+    public String create(User user) throws InstagramManagementException;
 
     /**
      * To get account name of user

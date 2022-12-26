@@ -38,7 +38,7 @@ public interface ProfileService {
      * @return user
      *        details of user if account created succesfully       
      */
-    public User add(User user) throws InstagramManagementException; 
+    public String add(User user) throws InstagramManagementException; 
   
     /**
      * remove the user

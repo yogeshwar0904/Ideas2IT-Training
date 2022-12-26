@@ -30,19 +30,18 @@ public class ProfileServiceImpl implements ProfileService {
      * {@inheritDoc}
      */
     @Override
-     public User getUser(String accountName, String password) 
+    public User getUser(String accountName, String password) 
                          throws InstagramManagementException {                    
-         User user = profileDao.getUser(accountName,password); 
-         return user;
+        return profileDao.getUser(accountName,password); 
     } 
  
     /**
      * {@inheritDoc}
      */
     @Override
-    public User add(User user) throws InstagramManagementException {
-        String userId = UUID.randomUUID().toString(); 
-        user.setUserId(userId);
+    public String add(User user) throws InstagramManagementException {
+        String id = UUID.randomUUID().toString(); 
+        user.setUserId(id);
         return profileDao.create(user);
     } 
   

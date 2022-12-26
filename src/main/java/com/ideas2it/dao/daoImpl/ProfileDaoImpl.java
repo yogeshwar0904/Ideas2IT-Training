@@ -8,11 +8,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import com.ideas2it.model.Post;
 import com.ideas2it.model.User;
 import com.ideas2it.dao.ProfileDao;
 import com.ideas2it.constant.Constant;
 import com.ideas2it.databaseconnection.DatabaseConnection;
+import com.ideas2it.databaseconnection.HibernateConfig;
 import com.ideas2it.exception.InstagramManagementException;
 import com.ideas2it.logger.CustomLogger;
 
@@ -33,38 +37,23 @@ public class ProfileDaoImpl implements ProfileDao {
      * {@inheritDoc}
      */
     @Override
-    public User create(User user) throws InstagramManagementException {
-        User userAccount = null;
-        int numberOfRowsAffected = 0;
-        StringBuilder query = new StringBuilder();
-        query.append("INSERT INTO")
-             .append(" user (user_id, account_name, user_name,")
-             .append(" mobile_number, password)")
-             .append(" VALUES(?, ?, ?, ?, ?);");
-       
-        try {
-            Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement statement = connection
-                                          .prepareStatement(query.toString());
-            statement.setString(1, user.getUserId());
-            statement.setString(2, user.getAccountName());
-            statement.setString(3, user.getUserName());
-            statement.setString(4, user.getMobileNumber());
-            statement.setString(5, user.getPassword());
-            numberOfRowsAffected = statement.executeUpdate(); 
+    public String create(User user) throws InstagramManagementException {
+        Transaction transaction = null;
+        String userId = null;
 
-            if(numberOfRowsAffected > 0) {
-                userAccount  = user;
-            }
-            statement.close();
-        } catch (SQLException sqlException) {
-            logger.error(sqlException.getMessage());
+        try {
+            Session session = HibernateConfig.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            userId = String.valueOf(session.save(user));
+            transaction.commit();
+            session.close();
+        } catch (Exception hibernateException) {
+            transaction.rollback();
+            logger.error(hibernateException.getMessage());
             throw new InstagramManagementException(Constant
                                      .ACCOUNT_NOT_CREATED);
-        } finally {
-            DatabaseConnection.closeConnection();
-        }
-        return userAccount;
+        } 
+        return userId;
     }
 
     /**

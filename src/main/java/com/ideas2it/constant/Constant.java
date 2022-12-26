@@ -51,7 +51,7 @@ public class Constant {
     public static final String POST_UPDATED_SUCCESFULLY = "post updated Successfully";
     public static final String POST_NOT_UPDATED = "post not updated";
 
-    public static final String URL = "jdbc:mysql://localhost:3306/instagram";
+    public static final String URL = "jdbc:mysql://localhost:3306/instagram_app";
     public static final String USER_NAME = "root";
     public static final String PASSWORD = "Printf";
 

@@ -155,8 +155,13 @@ public class ProfileController extends HttpServlet {
                 user.setUserName(request.getParameter("userName"));
                 user.setMobileNumber(request.getParameter("mobileNumber"));
                 user.setPassword(request.getParameter("password"));
-                profileService.add(user);
-                request.setAttribute("Message", Constant.ACCOUNT_CREATED);
+                String id = profileService.add(user);
+
+                if (null != id) {
+                    request.setAttribute("Message", Constant.ACCOUNT_CREATED);
+                } else {
+                    request.setAttribute("Message", Constant.ACCOUNT_NOT_CREATED);
+                }
                 RequestDispatcher requestDispatcher = request
                                             .getRequestDispatcher("login.jsp");
                 requestDispatcher.forward(request, response);

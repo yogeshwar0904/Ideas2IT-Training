@@ -15,7 +15,8 @@ import com.ideas2it.constant.Constant;
  */
 public class DatabaseConnection {
     private static Connection connection = null; 
-    private static CustomLogger logger = new CustomLogger(DatabaseConnection.class);
+    private static CustomLogger logger = new 
+                                CustomLogger(DatabaseConnection.class);
   
     private DatabaseConnection() {}
     
