@@ -1,7 +1,7 @@
 /**
  * copyrights ideas2it.
  */
-package com.ideas2it.instagram.UserRepository;
+package com.ideas2it.instagram.userrepository;
 
 import com.ideas2it.instagram.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

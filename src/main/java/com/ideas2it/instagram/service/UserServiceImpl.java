@@ -3,7 +3,7 @@
  */
 package com.ideas2it.instagram.service;
 
-import com.ideas2it.instagram.UserRepository.UserRepository;
+import com.ideas2it.instagram.userrepository.UserRepository;
 import com.ideas2it.instagram.model.User;
 import org.springframework.stereotype.Service;
 
