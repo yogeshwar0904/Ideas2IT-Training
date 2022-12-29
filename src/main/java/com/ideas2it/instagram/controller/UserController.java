@@ -3,10 +3,9 @@
  */
 package com.ideas2it.instagram.controller;
 
-import com.ideas2it.instagram.model.User;
-import com.ideas2it.instagram.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.ideas2it.instagram.model.User;
+import com.ideas2it.instagram.service.UserService;
+import com.ideas2it.instagram.constant.Constant;
+import com.ideas2it.instagram.exception.CustomException;
+import com.ideas2it.instagram.logger.CustomLogger;
 
 /**
  *  Creates the account for user and manipulate the user account by update,get and delete
@@ -29,8 +32,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
-
     private final UserService userService;
+    private final CustomLogger logger = new CustomLogger(UserController.class);
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -44,8 +47,9 @@ public class UserController {
      */
     @PostMapping
     public ResponseEntity<User> add(@RequestBody User user) {
+        logger.info("create account for user");
         return ResponseEntity.status(HttpStatus.CREATED).body(userService
-                .create(user));
+                    .create(user));
     }
 
     /**
@@ -54,8 +58,15 @@ public class UserController {
      * @return list of user - active user in the database.
      */
     @GetMapping
-    public ResponseEntity <List<User>> getAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.getAll());
+    public ResponseEntity <Object> getAll() {
+        try {
+            return ResponseEntity.status(HttpStatus.OK)
+                        .body(userService.getAll());
+        } catch (CustomException customException) {
+            logger.error(Constant.ACCOUNT_IS_EMPTY);
+            return new ResponseEntity<>(customException.getMessage(),
+                    HttpStatus.NOT_FOUND);
+        }
     }
 
     /**
@@ -65,9 +76,15 @@ public class UserController {
      * @return user of given id.
      */
     @GetMapping("/{id}")
-    public ResponseEntity <User> getById(@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(userService
-                .getById(id));
+    public ResponseEntity <Object> getById(@PathVariable Long id) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(userService
+                    .getById(id));
+        } catch (CustomException customException) {
+            logger.error(Constant.NO_USER_EXIST_TO_SHOW);
+            return new ResponseEntity<>(customException.getMessage(),
+                    HttpStatus.NOT_FOUND);
+        }
     }
 
     /**
@@ -77,9 +94,15 @@ public class UserController {
      * @return user - if user updated successfully
      */
     @PutMapping
-    public ResponseEntity<User> update(@RequestBody User user) {
-        return ResponseEntity.status(HttpStatus.OK).body(userService
-                .update(user));
+    public ResponseEntity<Object> update(@RequestBody User user) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(userService
+                    .update(user));
+        } catch (CustomException customException) {
+            logger.error(Constant.NO_ACCOUNT_FOUND_TO_UPDATE);
+            return new ResponseEntity<>(customException.getMessage(),
+                    HttpStatus.NOT_FOUND);
+        }
     }
 
     /**
@@ -90,7 +113,13 @@ public class UserController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteById(@PathVariable Long id) {
-        userService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try {
+            userService.delete(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (CustomException customException) {
+            logger.error(Constant.NO_ACCOUNT_EXIST_TO_DELETE);
+            return new ResponseEntity<>(customException.getMessage(),
+                    HttpStatus.NOT_FOUND);
+        }
     }
 }
